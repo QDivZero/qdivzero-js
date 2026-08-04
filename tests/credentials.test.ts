@@ -14,21 +14,34 @@ describe("credentials file", () => {
   function withHome(content?: string): string {
     const home = join(tmpdir(), `qdivzero-test-${crypto.randomUUID()}`);
     mkdirSync(join(home, ".qdivzero"), { recursive: true });
-    if (content !== undefined) writeFileSync(join(home, ".qdivzero", "credentials"), content);
+    if (content !== undefined)
+      writeFileSync(join(home, ".qdivzero", "credentials"), content);
     homes.add(home);
     return home;
   }
 
   it("loads tokens from ~/.qdivzero/credentials", () => {
-    const home = withHome(JSON.stringify({ access_token: "t1", refresh_token: "r1" }));
+    const home = withHome(
+      JSON.stringify({ access_token: "t1", refresh_token: "r1" }),
+    );
     const creds = loadCredentials(home);
-    expect(creds).toEqual({ email: "", password: "", accessToken: "t1", refreshToken: "r1" });
+    expect(creds).toEqual({
+      email: "",
+      password: "",
+      accessToken: "t1",
+      refreshToken: "r1",
+    });
   });
 
   it("returns empty credentials when the file is missing", () => {
     const home = withHome();
     const creds = loadCredentials(home);
-    expect(creds).toEqual({ email: "", password: "", accessToken: "", refreshToken: "" });
+    expect(creds).toEqual({
+      email: "",
+      password: "",
+      accessToken: "",
+      refreshToken: "",
+    });
   });
 
   it("throws on a malformed file", () => {

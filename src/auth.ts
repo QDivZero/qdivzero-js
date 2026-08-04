@@ -100,8 +100,12 @@ export class TokenManager {
 }
 
 export function authMiddleware(manager: TokenManager): Middleware {
+  const sent = new Map<Request, Request>();
   return {
     async onRequest({ request }) {
+      // Cache a pristine clone BEFORE dispatch: cloning after the request is
+      // sent throws "Body is unusable" for body-bearing requests.
+      sent.set(request, request.clone());
       manager.applyAuth(request);
     },
     async onResponse({ request, response }) {
@@ -109,12 +113,16 @@ export function authMiddleware(manager: TokenManager): Middleware {
         response.status === 401 &&
         manager.canRefresh(new URL(request.url).pathname)
       ) {
-        await manager.refreshNow();
-        const retried = request.clone();
-        retried.headers.delete("Authorization");
-        manager.applyAuth(retried);
-        return fetch(retried);
+        const original = sent.get(request);
+        sent.delete(request);
+        if (original) {
+          await manager.refreshNow();
+          original.headers.delete("Authorization"); // clone carries the stale header
+          manager.applyAuth(original);
+          return fetch(original);
+        }
       }
+      sent.delete(request);
       return response;
     },
   };
