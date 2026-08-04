@@ -71,7 +71,8 @@ fields are optional:
   "email": "you@example.com",
   "password": "your-password",
   "access_token": "...",
-  "refresh_token": "..."
+  "refresh_token": "...",
+  "api_key": "..."
 }
 ```
 
