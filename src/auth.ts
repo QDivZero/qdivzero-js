@@ -100,7 +100,7 @@ export class TokenManager {
 }
 
 export function authMiddleware(manager: TokenManager): Middleware {
-  const sent = new Map<Request, Request>();
+  const sent = new WeakMap<Request, Request>();
   return {
     async onRequest({ request }) {
       // Cache a pristine clone BEFORE dispatch: cloning after the request is
@@ -117,7 +117,7 @@ export function authMiddleware(manager: TokenManager): Middleware {
         sent.delete(request);
         if (original) {
           await manager.refreshNow();
-          original.headers.delete("Authorization"); // clone carries the stale header
+          original.headers.delete("Authorization"); // defensive: clone is pristine (taken before auth)
           manager.applyAuth(original);
           return fetch(original);
         }
