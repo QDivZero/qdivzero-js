@@ -30,6 +30,7 @@ describe("credentials file", () => {
       password: "",
       accessToken: "t1",
       refreshToken: "r1",
+      apiKey: "",
     });
   });
 
@@ -41,6 +42,7 @@ describe("credentials file", () => {
       password: "",
       accessToken: "",
       refreshToken: "",
+      apiKey: "",
     });
   });
 
