@@ -7,6 +7,7 @@ export interface Credentials {
   password: string;
   accessToken: string;
   refreshToken: string;
+  apiKey: string;
 }
 
 const EMPTY: Credentials = {
@@ -14,6 +15,7 @@ const EMPTY: Credentials = {
   password: "",
   accessToken: "",
   refreshToken: "",
+  apiKey: "",
 };
 
 export function credentialsPath(home?: string): string {
@@ -36,6 +38,7 @@ export function loadCredentials(home?: string): Credentials {
       password: parsed.password ?? "",
       accessToken: parsed.access_token ?? "",
       refreshToken: parsed.refresh_token ?? "",
+      apiKey: parsed.api_key ?? "",
     };
   } catch (err) {
     throw new Error(`qdivzero: parse credentials: ${(err as Error).message}`);

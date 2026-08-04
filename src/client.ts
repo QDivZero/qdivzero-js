@@ -30,7 +30,7 @@ export function createQDivZeroClient(
   const baseUrl = opts.baseUrl ?? "https://api.qdiv0.com";
   const file = opts.loadCredentialsFile === false ? null : loadCredentials();
   const authOpts = {
-    apiKey: opts.apiKey,
+    apiKey: opts.apiKey ?? file?.apiKey,
     accessToken: opts.accessToken ?? file?.accessToken,
     refreshToken: opts.refreshToken ?? file?.refreshToken,
     email: opts.credentials?.email ?? file?.email,
