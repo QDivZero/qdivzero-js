@@ -692,26 +692,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/billing/quote": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Quote a checkout total
-         * @description Resolves the authenticated account's application-side tax quote without creating Stripe or checkout state.
-         */
-        post: operations["postBillingQuote"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/firewall-rules": {
         parameters: {
             query?: never;
@@ -2029,19 +2009,7 @@ export interface components {
         AccountResponse: {
             created_at_unix?: number;
             description?: string;
-            fiscal_address?: string;
-            fiscal_city?: string;
-            fiscal_company_name?: string;
-            fiscal_country?: string;
             fiscal_customer_type?: string;
-            fiscal_invoice_email?: string;
-            fiscal_legal_name?: string;
-            fiscal_postcode?: string;
-            fiscal_profile_completed?: boolean;
-            fiscal_region?: string;
-            fiscal_tax_id?: string;
-            fiscal_vat_validated?: boolean;
-            holded_contact_id?: string;
             id?: string;
             name?: string;
         };
@@ -2139,26 +2107,6 @@ export interface components {
         ChatToolCallFunctionEnvelope: {
             arguments?: string;
             name?: string;
-        };
-        CheckoutQuoteRequest: {
-            amount_cents?: number;
-            currency?: string;
-            discount_code?: string;
-        };
-        CheckoutQuoteResponse: {
-            currency?: string;
-            discount_amount_minor?: number;
-            gross_total_minor?: number;
-            original_amount_minor?: number;
-            policy_version?: string;
-            quote_hash?: string;
-            quote_id?: string;
-            reason?: string;
-            reverse_charge?: boolean;
-            tax_included?: boolean;
-            tax_minor?: number;
-            tax_rate_basis_points?: number;
-            taxable_base_minor?: number;
         };
         CheckoutSessionResponse: {
             checkout_url?: string;
@@ -2538,13 +2486,8 @@ export interface components {
             currency?: string;
             discount_code_snapshot?: string;
             discount_ticket_id?: string;
-            holded_contact_id?: string;
-            holded_invoice_id?: string;
-            holded_invoice_number?: string;
-            holded_invoice_status?: string;
-            holded_invoice_url?: string;
+            document_status?: string;
             id?: string;
-            invoice_state?: string;
             ledger_entry_id?: string;
             paid_at?: string;
             provider?: string;
@@ -2552,6 +2495,7 @@ export interface components {
             status?: string;
             stripe_customer_id?: string;
             stripe_event_id?: string;
+            stripe_invoice_id?: string;
             stripe_payment_intent_id?: string;
             stripe_session_id?: string;
             updated_at?: string;
@@ -2708,14 +2652,16 @@ export interface components {
             user_id?: string;
         };
         ResourceMetricSnapshot: {
-            cpu_utilization_percent?: number;
-            disk_utilization_percent?: number;
-            gpu_memory_utilization_percent?: number;
-            gpu_power_watts?: number;
-            gpu_temperature_celsius?: number;
-            gpu_utilization_percent?: number;
-            memory_utilization_percent?: number;
+            e2e_request_latency_p95_seconds?: number;
+            generation_tokens_per_second?: number;
+            kv_cache_usage_percent?: number;
+            prompt_tokens_per_second?: number;
+            requests_running?: number;
+            requests_waiting?: number;
+            runtime_cpu_seconds_per_second?: number;
+            runtime_memory_bytes?: number;
             sampled_at?: string;
+            time_to_first_token_p95_seconds?: number;
         };
         ResourceMetricsResponse: {
             latest?: components["schemas"]["ResourceMetricSnapshot"];
@@ -2964,18 +2910,7 @@ export interface components {
         };
         UpdateAccountRequest: {
             description?: string;
-            fiscal_address?: string;
-            fiscal_city?: string;
-            fiscal_company_name?: string;
-            fiscal_country?: string;
             fiscal_customer_type?: string;
-            fiscal_invoice_email?: string;
-            fiscal_legal_name?: string;
-            fiscal_postcode?: string;
-            fiscal_profile_completed?: boolean;
-            fiscal_region?: string;
-            fiscal_tax_id?: string;
-            fiscal_vat_validated?: boolean;
             name?: string;
         };
         UpdateFirewallRequest: {
@@ -2995,18 +2930,7 @@ export interface components {
             slug?: string;
         };
         UpdateFiscalProfileRequest: {
-            fiscal_address?: string;
-            fiscal_city?: string;
-            fiscal_company_name?: string;
-            fiscal_country?: string;
             fiscal_customer_type?: string;
-            fiscal_invoice_email?: string;
-            fiscal_legal_name?: string;
-            fiscal_postcode?: string;
-            fiscal_profile_completed?: boolean;
-            fiscal_region?: string;
-            fiscal_tax_id?: string;
-            fiscal_vat_validated?: boolean;
         };
         UpdateInstanceRequest: {
             description?: string;
@@ -5371,66 +5295,6 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postBillingQuote: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CheckoutQuoteRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CheckoutQuoteResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Service Unavailable */
-            503: {
                 headers: {
                     [name: string]: unknown;
                 };
