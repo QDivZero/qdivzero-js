@@ -2653,9 +2653,9 @@ export interface components {
         };
         ResourceMetricSnapshot: {
             e2e_request_latency_p95_seconds?: number;
-            generation_tokens_per_second?: number;
+            generation_tokens_total?: number;
             kv_cache_usage_percent?: number;
-            prompt_tokens_per_second?: number;
+            prompt_tokens_total?: number;
             requests_running?: number;
             requests_waiting?: number;
             runtime_cpu_seconds_per_second?: number;
