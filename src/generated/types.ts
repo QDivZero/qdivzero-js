@@ -2166,6 +2166,7 @@ export interface components {
             smart_region?: string;
             smart_regions?: string[];
             smart_selection_label?: string;
+            supported_protocols?: string[];
             workload_kind?: string;
         };
         CreateInvitationRequest: {
@@ -2389,6 +2390,7 @@ export interface components {
             started_at?: string;
             state?: string;
             stopped_at?: string;
+            supported_protocols?: string[];
             workload_kind?: string;
         };
         InstanceUsageBucketResponse: {
@@ -2635,6 +2637,7 @@ export interface components {
             smart_regions?: string[];
             smart_selection_label?: string;
             status?: string;
+            supported_protocols?: string[];
             target_group_id?: string;
             updated_at?: string;
             workload_kind?: string;
@@ -2671,6 +2674,10 @@ export interface components {
         };
         ResponsesRequestEnvelope: {
             input?: number[];
+            instructions?: string;
+            metadata?: {
+                [key: string]: string;
+            };
             model?: string;
             previous_response_id?: string;
             reasoning?: {
@@ -2798,6 +2805,8 @@ export interface components {
             model_id?: string;
             name?: string;
             region?: string;
+            supported_protocols?: string[];
+            supports_tools?: boolean;
         };
         ServingTargetRequest: {
             instance_id?: string;
@@ -2952,6 +2961,7 @@ export interface components {
             smart_region?: string;
             smart_regions?: string[];
             smart_selection_label?: string;
+            supported_protocols?: string[];
         };
         UpdatePreferencesRequest: {
             email_2fa_enabled?: boolean;
