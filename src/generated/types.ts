@@ -2031,6 +2031,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/videos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Synchronous video generation
+         * @description Generates a video from a prompt and optional image, video, and audio references. Accepts Bearer access tokens or API keys. MiniMax-H3 prompts are limited to 7,000 Unicode characters; image references are limited to 30 MiB, video references to 50 MiB, audio references to 15 MiB, and the aggregate input-reference plus audio bytes to 64 MiB. HTTP(S) audio_reference_url values are limited to 16 KiB; data URLs are limited by the 15 MiB decoded audio payload.
+         */
+        post: operations["postV1VideoGenerations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2227,7 +2247,6 @@ export interface components {
             smart_regions?: string[];
             smart_selection_label?: string;
             supported_protocols?: string[];
-            workload_kind?: string;
         };
         CreateInvitationRequest: {
             email: string;
@@ -2353,6 +2372,8 @@ export interface components {
             size_bytes?: number;
         };
         HuggingFaceModelResponse: {
+            compatibility_reason?: string;
+            compatible?: boolean;
             downloads?: number;
             gguf_files?: components["schemas"]["HuggingFaceGGUFFileResponse"][];
             has_gguf?: boolean;
@@ -2362,6 +2383,7 @@ export interface components {
             repo_id?: string;
             tags?: string[];
             warnings?: string[];
+            workload_kind?: string;
         };
         HuggingFaceModelsResponse: {
             models?: components["schemas"]["HuggingFaceModelResponse"][];
@@ -6746,6 +6768,45 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    /**
+                     * @example {
+                     *       "models": [
+                     *         {
+                     *           "compatibility_reason": "",
+                     *           "compatible": true,
+                     *           "downloads": 800000,
+                     *           "gguf_files": [],
+                     *           "has_gguf": false,
+                     *           "has_safetensors": true,
+                     *           "likes": 900,
+                     *           "pipeline_tag": "feature-extraction",
+                     *           "repo_id": "intfloat/multilingual-e5-large",
+                     *           "tags": [
+                     *             "sentence-transformers"
+                     *           ],
+                     *           "warnings": [],
+                     *           "workload_kind": "embeddings"
+                     *         },
+                     *         {
+                     *           "compatibility_reason": "conflicting-specialized-tags",
+                     *           "compatible": false,
+                     *           "downloads": 600,
+                     *           "gguf_files": [],
+                     *           "has_gguf": false,
+                     *           "has_safetensors": true,
+                     *           "likes": 4,
+                     *           "pipeline_tag": "sentence-similarity",
+                     *           "repo_id": "org/conflicting-embedding",
+                     *           "tags": [
+                     *             "sentence-similarity",
+                     *             "text-to-image"
+                     *           ],
+                     *           "warnings": [],
+                     *           "workload_kind": ""
+                     *         }
+                     *       ]
+                     *     }
+                     */
                     "application/json": components["schemas"]["HuggingFaceModelsResponse"];
                 };
             };
@@ -6819,6 +6880,52 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    /**
+                     * @example {
+                     *       "models": [
+                     *         {
+                     *           "compatibility_reason": "",
+                     *           "compatible": true,
+                     *           "downloads": 500000,
+                     *           "gguf_files": [
+                     *             {
+                     *               "filename": "Qwen3-32B-Q4_K_M.gguf",
+                     *               "quantization": "Q4_K_M",
+                     *               "size_bytes": 21474836480
+                     *             }
+                     *           ],
+                     *           "has_gguf": true,
+                     *           "has_safetensors": true,
+                     *           "likes": 1200,
+                     *           "pipeline_tag": "text-generation",
+                     *           "repo_id": "Qwen/Qwen3-32B",
+                     *           "tags": [
+                     *             "transformers"
+                     *           ],
+                     *           "warnings": [],
+                     *           "workload_kind": "chat"
+                     *         },
+                     *         {
+                     *           "compatibility_reason": "unsupported-task",
+                     *           "compatible": false,
+                     *           "downloads": 1200,
+                     *           "gguf_files": [],
+                     *           "has_gguf": false,
+                     *           "has_safetensors": true,
+                     *           "likes": 8,
+                     *           "pipeline_tag": "text-classification",
+                     *           "repo_id": "org/text-classifier",
+                     *           "tags": [
+                     *             "text-classification"
+                     *           ],
+                     *           "warnings": [
+                     *             "unsupported pipeline task"
+                     *           ],
+                     *           "workload_kind": ""
+                     *         }
+                     *       ]
+                     *     }
+                     */
                     "application/json": components["schemas"]["HuggingFaceModelsResponse"];
                 };
             };
@@ -6937,6 +7044,46 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    /**
+                     * @example {
+                     *       "models": [
+                     *         {
+                     *           "compatibility_reason": "",
+                     *           "compatible": true,
+                     *           "downloads": 2000000,
+                     *           "gguf_files": [],
+                     *           "has_gguf": false,
+                     *           "has_safetensors": true,
+                     *           "likes": 3000,
+                     *           "pipeline_tag": "text-generation",
+                     *           "repo_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+                     *           "tags": [
+                     *             "transformers"
+                     *           ],
+                     *           "warnings": [],
+                     *           "workload_kind": "chat"
+                     *         },
+                     *         {
+                     *           "compatibility_reason": "unsupported-task",
+                     *           "compatible": false,
+                     *           "downloads": 500,
+                     *           "gguf_files": [],
+                     *           "has_gguf": false,
+                     *           "has_safetensors": true,
+                     *           "likes": 2,
+                     *           "pipeline_tag": "text-classification",
+                     *           "repo_id": "org/unsupported-trending",
+                     *           "tags": [
+                     *             "text-classification"
+                     *           ],
+                     *           "warnings": [
+                     *             "unsupported pipeline task"
+                     *           ],
+                     *           "workload_kind": ""
+                     *         }
+                     *       ]
+                     *     }
+                     */
                     "application/json": components["schemas"]["HuggingFaceModelsResponse"];
                 };
             };
@@ -9372,10 +9519,16 @@ export interface operations {
         requestBody: {
             content: {
                 "multipart/form-data": {
+                    /** @description Model ID */
                     model: string;
-                    /** Format: binary */
+                    /**
+                     * Format: binary
+                     * @description Audio file
+                     */
                     file: string;
+                    /** @description Source language */
                     language?: string;
+                    /** @description Response format */
                     response_format?: string;
                 };
             };
@@ -9600,16 +9753,29 @@ export interface operations {
         requestBody: {
             content: {
                 "multipart/form-data": {
+                    /** @description Model ID */
                     model: string;
+                    /** @description Edit prompt */
                     prompt: string;
-                    /** Format: binary */
+                    /**
+                     * Format: binary
+                     * @description Source image file
+                     */
                     image: string;
-                    /** Format: binary */
+                    /**
+                     * Format: binary
+                     * @description Mask image file
+                     */
                     mask?: string;
+                    /** @description Output size (WIDTHxHEIGHT) */
                     size?: string;
+                    /** @description Inference steps (1-200) */
                     num_inference_steps?: number;
+                    /** @description Guidance scale (0-20) */
                     guidance_scale?: number;
+                    /** @description Random seed */
                     seed?: number;
+                    /** @description Denoising strength (0-1, lower preserves original) */
                     strength?: number;
                 };
             };
@@ -10361,6 +10527,175 @@ export interface operations {
             };
             /** @description Service Unavailable */
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1VideoGenerations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** @description Model ID */
+                    model: string;
+                    /** @description Video prompt (maximum 7,000 Unicode characters) */
+                    prompt: string;
+                    /**
+                     * @description Generation task: t2va, fl2va, or ref2va
+                     * @default t2va
+                     * @enum {string}
+                     */
+                    task?: "t2va" | "fl2va" | "ref2va";
+                    /**
+                     * @description Duration in seconds
+                     * @default 5
+                     */
+                    duration?: number;
+                    /** @description Output width; provide with height; may accompany a matching standard aspect_ratio */
+                    width?: number;
+                    /** @description Output height; provide with width; may accompany a matching standard aspect_ratio */
+                    height?: number;
+                    /**
+                     * @description Output aspect ratio: a standard ratio may accompany matching dimensions; adaptive requires short_edge
+                     * @enum {string}
+                     */
+                    aspect_ratio?: "21:9" | "16:9" | "4:3" | "1:1" | "3:4" | "9:16" | "adaptive";
+                    /** @description Output short edge; only valid with aspect_ratio=adaptive */
+                    short_edge?: number;
+                    /**
+                     * @description Frames per second; only 24 is supported
+                     * @default 24
+                     * @enum {integer}
+                     */
+                    fps?: 24;
+                    /**
+                     * @description Inference steps
+                     * @default 50
+                     */
+                    num_inference_steps?: number;
+                    /**
+                     * @description Non-negative flow shift
+                     * @default 12
+                     */
+                    flow_shift?: number;
+                    /**
+                     * @description Non-negative audio flow shift
+                     * @default 3
+                     */
+                    audio_flow_shift?: number;
+                    /**
+                     * Format: int64
+                     * @description Random seed
+                     */
+                    seed?: number;
+                    /**
+                     * Format: binary
+                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
+                     */
+                    input_reference?: string;
+                    /**
+                     * Format: binary
+                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
+                     */
+                    input_references?: string;
+                    /**
+                     * Format: binary
+                     * @description Audio reference up to 15 MiB
+                     */
+                    audio_reference?: string;
+                    /**
+                     * Format: uri
+                     * @description Hosted audio reference URL; HTTP(S) URLs are limited to 16 KiB and data URLs to the bounded decoded-audio ceiling
+                     */
+                    audio_reference_url?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Generated MP4 video bytes */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "video/mp4": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Payment Required */
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gateway Timeout */
+            504: {
                 headers: {
                     [name: string]: unknown;
                 };
