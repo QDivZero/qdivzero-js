@@ -1867,6 +1867,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/realtime": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Duplex realtime WebSocket proxy
+         * @description Proxies a duplex realtime session (/v1/realtime?duplex=1) to the instance serving the requested omni model. Accepts Bearer access tokens or API keys. Exchanges OpenAI-Realtime-style events (session.update, input_audio_buffer.append, response.create, response.audio.delta).
+         */
+        get: operations["getV1Realtime"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/responses": {
         parameters: {
             query?: never;
@@ -2112,10 +2132,13 @@ export interface components {
             instructions?: string;
             language?: string;
             model?: string;
+            ref_audio?: string;
+            ref_text?: string;
             response_format?: string;
             speed?: number;
             task_type?: string;
             voice?: string;
+            x_vector_only_mode?: boolean;
         };
         BeginPasskeyRegistrationResponse: {
             challenge_id?: string;
@@ -2774,6 +2797,7 @@ export interface components {
         RuntimeConfigRequest: {
             context_size?: number;
             dtype?: string;
+            duplex?: boolean;
             gpu_memory_utilization?: number;
             kv_cache_dtype?: string;
             max_num_batched_tokens?: number;
@@ -2790,6 +2814,7 @@ export interface components {
         RuntimeConfigResponse: {
             context_size?: number;
             dtype?: string;
+            duplex?: boolean;
             gpu_memory_utilization?: number;
             kv_cache_dtype?: string;
             max_num_batched_tokens?: number;
@@ -2878,6 +2903,7 @@ export interface components {
             public_input_per_million_eur?: number;
             public_output_per_million_eur?: number;
             state?: string;
+            supports_duplex?: boolean;
             supports_thinking?: boolean;
             targets?: components["schemas"]["ServingTargetResponse"][];
             updated_at?: string;
@@ -9935,6 +9961,42 @@ export interface operations {
             };
             /** @description Bad Gateway */
             502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1Realtime: {
+        parameters: {
+            query: {
+                /** @description Model serving name */
+                model: string;
+                /** @description Resume a duplex session id */
+                session_id?: string;
+                /** @description Auto-start the duplex session (1/true/on) */
+                autostart?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description WebSocket upgrade */
+            101: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
