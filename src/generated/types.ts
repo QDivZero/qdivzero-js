@@ -2903,6 +2903,7 @@ export interface components {
             public_input_per_million_eur?: number;
             public_output_per_million_eur?: number;
             state?: string;
+            supported_protocols?: string[];
             supports_duplex?: boolean;
             supports_thinking?: boolean;
             targets?: components["schemas"]["ServingTargetResponse"][];
@@ -2927,6 +2928,7 @@ export interface components {
             id?: string;
             instance_id?: string;
             priority?: number;
+            supported_protocols?: string[];
             target_ref_id?: string;
             type?: string;
             updated_at?: string;
