@@ -1586,26 +1586,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/system-tools": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List system tools
-         * @description Lists available system tools (code interpreter, web search, etc.) for the authenticated account.
-         */
-        get: operations["getSystemTools"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/target-groups": {
         parameters: {
             query?: never;
@@ -1641,6 +1621,46 @@ export interface paths {
         head?: never;
         /** Update a target group */
         patch: operations["patchTargetGroup"];
+        trace?: never;
+    };
+    "/tools": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List tools
+         * @description Lists all available platform tools for the authenticated account.
+         */
+        get: operations["getTools"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tools/{toolType}/try": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Try a tool
+         * @description Runs a single platform tool with the given configuration and returns the raw tool output.
+         */
+        post: operations["tryTool"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/users/me/api-keys": {
@@ -2778,6 +2798,7 @@ export interface components {
             series?: components["schemas"]["ResourceMetricSnapshot"][];
         };
         ResponsesRequestEnvelope: {
+            context_management?: components["schemas"]["Protocol.ContextManagement"][];
             input?: number[];
             instructions?: string;
             metadata?: {
@@ -3145,15 +3166,6 @@ export interface components {
             recommend_token?: string;
             weight?: number;
         };
-        SystemToolOutput: {
-            configuration_schema?: {
-                [key: string]: string;
-            };
-            description?: string;
-            managed_by?: string;
-            type?: string;
-            visibility?: string;
-        };
         Model: {
             display_name?: string;
             downloads?: number;
@@ -3191,6 +3203,10 @@ export interface components {
             gpu_count?: number;
             market_type?: string;
             vram_gb?: number;
+        };
+        "Protocol.ContextManagement": {
+            compact_threshold?: number;
+            type?: string;
         };
         GetTemplateBySlugResponse: {
             template?: components["schemas"]["TemplateWithVariants"];
@@ -9027,35 +9043,6 @@ export interface operations {
             };
         };
     };
-    getSystemTools: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SystemToolOutput"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
     getTargetGroups: {
         parameters: {
             query?: never;
@@ -9344,6 +9331,86 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getTools: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    tryTool: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tool type */
+                toolType: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
