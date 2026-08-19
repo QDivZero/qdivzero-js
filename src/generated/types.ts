@@ -2216,6 +2216,7 @@ export interface components {
             firewall?: string;
             max_tokens?: number;
             messages?: components["schemas"]["ChatMessageEnvelope"][];
+            modalities?: string[];
             model?: string;
             stream?: boolean;
             temperature?: number;
