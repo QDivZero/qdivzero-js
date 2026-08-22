@@ -632,6 +632,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/billing/debit/operations/{operationID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a debit operation */
+        get: operations["getBillingDebitOperation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/billing/ledger": {
         parameters: {
             query?: never;
@@ -2438,6 +2455,15 @@ export interface components {
             new_balance?: number;
             success?: boolean;
         };
+        DebitOperationResponse: {
+            created_at?: string;
+            operation_id?: string;
+            outcome?: string;
+            reference?: string;
+            source?: string;
+            status?: string;
+            updated_at?: string;
+        };
         DismissRequest: {
             ids?: string[];
         };
@@ -2458,11 +2484,7 @@ export interface components {
             credential: number[];
             email: string;
         };
-        FinishPasskeyloginResponse: {
-            access_token?: string;
-            access_token_expiry?: number;
-            refresh_token?: string;
-        };
+        FinishPasskeyloginResponse: Record<string, never>;
         FirewallEvaluationRequest: {
             input?: string;
         };
@@ -2698,10 +2720,7 @@ export interface components {
             totp_code?: string;
         };
         LoginResponse: {
-            access_token?: string;
-            access_token_expiry?: number;
             next_step?: string;
-            refresh_token?: string;
         };
         MarkAllReadRequest: {
             kind?: string;
@@ -2856,17 +2875,16 @@ export interface components {
             status?: string;
             unit?: string;
         };
+        QueuedDebitResponse: {
+            operation_id?: string;
+            queued?: boolean;
+        };
         RecommendRequest: {
             recommend_token?: string;
             top_k?: number;
         };
-        RefreshRequest: {
-            refresh_token: string;
-        };
-        RefreshResponse: {
-            access_token?: string;
-            access_token_expiry?: number;
-        };
+        RefreshRequest: Record<string, never>;
+        RefreshResponse: Record<string, never>;
         RegisterPasskeyRequest: {
             credential_id: string;
             public_key: string;
@@ -2879,9 +2897,6 @@ export interface components {
             resend?: boolean;
         };
         RegisterResponse: {
-            access_token?: string;
-            access_token_expiry?: number;
-            refresh_token?: string;
             requires_verification?: boolean;
             user_id?: string;
         };
@@ -2922,10 +2937,7 @@ export interface components {
             token: string;
         };
         ResetPasswordResponse: {
-            access_token?: string;
-            access_token_expiry?: number;
             email?: string;
-            refresh_token?: string;
             user_id?: string;
         };
         ResourceMetricSnapshot: {
@@ -3310,10 +3322,7 @@ export interface components {
             updated_at?: string;
         };
         VerifyEmailResponse: {
-            access_token?: string;
-            access_token_expiry?: number;
             email?: string;
-            refresh_token?: string;
             user_id?: string;
         };
         ViewElementRequest: {
@@ -5398,7 +5407,10 @@ export interface operations {
     postBillingDebit: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                /** @description Debit idempotency key */
+                "Idempotency-Key": string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -5415,6 +5427,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DebitBalanceResponse"];
+                };
+            };
+            /** @description Accepted */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QueuedDebitResponse"];
                 };
             };
             /** @description Bad Request */
@@ -5435,8 +5456,94 @@ export interface operations {
                     "application/json": string;
                 };
             };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getBillingDebitOperation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Debit operation ID */
+                operationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DebitOperationResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -2434,6 +2434,16 @@
               }
             }
           },
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueuedDebitResponse"
+                }
+              }
+            }
+          },
           "400": {
             "description": "Bad Request",
             "content": {
@@ -2454,6 +2464,16 @@
               }
             }
           },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -2463,8 +2483,29 @@
                 }
               }
             }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Debit idempotency key"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -2475,6 +2516,94 @@
             }
           }
         },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/billing/debit/operations/{operationID}": {
+      "get": {
+        "operationId": "getBillingDebitOperation",
+        "summary": "Get a debit operation",
+        "description": "",
+        "tags": [
+          "billing"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DebitOperationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing credentials or invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "operationID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Debit operation ID"
+          }
+        ],
         "security": [
           {
             "BearerAuth": []
@@ -11114,6 +11243,33 @@
         },
         "x-go-name": "DebitBalanceResponse"
       },
+      "DebitOperationResponse": {
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string"
+          },
+          "operation_id": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "x-go-name": "DebitOperationResponse"
+      },
       "DismissRequest": {
         "type": "object",
         "properties": {
@@ -11197,17 +11353,6 @@
       },
       "FinishPasskeyloginResponse": {
         "type": "object",
-        "properties": {
-          "access_token": {
-            "type": "string"
-          },
-          "access_token_expiry": {
-            "type": "integer"
-          },
-          "refresh_token": {
-            "type": "string"
-          }
-        },
         "x-go-name": "FinishPasskeyloginResponse"
       },
       "FirewallEvaluationRequest": {
@@ -11967,16 +12112,7 @@
       "LoginResponse": {
         "type": "object",
         "properties": {
-          "access_token": {
-            "type": "string"
-          },
-          "access_token_expiry": {
-            "type": "integer"
-          },
           "next_step": {
-            "type": "string"
-          },
-          "refresh_token": {
             "type": "string"
           }
         },
@@ -12449,6 +12585,18 @@
         },
         "x-go-name": "PublicPricingService"
       },
+      "QueuedDebitResponse": {
+        "type": "object",
+        "properties": {
+          "operation_id": {
+            "type": "string"
+          },
+          "queued": {
+            "type": "boolean"
+          }
+        },
+        "x-go-name": "QueuedDebitResponse"
+      },
       "RecommendRequest": {
         "type": "object",
         "properties": {
@@ -12463,26 +12611,10 @@
       },
       "RefreshRequest": {
         "type": "object",
-        "required": [
-          "refresh_token"
-        ],
-        "properties": {
-          "refresh_token": {
-            "type": "string"
-          }
-        },
         "x-go-name": "RefreshRequest"
       },
       "RefreshResponse": {
         "type": "object",
-        "properties": {
-          "access_token": {
-            "type": "string"
-          },
-          "access_token_expiry": {
-            "type": "integer"
-          }
-        },
         "x-go-name": "RefreshResponse"
       },
       "RegisterPasskeyRequest": {
@@ -12530,15 +12662,6 @@
       "RegisterResponse": {
         "type": "object",
         "properties": {
-          "access_token": {
-            "type": "string"
-          },
-          "access_token_expiry": {
-            "type": "integer"
-          },
-          "refresh_token": {
-            "type": "string"
-          },
           "requires_verification": {
             "type": "boolean"
           },
@@ -12673,16 +12796,7 @@
       "ResetPasswordResponse": {
         "type": "object",
         "properties": {
-          "access_token": {
-            "type": "string"
-          },
-          "access_token_expiry": {
-            "type": "integer"
-          },
           "email": {
-            "type": "string"
-          },
-          "refresh_token": {
             "type": "string"
           },
           "user_id": {
@@ -13886,16 +14000,7 @@
       "VerifyEmailResponse": {
         "type": "object",
         "properties": {
-          "access_token": {
-            "type": "string"
-          },
-          "access_token_expiry": {
-            "type": "integer"
-          },
           "email": {
-            "type": "string"
-          },
-          "refresh_token": {
             "type": "string"
           },
           "user_id": {
@@ -14326,17 +14431,17 @@
       }
     },
     "securitySchemes": {
-      "BearerAuth": {
-        "description": "Bearer access token with the `Bearer ` prefix.",
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
-      },
       "ApiKeyAuth": {
         "type": "apiKey",
         "name": "Authorization",
         "in": "header",
         "description": "TokenFactory API key in the Authorization header."
+      },
+      "BearerAuth": {
+        "description": "Bearer access token with the `Bearer ` prefix.",
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
       },
       "RuntimeJWTAuth": {
         "type": "http",
