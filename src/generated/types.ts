@@ -2974,6 +2974,7 @@ export interface components {
             store?: boolean;
             stream?: boolean;
             thinking_token_budget?: number;
+            tools?: number[];
             type?: string;
         };
         RuntimeConfigRequest: {

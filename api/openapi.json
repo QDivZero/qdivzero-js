@@ -12912,6 +12912,12 @@
           "thinking_token_budget": {
             "type": "integer"
           },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
           "type": {
             "type": "string"
           }
