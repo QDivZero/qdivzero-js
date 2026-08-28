@@ -1619,6 +1619,314 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/shared-instances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List shared offers
+         * @description List shared offers owned by the selected account.
+         */
+        get: operations["get_shared_instances"];
+        put?: never;
+        /**
+         * Create shared offer
+         * @description Create a draft offer by adopting an eligible dedicated instance.
+         */
+        post: operations["post_shared_instances"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get shared offer
+         * @description Get an account-authorized shared offer.
+         */
+        get: operations["get_shared_instances_offerID"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update shared offer
+         * @description Update draft shared offer settings before publication.
+         */
+        patch: operations["patch_shared_instances_offerID"];
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Check shared offer eligibility
+         * @description Return account-scoped eligibility and maximum liability for joining an offer.
+         */
+        get: operations["get_shared_instances_offerID_eligibility"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join shared offer
+         * @description Join an open or approval-required offer using the selected account.
+         */
+        post: operations["post_shared_instances_offerID_join"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/links/{linkID}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke shared link
+         * @description Revoke a share link as a resolved manager.
+         */
+        post: operations["post_shared_instances_offerID_links_linkID_revoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/memberships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List shared memberships
+         * @description List memberships visible to the selected account.
+         */
+        get: operations["get_shared_instances_offerID_memberships"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/memberships/{membershipID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get shared membership
+         * @description Get membership details visible to the selected account.
+         */
+        get: operations["get_shared_instances_offerID_memberships_membershipID"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/memberships/{membershipID}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve shared membership
+         * @description Approve a pending membership as a resolved manager.
+         */
+        post: operations["post_shared_instances_offerID_memberships_membershipID_approve"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/memberships/{membershipID}/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Leave shared membership
+         * @description Schedule the selected account's membership to leave.
+         */
+        post: operations["post_shared_instances_offerID_memberships_membershipID_leave"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/memberships/{membershipID}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject shared membership
+         * @description Reject a pending membership as a resolved manager.
+         */
+        post: operations["post_shared_instances_offerID_memberships_membershipID_reject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/memberships/{membershipID}/share-links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create member share link
+         * @description Create an opaque attribution link from an active membership.
+         */
+        post: operations["post_shared_instances_offerID_memberships_membershipID_share_links"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish shared offer
+         * @description Publish an offer after human terms acceptance and owner reservation.
+         */
+        post: operations["post_shared_instances_offerID_publish"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/share-links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create general share link
+         * @description Create a general attribution link for an offer.
+         */
+        post: operations["post_shared_instances_offerID_share_links"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Propose shared ownership transfer
+         * @description Create an explicit successor proposal without executing technical ownership transfer.
+         */
+        post: operations["post_shared_instances_offerID_transfers"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/{offerID}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unpublish shared offer
+         * @description Stop sharing an offer while retaining the backing private instance.
+         */
+        post: operations["post_shared_instances_offerID_unpublish"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/smart-balancers": {
         parameters: {
             query?: never;
@@ -2004,6 +2312,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/shared-instance-links/{opaque-token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get shared instance from public link
+         * @description Resolves an active unlisted or member share link to a safe public projection. No authentication required.
+         */
+        get: operations["getV1PublicSharedInstanceByLink"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/shared-instances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List public shared instances
+         * @description Returns published shared-instance offers using a safe public projection. No authentication required.
+         */
+        get: operations["getV1PublicSharedInstances"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/shared-instances/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get public shared instance
+         * @description Returns one published public shared-instance offer using a safe projection. No authentication required.
+         */
+        get: operations["getV1PublicSharedInstance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/realtime": {
         parameters: {
             query?: never;
@@ -2212,9 +2580,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        ErrorResponse: {
-            error?: string;
-        };
         AcceptInvitationRequest: {
             invitation_id?: string;
             token?: string;
@@ -2474,6 +2839,9 @@ export interface components {
             input?: number[];
             model?: string;
         };
+        ErrorResponse: {
+            error?: string;
+        };
         FinishPasskeyRegistrationRequest: {
             challenge_id: string;
             credential: number[];
@@ -2529,6 +2897,12 @@ export interface components {
         };
         ForgotPasswordResponse: {
             message?: string;
+        };
+        GetTemplateBySlugResponse: {
+            template?: components["schemas"]["TemplateWithVariants"];
+        };
+        GetUserVariantResponse: {
+            variant?: components["schemas"]["VariantWithRelations"];
         };
         GpuListResponse: {
             gpus?: components["schemas"]["CatalogGPUResponse"][];
@@ -2704,6 +3078,10 @@ export interface components {
             items?: components["schemas"]["NotificationResponse"][];
             next_since?: string;
         };
+        ListUserVariantsResponse: {
+            items?: components["schemas"]["VariantWithRelations"][];
+            total?: number;
+        };
         ListedDocumentResponse: {
             content?: string;
             id?: string;
@@ -2728,6 +3106,29 @@ export interface components {
         };
         MarkAllReadResponse: {
             marked?: number;
+        };
+        Model: {
+            display_name?: string;
+            downloads?: number;
+            likes?: number;
+            organization?: string;
+            organization_logo_url?: string;
+            pipeline_tag?: string;
+            price_eur_per_hour?: number;
+            pricing_status?: components["schemas"]["PricingStatus"];
+            recommended_gpu?: components["schemas"]["RecommendedGPU"];
+            repo_id?: string;
+            tags?: string[];
+        };
+        ModelPricesResponse: {
+            models?: components["schemas"]["Model"][];
+            query?: string;
+            services?: components["schemas"]["PricingService"][];
+            source?: string;
+            source_status?: string;
+            stale?: boolean;
+            updated_at?: string;
+            version?: number;
         };
         NotificationLinkResponse: {
             kind_route?: string;
@@ -2837,6 +3238,18 @@ export interface components {
             smart_regions?: string[];
             smart_selection_label?: string;
         };
+        PricingService: {
+            currency?: string;
+            id?: string;
+            price_eur_per_gb_hour?: number;
+            status?: string;
+        };
+        /** @enum {string} */
+        PricingStatus: "estimated" | "unavailable";
+        "Protocol.ContextManagement": {
+            compact_threshold?: number;
+            type?: string;
+        };
         PublicGPUPreferenceJSON: {
             count?: number;
             public_gpu_id?: string;
@@ -2875,6 +3288,34 @@ export interface components {
             status?: string;
             unit?: string;
         };
+        PublicSharedInstanceResponse: {
+            active_member_count?: number;
+            availability_mode?: string;
+            best_effort?: boolean;
+            currency?: string;
+            current_price_per_hour_microcents?: number;
+            estimated_cold_start_seconds?: number;
+            expected_price_per_hour_microcents?: number;
+            idle_timeout_seconds?: number;
+            join_policy?: string;
+            lifecycle_state?: string;
+            max_members?: number;
+            maximum_price_per_hour_microcents?: number;
+            minimum_membership_duration_seconds?: number;
+            model?: string;
+            permanence_disclosure?: string;
+            region?: string;
+            schedule?: components["schemas"]["PublicSharedInstanceScheduleResponse"];
+            slug?: string;
+            title?: string;
+            workload_kind?: string;
+        };
+        PublicSharedInstanceScheduleResponse: {
+            days_of_week?: number[];
+            end_minute?: number;
+            start_minute?: number;
+            timezone?: string;
+        };
         QueuedDebitResponse: {
             operation_id?: string;
             queued?: boolean;
@@ -2882,6 +3323,13 @@ export interface components {
         RecommendRequest: {
             recommend_token?: string;
             top_k?: number;
+        };
+        RecommendedGPU: {
+            availability?: string;
+            display_name?: string;
+            gpu_count?: number;
+            market_type?: string;
+            vram_gb?: number;
         };
         RefreshRequest: Record<string, never>;
         RefreshResponse: Record<string, never>;
@@ -3207,6 +3655,50 @@ export interface components {
             updated_at?: string;
             workload_kind?: string;
         };
+        Template: {
+            category?: string;
+            created_at?: components["schemas"]["Timestamp"];
+            created_by?: string;
+            health_checked_at?: components["schemas"]["Timestamp"];
+            health_error?: string;
+            health_status?: string;
+            id?: string;
+            is_active?: boolean;
+            is_featured?: boolean;
+            ordering?: number;
+            slug?: string;
+            tags?: string[];
+            translations?: components["schemas"]["Translation"][];
+            updated_at?: components["schemas"]["Timestamp"];
+            updated_by?: string;
+        };
+        TemplateWithVariants: {
+            description?: string;
+            name?: string;
+            template?: components["schemas"]["Template"];
+            variants?: components["schemas"]["VariantWithRelations"][];
+        };
+        Timestamp: {
+            /**
+             * @description Non-negative fractions of a second at nanosecond resolution. This field is
+             *     the nanosecond portion of the duration, not an alternative to seconds.
+             *     Negative second values with fractions must still have non-negative nanos
+             *     values that count forward in time. Must be between 0 and 999,999,999
+             *     inclusive.
+             */
+            nanos?: number;
+            /**
+             * @description Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must
+             *     be between -315576000000 and 315576000000 inclusive (which corresponds to
+             *     0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z).
+             */
+            seconds?: number;
+        };
+        Translation: {
+            description?: string;
+            locale?: string;
+            name?: string;
+        };
         UnreadCountResponse: {
             by_severity?: {
                 [key: string]: number;
@@ -3308,109 +3800,6 @@ export interface components {
             email_2fa_enabled?: boolean;
             totp_enabled?: boolean;
         };
-        VectorDatabaseResponse: {
-            account_id?: string;
-            created_at?: string;
-            description?: string;
-            embedding_model_ref?: string;
-            embedding_serving_name?: string;
-            error_message?: string;
-            id?: string;
-            name?: string;
-            opensearch_index_name?: string;
-            slug?: string;
-            status?: string;
-            updated_at?: string;
-        };
-        VerifyEmailResponse: {
-            email?: string;
-            user_id?: string;
-        };
-        ViewElementRequest: {
-            document_id?: string;
-            recommend_token?: string;
-            weight?: number;
-        };
-        Model: {
-            display_name?: string;
-            downloads?: number;
-            likes?: number;
-            organization?: string;
-            organization_logo_url?: string;
-            pipeline_tag?: string;
-            price_eur_per_hour?: number;
-            pricing_status?: components["schemas"]["PricingStatus"];
-            recommended_gpu?: components["schemas"]["RecommendedGPU"];
-            repo_id?: string;
-            tags?: string[];
-        };
-        ModelPricesResponse: {
-            models?: components["schemas"]["Model"][];
-            query?: string;
-            services?: components["schemas"]["PricingService"][];
-            source?: string;
-            source_status?: string;
-            stale?: boolean;
-            updated_at?: string;
-            version?: number;
-        };
-        PricingService: {
-            currency?: string;
-            id?: string;
-            price_eur_per_gb_hour?: number;
-            status?: string;
-        };
-        /** @enum {string} */
-        PricingStatus: "estimated" | "unavailable";
-        RecommendedGPU: {
-            availability?: string;
-            display_name?: string;
-            gpu_count?: number;
-            market_type?: string;
-            vram_gb?: number;
-        };
-        "Protocol.ContextManagement": {
-            compact_threshold?: number;
-            type?: string;
-        };
-        GetTemplateBySlugResponse: {
-            template?: components["schemas"]["TemplateWithVariants"];
-        };
-        GetUserVariantResponse: {
-            variant?: components["schemas"]["VariantWithRelations"];
-        };
-        ListUserVariantsResponse: {
-            items?: components["schemas"]["VariantWithRelations"][];
-            total?: number;
-        };
-        Template: {
-            category?: string;
-            created_at?: components["schemas"]["Timestamp"];
-            created_by?: string;
-            health_checked_at?: components["schemas"]["Timestamp"];
-            health_error?: string;
-            health_status?: string;
-            id?: string;
-            is_active?: boolean;
-            is_featured?: boolean;
-            ordering?: number;
-            slug?: string;
-            tags?: string[];
-            translations?: components["schemas"]["Translation"][];
-            updated_at?: components["schemas"]["Timestamp"];
-            updated_by?: string;
-        };
-        TemplateWithVariants: {
-            description?: string;
-            name?: string;
-            template?: components["schemas"]["Template"];
-            variants?: components["schemas"]["VariantWithRelations"][];
-        };
-        Translation: {
-            description?: string;
-            locale?: string;
-            name?: string;
-        };
         Variant: {
             artifact_type?: string;
             created_at?: components["schemas"]["Timestamp"];
@@ -3448,21 +3837,28 @@ export interface components {
             template_tags?: string[];
             variant?: components["schemas"]["Variant"];
         };
-        Timestamp: {
-            /**
-             * @description Non-negative fractions of a second at nanosecond resolution. This field is
-             *     the nanosecond portion of the duration, not an alternative to seconds.
-             *     Negative second values with fractions must still have non-negative nanos
-             *     values that count forward in time. Must be between 0 and 999,999,999
-             *     inclusive.
-             */
-            nanos?: number;
-            /**
-             * @description Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must
-             *     be between -315576000000 and 315576000000 inclusive (which corresponds to
-             *     0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z).
-             */
-            seconds?: number;
+        VectorDatabaseResponse: {
+            account_id?: string;
+            created_at?: string;
+            description?: string;
+            embedding_model_ref?: string;
+            embedding_serving_name?: string;
+            error_message?: string;
+            id?: string;
+            name?: string;
+            opensearch_index_name?: string;
+            slug?: string;
+            status?: string;
+            updated_at?: string;
+        };
+        VerifyEmailResponse: {
+            email?: string;
+            user_id?: string;
+        };
+        ViewElementRequest: {
+            document_id?: string;
+            recommend_token?: string;
+            weight?: number;
         };
     };
     responses: never;
@@ -9172,6 +9568,798 @@ export interface operations {
             };
         };
     };
+    get_shared_instances: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "offers": [
+                     *         {
+                     *           "availability_mode": "always_on",
+                     *           "billing_currency": "eur",
+                     *           "id": "offer_xxx",
+                     *           "join_policy": "open",
+                     *           "maximum_final_price_per_hour_microcents": 700000,
+                     *           "status": "draft",
+                     *           "terms_version": "terms-1",
+                     *           "visibility": "public"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "availability_config_json": "{}",
+                 *       "availability_mode": "always_on",
+                 *       "billing_currency": "eur",
+                 *       "instance_id": "inst_xxx",
+                 *       "join_policy": "open",
+                 *       "maximum_final_price_per_hour_microcents": 700000,
+                 *       "price_policy_version": "v1",
+                 *       "public_slug": "shared-model",
+                 *       "terms_hash": "4f8b42c5a4d0b2aab1e72e3e7c8c4e2f8d15b52f55d0d4e0f2f5d2f0c7e0c111",
+                 *       "terms_version": "terms-1",
+                 *       "visibility": "public"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "availability_mode": "always_on",
+                     *       "billing_currency": "eur",
+                     *       "id": "offer_xxx",
+                     *       "join_policy": "open",
+                     *       "maximum_final_price_per_hour_microcents": 700000,
+                     *       "status": "draft",
+                     *       "terms_version": "terms-1",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_offerID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "availability_mode": "always_on",
+                     *       "billing_currency": "eur",
+                     *       "id": "offer_xxx",
+                     *       "join_policy": "open",
+                     *       "maximum_final_price_per_hour_microcents": 700000,
+                     *       "status": "draft",
+                     *       "terms_version": "terms-1",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    patch_shared_instances_offerID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "availability_config_json": "{}",
+                 *       "availability_mode": "always_on",
+                 *       "billing_currency": "eur",
+                 *       "join_policy": "open",
+                 *       "maximum_final_price_per_hour_microcents": 700000,
+                 *       "price_policy_version": "v1",
+                 *       "terms_hash": "4f8b42c5a4d0b2aab1e72e3e7c8c4e2f8d15b52f55d0d4e0f2f5d2f0c7e0c111",
+                 *       "terms_version": "terms-1",
+                 *       "visibility": "public"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "availability_mode": "always_on",
+                     *       "billing_currency": "eur",
+                     *       "id": "offer_xxx",
+                     *       "join_policy": "open",
+                     *       "maximum_final_price_per_hour_microcents": 700000,
+                     *       "status": "draft",
+                     *       "terms_version": "terms-1",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_offerID_eligibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "eligible": true,
+                     *       "maximum_liability_microcents": 700000,
+                     *       "offer": {
+                     *         "availability_mode": "always_on",
+                     *         "billing_currency": "eur",
+                     *         "id": "offer_xxx",
+                     *         "join_policy": "open",
+                     *         "maximum_final_price_per_hour_microcents": 700000,
+                     *         "status": "draft",
+                     *         "terms_version": "terms-1",
+                     *         "visibility": "public"
+                     *       },
+                     *       "requires_approval": false
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_join: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "source_link_token": "opaque-token",
+                 *       "terms_hash": "4f8b42c5a4d0b2aab1e72e3e7c8c4e2f8d15b52f55d0d4e0f2f5d2f0c7e0c111",
+                 *       "terms_version": "terms-1"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "member",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "scheduled"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_links_linkID_revoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Link ID */
+                linkID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "link_xxx",
+                     *       "status": "revoked"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_offerID_memberships: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "memberships": [
+                     *         {
+                     *           "effective_from": "2026-01-15T10:01:00Z",
+                     *           "id": "membership_xxx",
+                     *           "offer_id": "offer_xxx",
+                     *           "role": "member",
+                     *           "serving_alias": "shared-model-ab12cd34",
+                     *           "status": "scheduled"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_offerID_memberships_membershipID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "member",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "scheduled"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_memberships_membershipID_approve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "terms_hash": "4f8b42c5a4d0b2aab1e72e3e7c8c4e2f8d15b52f55d0d4e0f2f5d2f0c7e0c111",
+                 *       "terms_version": "terms-1"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "member",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "scheduled"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_memberships_membershipID_leave: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "member",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "scheduled"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_memberships_membershipID_reject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "member",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "scheduled"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_memberships_membershipID_share_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "link_xxx",
+                     *       "kind": "member",
+                     *       "offer_id": "offer_xxx",
+                     *       "status": "active",
+                     *       "token": "opaque-token"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_publish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "terms_hash": "4f8b42c5a4d0b2aab1e72e3e7c8c4e2f8d15b52f55d0d4e0f2f5d2f0c7e0c111",
+                 *       "terms_version": "terms-1"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "offer": {
+                     *         "availability_mode": "always_on",
+                     *         "billing_currency": "eur",
+                     *         "id": "offer_xxx",
+                     *         "join_policy": "open",
+                     *         "maximum_final_price_per_hour_microcents": 700000,
+                     *         "status": "draft",
+                     *         "terms_version": "terms-1",
+                     *         "visibility": "public"
+                     *       },
+                     *       "owner_membership": {
+                     *         "effective_from": "2026-01-15T10:01:00Z",
+                     *         "id": "membership_xxx",
+                     *         "offer_id": "offer_xxx",
+                     *         "role": "member",
+                     *         "serving_alias": "shared-model-ab12cd34",
+                     *         "status": "scheduled"
+                     *       }
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_share_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "link_xxx",
+                     *       "kind": "general",
+                     *       "offer_id": "offer_xxx",
+                     *       "status": "active",
+                     *       "token": "opaque-token"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_transfers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "candidate_membership_id": "membership_candidate",
+                 *       "effective_at": "2026-01-15T10:01:00Z",
+                 *       "operation_reference": "transfer-2026-01",
+                 *       "outgoing_membership_id": "membership_owner"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "transfer_xxx",
+                     *       "status": "proposed"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_offerID_unpublish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "availability_mode": "always_on",
+                     *       "billing_currency": "eur",
+                     *       "id": "offer_xxx",
+                     *       "join_policy": "open",
+                     *       "maximum_final_price_per_hour_microcents": 700000,
+                     *       "status": "draft",
+                     *       "terms_version": "terms-1",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getSmartBalancers: {
         parameters: {
             query?: never;
@@ -10123,8 +11311,6 @@ export interface operations {
         requestBody: {
             content: {
                 "multipart/form-data": {
-                    /** @description Model ID */
-                    model: string;
                     /**
                      * Format: binary
                      * @description Audio file
@@ -10132,6 +11318,8 @@ export interface operations {
                     file: string;
                     /** @description Source language */
                     language?: string;
+                    /** @description Model ID */
+                    model: string;
                     /** @description Response format */
                     response_format?: string;
                 };
@@ -10357,10 +11545,8 @@ export interface operations {
         requestBody: {
             content: {
                 "multipart/form-data": {
-                    /** @description Model ID */
-                    model: string;
-                    /** @description Edit prompt */
-                    prompt: string;
+                    /** @description Guidance scale (0-20) */
+                    guidance_scale?: number;
                     /**
                      * Format: binary
                      * @description Source image file
@@ -10371,14 +11557,16 @@ export interface operations {
                      * @description Mask image file
                      */
                     mask?: string;
-                    /** @description Output size (WIDTHxHEIGHT) */
-                    size?: string;
+                    /** @description Model ID */
+                    model: string;
                     /** @description Inference steps (1-200) */
                     num_inference_steps?: number;
-                    /** @description Guidance scale (0-20) */
-                    guidance_scale?: number;
+                    /** @description Edit prompt */
+                    prompt: string;
                     /** @description Random seed */
                     seed?: number;
+                    /** @description Output size (WIDTHxHEIGHT) */
+                    size?: string;
                     /** @description Denoising strength (0-1, lower preserves original) */
                     strength?: number;
                 };
@@ -10535,6 +11723,155 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PublicPricingResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicSharedInstanceByLink: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Opaque share token */
+                "opaque-token": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicSharedInstanceResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicSharedInstances: {
+        parameters: {
+            query?: {
+                /** @description Filter by exact model repository */
+                model?: string;
+                /** @description Filter by normalized region */
+                region?: string;
+                /** @description Filter by public lifecycle state */
+                status?: string;
+                /** @description Opaque pagination cursor */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicSharedInstance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Public shared-instance slug */
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicSharedInstanceResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Bad Gateway */
@@ -11186,68 +12523,16 @@ export interface operations {
         requestBody: {
             content: {
                 "multipart/form-data": {
-                    /** @description Model ID */
-                    model: string;
-                    /** @description Video prompt (maximum 7,000 Unicode characters) */
-                    prompt: string;
-                    /**
-                     * @description Generation task: t2va, fl2va, or ref2va
-                     * @default t2va
-                     * @enum {string}
-                     */
-                    task?: "t2va" | "fl2va" | "ref2va";
-                    /**
-                     * @description Duration in seconds
-                     * @default 5
-                     */
-                    duration?: number;
-                    /** @description Output width; provide with height; may accompany a matching standard aspect_ratio */
-                    width?: number;
-                    /** @description Output height; provide with width; may accompany a matching standard aspect_ratio */
-                    height?: number;
                     /**
                      * @description Output aspect ratio: a standard ratio may accompany matching dimensions; adaptive requires short_edge
                      * @enum {string}
                      */
                     aspect_ratio?: "21:9" | "16:9" | "4:3" | "1:1" | "3:4" | "9:16" | "adaptive";
-                    /** @description Output short edge; only valid with aspect_ratio=adaptive */
-                    short_edge?: number;
-                    /**
-                     * @description Frames per second; only 24 is supported
-                     * @default 24
-                     * @enum {integer}
-                     */
-                    fps?: 24;
-                    /**
-                     * @description Inference steps
-                     * @default 50
-                     */
-                    num_inference_steps?: number;
-                    /**
-                     * @description Non-negative flow shift
-                     * @default 12
-                     */
-                    flow_shift?: number;
                     /**
                      * @description Non-negative audio flow shift
                      * @default 3
                      */
                     audio_flow_shift?: number;
-                    /**
-                     * Format: int64
-                     * @description Random seed
-                     */
-                    seed?: number;
-                    /**
-                     * Format: binary
-                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
-                     */
-                    input_reference?: string;
-                    /**
-                     * Format: binary
-                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
-                     */
-                    input_references?: string;
                     /**
                      * Format: binary
                      * @description Audio reference up to 15 MiB
@@ -11258,6 +12543,58 @@ export interface operations {
                      * @description Hosted audio reference URL; HTTP(S) URLs are limited to 16 KiB and data URLs to the bounded decoded-audio ceiling
                      */
                     audio_reference_url?: string;
+                    /**
+                     * @description Duration in seconds
+                     * @default 5
+                     */
+                    duration?: number;
+                    /**
+                     * @description Non-negative flow shift
+                     * @default 12
+                     */
+                    flow_shift?: number;
+                    /**
+                     * @description Frames per second; only 24 is supported
+                     * @default 24
+                     * @enum {integer}
+                     */
+                    fps?: 24;
+                    /** @description Output height; provide with width; may accompany a matching standard aspect_ratio */
+                    height?: number;
+                    /**
+                     * Format: binary
+                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
+                     */
+                    input_reference?: string;
+                    /**
+                     * Format: binary
+                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
+                     */
+                    input_references?: string;
+                    /** @description Model ID */
+                    model: string;
+                    /**
+                     * @description Inference steps
+                     * @default 50
+                     */
+                    num_inference_steps?: number;
+                    /** @description Video prompt (maximum 7,000 Unicode characters) */
+                    prompt: string;
+                    /**
+                     * Format: int64
+                     * @description Random seed
+                     */
+                    seed?: number;
+                    /** @description Output short edge; only valid with aspect_ratio=adaptive */
+                    short_edge?: number;
+                    /**
+                     * @description Generation task: t2va, fl2va, or ref2va
+                     * @default t2va
+                     * @enum {string}
+                     */
+                    task?: "t2va" | "fl2va" | "ref2va";
+                    /** @description Output width; provide with height; may accompany a matching standard aspect_ratio */
+                    width?: number;
                 };
             };
         };
