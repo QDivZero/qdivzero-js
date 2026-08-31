@@ -11660,6 +11660,1250 @@
         ]
       }
     },
+    "/shared-instances/marketplace-policy": {
+      "get": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Get Marketplace policy",
+        "description": "Return the current server-owned Marketplace currency, pricing policy, and terms.",
+        "operationId": "get_shared_instances_marketplace_policy",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "currency": "eur",
+                  "price_policy_version": "marketplace-price-policy-v1",
+                  "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                  "terms_text": "Approved Marketplace terms.",
+                  "terms_version": "marketplace-terms-v1"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/adoption-preflight": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Preview shared offer adoption",
+        "description": "Check whether a dedicated instance can be adopted without changing instance or offer state.",
+        "operationId": "post_shared_instances_owner_adoption_preflight",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "instance_id": "inst_xxx"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "availability_options": [
+                    {
+                      "available": true,
+                      "mode": "always_on"
+                    }
+                  ],
+                  "blockers": [],
+                  "eligible": true,
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers": {
+      "get": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "List owner offers",
+        "description": "List safe Marketplace offer views for the selected account.",
+        "operationId": "get_shared_instances_owner_offers",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "offers": [
+                    {
+                      "active_member_count": 1,
+                      "availability": {
+                        "mode": "scheduled",
+                        "windows": [
+                          {
+                            "end": "17:00",
+                            "start": "08:00",
+                            "timezone": "Europe/Madrid",
+                            "weekdays": [
+                              1,
+                              2
+                            ]
+                          }
+                        ]
+                      },
+                      "current_policy": {
+                        "currency": "eur",
+                        "price_policy_version": "marketplace-price-policy-v1",
+                        "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                        "terms_text": "Approved Marketplace terms.",
+                        "terms_version": "marketplace-terms-v1"
+                      },
+                      "id": "offer_xxx",
+                      "instance": {
+                        "display_name": "Llama",
+                        "model": "meta/llama",
+                        "region": "eu-west"
+                      },
+                      "join_policy": "open",
+                      "management": {
+                        "capabilities": {
+                          "can_copy": true,
+                          "can_discard": true,
+                          "can_edit": true,
+                          "can_publish": true
+                        },
+                        "state": "draft"
+                      },
+                      "minimum_duration_seconds": 3600,
+                      "pending_approval_count": 0,
+                      "policy_state": "current",
+                      "pricing": {
+                        "currency": "eur",
+                        "current_microcents": 612345,
+                        "expected_microcents": 700000,
+                        "maximum_microcents": 700000,
+                        "price_policy_version": "marketplace-price-policy-v1"
+                      },
+                      "public_slug": "shared-model",
+                      "status": "draft",
+                      "visibility": "public"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Create owner offer",
+        "description": "Create a typed Marketplace draft after adopting an eligible dedicated instance.",
+        "operationId": "post_shared_instances_owner_offers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "availability": {
+                  "mode": "scheduled",
+                  "windows": [
+                    {
+                      "end": "17:00",
+                      "start": "08:00",
+                      "timezone": "Europe/Madrid",
+                      "weekdays": [
+                        1,
+                        2
+                      ]
+                    }
+                  ]
+                },
+                "instance_id": "inst_xxx",
+                "join_policy": "open",
+                "maximum_final_price_per_hour_microcents": 700000,
+                "minimum_membership_duration_seconds": 3600,
+                "public_slug": "shared-model",
+                "visibility": "public"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}": {
+      "get": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Get owner offer",
+        "description": "Get a safe typed Marketplace offer view.",
+        "operationId": "get_shared_instances_owner_offers_offerID",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Update owner offer",
+        "description": "Update typed editable Marketplace configuration. Policy fields are server-owned.",
+        "operationId": "patch_shared_instances_owner_offers_offerID",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "availability": {
+                  "mode": "scheduled",
+                  "windows": [
+                    {
+                      "end": "17:00",
+                      "start": "08:00",
+                      "timezone": "Europe/Madrid",
+                      "weekdays": [
+                        1,
+                        2
+                      ]
+                    }
+                  ]
+                },
+                "join_policy": "open",
+                "maximum_final_price_per_hour_microcents": 700000,
+                "minimum_membership_duration_seconds": 3600,
+                "public_slug": "shared-model",
+                "visibility": "public"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/discard": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Discard owner draft",
+        "description": "Discard an original pre-publication draft without releasing or exposing its backing instance.",
+        "operationId": "post_shared_instances_owner_offers_offerID_discard",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/memberships": {
+      "get": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "List owner memberships",
+        "description": "List manager-visible membership status without reservations or provider details.",
+        "operationId": "get_shared_instances_owner_offers_offerID_memberships",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "memberships": [
+                    {
+                      "account_id": "acct_xxx",
+                      "effective_from": "2026-01-15T10:01:00Z",
+                      "id": "membership_xxx",
+                      "offer_id": "offer_xxx",
+                      "role": "owner",
+                      "serving_alias": "shared-model-ab12cd34",
+                      "status": "active"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/approve": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Approve owner membership",
+        "description": "Approve a pending Marketplace membership as a manager.",
+        "operationId": "post_shared_instances_owner_offers_offerID_memberships_membershipID_approve",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Membership ID",
+            "in": "path",
+            "name": "membershipID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "account_id": "acct_xxx",
+                  "effective_from": "2026-01-15T10:01:00Z",
+                  "id": "membership_xxx",
+                  "offer_id": "offer_xxx",
+                  "role": "owner",
+                  "serving_alias": "shared-model-ab12cd34",
+                  "status": "active"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/reject": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Reject owner membership",
+        "description": "Reject a pending Marketplace membership as a manager.",
+        "operationId": "post_shared_instances_owner_offers_offerID_memberships_membershipID_reject",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Membership ID",
+            "in": "path",
+            "name": "membershipID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "account_id": "acct_xxx",
+                  "effective_from": "2026-01-15T10:01:00Z",
+                  "id": "membership_xxx",
+                  "offer_id": "offer_xxx",
+                  "role": "owner",
+                  "serving_alias": "shared-model-ab12cd34",
+                  "status": "active"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/share-links": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Create member share link",
+        "description": "Create a member share link and return its plaintext token once.",
+        "operationId": "post_shared_instances_owner_offers_offerID_memberships_membershipID_share_links",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Membership ID",
+            "in": "path",
+            "name": "membershipID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "link_xxx",
+                  "kind": "member",
+                  "status": "active",
+                  "token": "opaque-token"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/publish": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Publish owner offer",
+        "description": "Publish a current draft after explicit human acceptance of the current Marketplace terms.",
+        "operationId": "post_shared_instances_owner_offers_offerID_publish",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "accept_terms": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "offer": {
+                    "active_member_count": 1,
+                    "availability": {
+                      "mode": "scheduled",
+                      "windows": [
+                        {
+                          "end": "17:00",
+                          "start": "08:00",
+                          "timezone": "Europe/Madrid",
+                          "weekdays": [
+                            1,
+                            2
+                          ]
+                        }
+                      ]
+                    },
+                    "current_policy": {
+                      "currency": "eur",
+                      "price_policy_version": "marketplace-price-policy-v1",
+                      "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                      "terms_text": "Approved Marketplace terms.",
+                      "terms_version": "marketplace-terms-v1"
+                    },
+                    "id": "offer_xxx",
+                    "instance": {
+                      "display_name": "Llama",
+                      "model": "meta/llama",
+                      "region": "eu-west"
+                    },
+                    "join_policy": "open",
+                    "management": {
+                      "capabilities": {
+                        "can_copy": true,
+                        "can_discard": true,
+                        "can_edit": true,
+                        "can_publish": true
+                      },
+                      "state": "draft"
+                    },
+                    "minimum_duration_seconds": 3600,
+                    "pending_approval_count": 0,
+                    "policy_state": "current",
+                    "pricing": {
+                      "currency": "eur",
+                      "current_microcents": 612345,
+                      "expected_microcents": 700000,
+                      "maximum_microcents": 700000,
+                      "price_policy_version": "marketplace-price-policy-v1"
+                    },
+                    "public_slug": "shared-model",
+                    "status": "draft",
+                    "visibility": "public"
+                  },
+                  "owner_membership": {
+                    "account_id": "acct_xxx",
+                    "effective_from": "2026-01-15T10:01:00Z",
+                    "id": "membership_xxx",
+                    "offer_id": "offer_xxx",
+                    "role": "owner",
+                    "serving_alias": "shared-model-ab12cd34",
+                    "status": "active"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/retire": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Retire owner offer",
+        "description": "Retire an owner offer using the Marketplace lifecycle rules.",
+        "operationId": "post_shared_instances_owner_offers_offerID_retire",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/share-links": {
+      "get": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "List owner share links",
+        "description": "List share-link metadata without returning plaintext tokens.",
+        "operationId": "get_shared_instances_owner_offers_offerID_share_links",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "links": [
+                    {
+                      "expires_at": "2026-02-15T10:01:00Z",
+                      "id": "link_xxx",
+                      "kind": "general",
+                      "status": "active"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Create owner share link",
+        "description": "Create a share link and return its plaintext token once.",
+        "operationId": "post_shared_instances_owner_offers_offerID_share_links",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "expires_at": "2026-02-15T10:01:00Z",
+                  "id": "link_xxx",
+                  "kind": "general",
+                  "status": "active",
+                  "token": "opaque-token"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/share-links/{linkID}/revoke": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Revoke owner share link",
+        "description": "Revoke an owner share link without returning its plaintext token.",
+        "operationId": "post_shared_instances_owner_offers_offerID_share_links_linkID_revoke",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Link ID",
+            "in": "path",
+            "name": "linkID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "expires_at": "2026-02-15T10:01:00Z",
+                  "id": "link_xxx",
+                  "kind": "general",
+                  "status": "active"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/unpublish": {
+      "post": {
+        "tags": [
+          "Shared Instances"
+        ],
+        "summary": "Unpublish owner offer",
+        "description": "Unpublish an offer and expose its server-derived restored-private management state.",
+        "operationId": "post_shared_instances_owner_offers_offerID_unpublish",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1"
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/shared-instances/{offerID}": {
       "get": {
         "tags": [
@@ -15664,6 +16908,278 @@
         "tags": [
           "inference-v1"
         ]
+      }
+    },
+    "/v2/public/shared-instance-links/{opaque-token}": {
+      "get": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Get public shared instance from public link v2",
+        "description": "Resolves an active opaque link to a complete multi-window public projection. No authentication required.",
+        "operationId": "get_v2_public_shared_instance_links_opaque_token",
+        "parameters": [
+          {
+            "description": "Opaque share token",
+            "in": "path",
+            "name": "opaque-token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 2,
+                  "availability_mode": "scheduled",
+                  "best_effort": true,
+                  "currency": "eur",
+                  "current_price_per_hour_microcents": 612345,
+                  "estimated_cold_start_seconds": null,
+                  "expected_price_per_hour_microcents": 700000,
+                  "idle_timeout_seconds": null,
+                  "join_policy": "open",
+                  "lifecycle_state": "available",
+                  "max_members": 5,
+                  "maximum_price_per_hour_microcents": 800000,
+                  "minimum_membership_duration_seconds": 3600,
+                  "model": "org/model",
+                  "permanence_disclosure": "Shared capacity is best effort.",
+                  "region": "Europe",
+                  "schedule": {
+                    "windows": [
+                      {
+                        "days_of_week": [
+                          1,
+                          2
+                        ],
+                        "end_minute": 1020,
+                        "start_minute": 480,
+                        "timezone": "Europe/Madrid"
+                      },
+                      {
+                        "days_of_week": [
+                          3
+                        ],
+                        "end_minute": 1080,
+                        "start_minute": 540,
+                        "timezone": "America/New_York"
+                      }
+                    ]
+                  },
+                  "slug": "shared-model",
+                  "title": "Shared Model",
+                  "workload_kind": "chat"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "502": {
+            "description": "Marketplace unavailable"
+          }
+        }
+      }
+    },
+    "/v2/public/shared-instances": {
+      "get": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "List public shared instances v2",
+        "description": "Returns published shared-instance offers with every validated schedule window. No authentication required.",
+        "operationId": "get_v2_public_shared_instances",
+        "parameters": [
+          {
+            "description": "Filter by exact model repository",
+            "in": "query",
+            "name": "model",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by normalized region",
+            "in": "query",
+            "name": "region",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by public lifecycle state",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Opaque pagination cursor",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "instances": [
+                    {
+                      "active_member_count": 2,
+                      "availability_mode": "scheduled",
+                      "best_effort": true,
+                      "currency": "eur",
+                      "current_price_per_hour_microcents": 612345,
+                      "estimated_cold_start_seconds": null,
+                      "expected_price_per_hour_microcents": 700000,
+                      "idle_timeout_seconds": null,
+                      "join_policy": "open",
+                      "lifecycle_state": "available",
+                      "max_members": 5,
+                      "maximum_price_per_hour_microcents": 800000,
+                      "minimum_membership_duration_seconds": 3600,
+                      "model": "org/model",
+                      "permanence_disclosure": "Shared capacity is best effort.",
+                      "region": "Europe",
+                      "schedule": {
+                        "windows": [
+                          {
+                            "days_of_week": [
+                              1,
+                              2
+                            ],
+                            "end_minute": 1020,
+                            "start_minute": 480,
+                            "timezone": "Europe/Madrid"
+                          },
+                          {
+                            "days_of_week": [
+                              3
+                            ],
+                            "end_minute": 1080,
+                            "start_minute": 540,
+                            "timezone": "America/New_York"
+                          }
+                        ]
+                      },
+                      "slug": "shared-model",
+                      "title": "Shared Model",
+                      "workload_kind": "chat"
+                    }
+                  ],
+                  "next_cursor": "opaque-cursor"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "502": {
+            "description": "Marketplace unavailable"
+          }
+        }
+      }
+    },
+    "/v2/public/shared-instances/{slug}": {
+      "get": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Get public shared instance v2",
+        "description": "Returns one published public shared-instance offer with every validated schedule window. No authentication required.",
+        "operationId": "get_v2_public_shared_instances_slug",
+        "parameters": [
+          {
+            "description": "Public shared-instance slug",
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 2,
+                  "availability_mode": "scheduled",
+                  "best_effort": true,
+                  "currency": "eur",
+                  "current_price_per_hour_microcents": 612345,
+                  "estimated_cold_start_seconds": null,
+                  "expected_price_per_hour_microcents": 700000,
+                  "idle_timeout_seconds": null,
+                  "join_policy": "open",
+                  "lifecycle_state": "available",
+                  "max_members": 5,
+                  "maximum_price_per_hour_microcents": 800000,
+                  "minimum_membership_duration_seconds": 3600,
+                  "model": "org/model",
+                  "permanence_disclosure": "Shared capacity is best effort.",
+                  "region": "Europe",
+                  "schedule": {
+                    "windows": [
+                      {
+                        "days_of_week": [
+                          1,
+                          2
+                        ],
+                        "end_minute": 1020,
+                        "start_minute": 480,
+                        "timezone": "Europe/Madrid"
+                      },
+                      {
+                        "days_of_week": [
+                          3
+                        ],
+                        "end_minute": 1080,
+                        "start_minute": 540,
+                        "timezone": "America/New_York"
+                      }
+                    ]
+                  },
+                  "slug": "shared-model",
+                  "title": "Shared Model",
+                  "workload_kind": "chat"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "502": {
+            "description": "Marketplace unavailable"
+          }
+        }
       }
     }
   },

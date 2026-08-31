@@ -1643,6 +1643,298 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/shared-instances/marketplace-policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Marketplace policy
+         * @description Return the current server-owned Marketplace currency, pricing policy, and terms.
+         */
+        get: operations["get_shared_instances_marketplace_policy"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/adoption-preflight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview shared offer adoption
+         * @description Check whether a dedicated instance can be adopted without changing instance or offer state.
+         */
+        post: operations["post_shared_instances_owner_adoption_preflight"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List owner offers
+         * @description List safe Marketplace offer views for the selected account.
+         */
+        get: operations["get_shared_instances_owner_offers"];
+        put?: never;
+        /**
+         * Create owner offer
+         * @description Create a typed Marketplace draft after adopting an eligible dedicated instance.
+         */
+        post: operations["post_shared_instances_owner_offers"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get owner offer
+         * @description Get a safe typed Marketplace offer view.
+         */
+        get: operations["get_shared_instances_owner_offers_offerID"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update owner offer
+         * @description Update typed editable Marketplace configuration. Policy fields are server-owned.
+         */
+        patch: operations["patch_shared_instances_owner_offers_offerID"];
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/discard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Discard owner draft
+         * @description Discard an original pre-publication draft without releasing or exposing its backing instance.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_discard"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/memberships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List owner memberships
+         * @description List manager-visible membership status without reservations or provider details.
+         */
+        get: operations["get_shared_instances_owner_offers_offerID_memberships"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve owner membership
+         * @description Approve a pending Marketplace membership as a manager.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_memberships_membershipID_approve"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject owner membership
+         * @description Reject a pending Marketplace membership as a manager.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_memberships_membershipID_reject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/share-links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create member share link
+         * @description Create a member share link and return its plaintext token once.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_memberships_membershipID_share_links"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish owner offer
+         * @description Publish a current draft after explicit human acceptance of the current Marketplace terms.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_publish"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/retire": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retire owner offer
+         * @description Retire an owner offer using the Marketplace lifecycle rules.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_retire"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/share-links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List owner share links
+         * @description List share-link metadata without returning plaintext tokens.
+         */
+        get: operations["get_shared_instances_owner_offers_offerID_share_links"];
+        put?: never;
+        /**
+         * Create owner share link
+         * @description Create a share link and return its plaintext token once.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_share_links"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/share-links/{linkID}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke owner share link
+         * @description Revoke an owner share link without returning its plaintext token.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_share_links_linkID_revoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unpublish owner offer
+         * @description Unpublish an offer and expose its server-derived restored-private management state.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_unpublish"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/shared-instances/{offerID}": {
         parameters: {
             query?: never;
@@ -2570,6 +2862,66 @@ export interface paths {
          * @description Generates a video from a prompt and optional image, video, and audio references. Accepts Bearer access tokens or API keys. MiniMax-H3 prompts are limited to 7,000 Unicode characters; image references are limited to 30 MiB, video references to 50 MiB, audio references to 15 MiB, and the aggregate input-reference plus audio bytes to 64 MiB. HTTP(S) audio_reference_url values are limited to 16 KiB; data URLs are limited by the 15 MiB decoded audio payload.
          */
         post: operations["postV1VideoGenerations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/public/shared-instance-links/{opaque-token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get public shared instance from public link v2
+         * @description Resolves an active opaque link to a complete multi-window public projection. No authentication required.
+         */
+        get: operations["get_v2_public_shared_instance_links_opaque_token"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/public/shared-instances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List public shared instances v2
+         * @description Returns published shared-instance offers with every validated schedule window. No authentication required.
+         */
+        get: operations["get_v2_public_shared_instances"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/public/shared-instances/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get public shared instance v2
+         * @description Returns one published public shared-instance offer with every validated schedule window. No authentication required.
+         */
+        get: operations["get_v2_public_shared_instances_slug"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -9669,6 +10021,1154 @@ export interface operations {
             };
         };
     };
+    get_shared_instances_marketplace_policy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "currency": "eur",
+                     *       "price_policy_version": "marketplace-price-policy-v1",
+                     *       "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *       "terms_text": "Approved Marketplace terms.",
+                     *       "terms_version": "marketplace-terms-v1"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_adoption_preflight: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "instance_id": "inst_xxx"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "availability_options": [
+                     *         {
+                     *           "available": true,
+                     *           "mode": "always_on"
+                     *         }
+                     *       ],
+                     *       "blockers": [],
+                     *       "eligible": true,
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       }
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_owner_offers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "offers": [
+                     *         {
+                     *           "active_member_count": 1,
+                     *           "availability": {
+                     *             "mode": "scheduled",
+                     *             "windows": [
+                     *               {
+                     *                 "end": "17:00",
+                     *                 "start": "08:00",
+                     *                 "timezone": "Europe/Madrid",
+                     *                 "weekdays": [
+                     *                   1,
+                     *                   2
+                     *                 ]
+                     *               }
+                     *             ]
+                     *           },
+                     *           "current_policy": {
+                     *             "currency": "eur",
+                     *             "price_policy_version": "marketplace-price-policy-v1",
+                     *             "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *             "terms_text": "Approved Marketplace terms.",
+                     *             "terms_version": "marketplace-terms-v1"
+                     *           },
+                     *           "id": "offer_xxx",
+                     *           "instance": {
+                     *             "display_name": "Llama",
+                     *             "model": "meta/llama",
+                     *             "region": "eu-west"
+                     *           },
+                     *           "join_policy": "open",
+                     *           "management": {
+                     *             "capabilities": {
+                     *               "can_copy": true,
+                     *               "can_discard": true,
+                     *               "can_edit": true,
+                     *               "can_publish": true
+                     *             },
+                     *             "state": "draft"
+                     *           },
+                     *           "minimum_duration_seconds": 3600,
+                     *           "pending_approval_count": 0,
+                     *           "policy_state": "current",
+                     *           "pricing": {
+                     *             "currency": "eur",
+                     *             "current_microcents": 612345,
+                     *             "expected_microcents": 700000,
+                     *             "maximum_microcents": 700000,
+                     *             "price_policy_version": "marketplace-price-policy-v1"
+                     *           },
+                     *           "public_slug": "shared-model",
+                     *           "status": "draft",
+                     *           "visibility": "public"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "availability": {
+                 *         "mode": "scheduled",
+                 *         "windows": [
+                 *           {
+                 *             "end": "17:00",
+                 *             "start": "08:00",
+                 *             "timezone": "Europe/Madrid",
+                 *             "weekdays": [
+                 *               1,
+                 *               2
+                 *             ]
+                 *           }
+                 *         ]
+                 *       },
+                 *       "instance_id": "inst_xxx",
+                 *       "join_policy": "open",
+                 *       "maximum_final_price_per_hour_microcents": 700000,
+                 *       "minimum_membership_duration_seconds": 3600,
+                 *       "public_slug": "shared-model",
+                 *       "visibility": "public"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_owner_offers_offerID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    patch_shared_instances_owner_offers_offerID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "availability": {
+                 *         "mode": "scheduled",
+                 *         "windows": [
+                 *           {
+                 *             "end": "17:00",
+                 *             "start": "08:00",
+                 *             "timezone": "Europe/Madrid",
+                 *             "weekdays": [
+                 *               1,
+                 *               2
+                 *             ]
+                 *           }
+                 *         ]
+                 *       },
+                 *       "join_policy": "open",
+                 *       "maximum_final_price_per_hour_microcents": 700000,
+                 *       "minimum_membership_duration_seconds": 3600,
+                 *       "public_slug": "shared-model",
+                 *       "visibility": "public"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_discard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_owner_offers_offerID_memberships: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "memberships": [
+                     *         {
+                     *           "account_id": "acct_xxx",
+                     *           "effective_from": "2026-01-15T10:01:00Z",
+                     *           "id": "membership_xxx",
+                     *           "offer_id": "offer_xxx",
+                     *           "role": "owner",
+                     *           "serving_alias": "shared-model-ab12cd34",
+                     *           "status": "active"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_memberships_membershipID_approve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "account_id": "acct_xxx",
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "owner",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_memberships_membershipID_reject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "account_id": "acct_xxx",
+                     *       "effective_from": "2026-01-15T10:01:00Z",
+                     *       "id": "membership_xxx",
+                     *       "offer_id": "offer_xxx",
+                     *       "role": "owner",
+                     *       "serving_alias": "shared-model-ab12cd34",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_memberships_membershipID_share_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Membership ID */
+                membershipID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "link_xxx",
+                     *       "kind": "member",
+                     *       "status": "active",
+                     *       "token": "opaque-token"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_publish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "accept_terms": true
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "offer": {
+                     *         "active_member_count": 1,
+                     *         "availability": {
+                     *           "mode": "scheduled",
+                     *           "windows": [
+                     *             {
+                     *               "end": "17:00",
+                     *               "start": "08:00",
+                     *               "timezone": "Europe/Madrid",
+                     *               "weekdays": [
+                     *                 1,
+                     *                 2
+                     *               ]
+                     *             }
+                     *           ]
+                     *         },
+                     *         "current_policy": {
+                     *           "currency": "eur",
+                     *           "price_policy_version": "marketplace-price-policy-v1",
+                     *           "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *           "terms_text": "Approved Marketplace terms.",
+                     *           "terms_version": "marketplace-terms-v1"
+                     *         },
+                     *         "id": "offer_xxx",
+                     *         "instance": {
+                     *           "display_name": "Llama",
+                     *           "model": "meta/llama",
+                     *           "region": "eu-west"
+                     *         },
+                     *         "join_policy": "open",
+                     *         "management": {
+                     *           "capabilities": {
+                     *             "can_copy": true,
+                     *             "can_discard": true,
+                     *             "can_edit": true,
+                     *             "can_publish": true
+                     *           },
+                     *           "state": "draft"
+                     *         },
+                     *         "minimum_duration_seconds": 3600,
+                     *         "pending_approval_count": 0,
+                     *         "policy_state": "current",
+                     *         "pricing": {
+                     *           "currency": "eur",
+                     *           "current_microcents": 612345,
+                     *           "expected_microcents": 700000,
+                     *           "maximum_microcents": 700000,
+                     *           "price_policy_version": "marketplace-price-policy-v1"
+                     *         },
+                     *         "public_slug": "shared-model",
+                     *         "status": "draft",
+                     *         "visibility": "public"
+                     *       },
+                     *       "owner_membership": {
+                     *         "account_id": "acct_xxx",
+                     *         "effective_from": "2026-01-15T10:01:00Z",
+                     *         "id": "membership_xxx",
+                     *         "offer_id": "offer_xxx",
+                     *         "role": "owner",
+                     *         "serving_alias": "shared-model-ab12cd34",
+                     *         "status": "active"
+                     *       }
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_retire: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_shared_instances_owner_offers_offerID_share_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "links": [
+                     *         {
+                     *           "expires_at": "2026-02-15T10:01:00Z",
+                     *           "id": "link_xxx",
+                     *           "kind": "general",
+                     *           "status": "active"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_share_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "expires_at": "2026-02-15T10:01:00Z",
+                     *       "id": "link_xxx",
+                     *       "kind": "general",
+                     *       "status": "active",
+                     *       "token": "opaque-token"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_share_links_linkID_revoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+                /** @description Link ID */
+                linkID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "expires_at": "2026-02-15T10:01:00Z",
+                     *       "id": "link_xxx",
+                     *       "kind": "general",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_unpublish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     get_shared_instances_offerID: {
         parameters: {
             query?: never;
@@ -12679,6 +14179,274 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
+            };
+        };
+    };
+    get_v2_public_shared_instance_links_opaque_token: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Opaque share token */
+                "opaque-token": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 2,
+                     *       "availability_mode": "scheduled",
+                     *       "best_effort": true,
+                     *       "currency": "eur",
+                     *       "current_price_per_hour_microcents": 612345,
+                     *       "estimated_cold_start_seconds": null,
+                     *       "expected_price_per_hour_microcents": 700000,
+                     *       "idle_timeout_seconds": null,
+                     *       "join_policy": "open",
+                     *       "lifecycle_state": "available",
+                     *       "max_members": 5,
+                     *       "maximum_price_per_hour_microcents": 800000,
+                     *       "minimum_membership_duration_seconds": 3600,
+                     *       "model": "org/model",
+                     *       "permanence_disclosure": "Shared capacity is best effort.",
+                     *       "region": "Europe",
+                     *       "schedule": {
+                     *         "windows": [
+                     *           {
+                     *             "days_of_week": [
+                     *               1,
+                     *               2
+                     *             ],
+                     *             "end_minute": 1020,
+                     *             "start_minute": 480,
+                     *             "timezone": "Europe/Madrid"
+                     *           },
+                     *           {
+                     *             "days_of_week": [
+                     *               3
+                     *             ],
+                     *             "end_minute": 1080,
+                     *             "start_minute": 540,
+                     *             "timezone": "America/New_York"
+                     *           }
+                     *         ]
+                     *       },
+                     *       "slug": "shared-model",
+                     *       "title": "Shared Model",
+                     *       "workload_kind": "chat"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Marketplace unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v2_public_shared_instances: {
+        parameters: {
+            query?: {
+                /** @description Filter by exact model repository */
+                model?: string;
+                /** @description Filter by normalized region */
+                region?: string;
+                /** @description Filter by public lifecycle state */
+                status?: string;
+                /** @description Opaque pagination cursor */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "instances": [
+                     *         {
+                     *           "active_member_count": 2,
+                     *           "availability_mode": "scheduled",
+                     *           "best_effort": true,
+                     *           "currency": "eur",
+                     *           "current_price_per_hour_microcents": 612345,
+                     *           "estimated_cold_start_seconds": null,
+                     *           "expected_price_per_hour_microcents": 700000,
+                     *           "idle_timeout_seconds": null,
+                     *           "join_policy": "open",
+                     *           "lifecycle_state": "available",
+                     *           "max_members": 5,
+                     *           "maximum_price_per_hour_microcents": 800000,
+                     *           "minimum_membership_duration_seconds": 3600,
+                     *           "model": "org/model",
+                     *           "permanence_disclosure": "Shared capacity is best effort.",
+                     *           "region": "Europe",
+                     *           "schedule": {
+                     *             "windows": [
+                     *               {
+                     *                 "days_of_week": [
+                     *                   1,
+                     *                   2
+                     *                 ],
+                     *                 "end_minute": 1020,
+                     *                 "start_minute": 480,
+                     *                 "timezone": "Europe/Madrid"
+                     *               },
+                     *               {
+                     *                 "days_of_week": [
+                     *                   3
+                     *                 ],
+                     *                 "end_minute": 1080,
+                     *                 "start_minute": 540,
+                     *                 "timezone": "America/New_York"
+                     *               }
+                     *             ]
+                     *           },
+                     *           "slug": "shared-model",
+                     *           "title": "Shared Model",
+                     *           "workload_kind": "chat"
+                     *         }
+                     *       ],
+                     *       "next_cursor": "opaque-cursor"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Marketplace unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v2_public_shared_instances_slug: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Public shared-instance slug */
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 2,
+                     *       "availability_mode": "scheduled",
+                     *       "best_effort": true,
+                     *       "currency": "eur",
+                     *       "current_price_per_hour_microcents": 612345,
+                     *       "estimated_cold_start_seconds": null,
+                     *       "expected_price_per_hour_microcents": 700000,
+                     *       "idle_timeout_seconds": null,
+                     *       "join_policy": "open",
+                     *       "lifecycle_state": "available",
+                     *       "max_members": 5,
+                     *       "maximum_price_per_hour_microcents": 800000,
+                     *       "minimum_membership_duration_seconds": 3600,
+                     *       "model": "org/model",
+                     *       "permanence_disclosure": "Shared capacity is best effort.",
+                     *       "region": "Europe",
+                     *       "schedule": {
+                     *         "windows": [
+                     *           {
+                     *             "days_of_week": [
+                     *               1,
+                     *               2
+                     *             ],
+                     *             "end_minute": 1020,
+                     *             "start_minute": 480,
+                     *             "timezone": "Europe/Madrid"
+                     *           },
+                     *           {
+                     *             "days_of_week": [
+                     *               3
+                     *             ],
+                     *             "end_minute": 1080,
+                     *             "start_minute": 540,
+                     *             "timezone": "America/New_York"
+                     *           }
+                     *         ]
+                     *       },
+                     *       "slug": "shared-model",
+                     *       "title": "Shared Model",
+                     *       "workload_kind": "chat"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Marketplace unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
