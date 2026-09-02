@@ -14605,6 +14605,512 @@
         ]
       }
     },
+    "/tool-deployments": {
+      "get": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "List tool deployments",
+        "description": "List deployments owned by the authenticated account.",
+        "operationId": "get_tool_deployments",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "deployments": [
+                    {
+                      "current_version_id": "version_xxx",
+                      "deployment_id": "dep_xxx",
+                      "image_digest": "sha256:...",
+                      "policy_revision": "policy-2026-08-27",
+                      "provider_key": "lambda:dep_xxx",
+                      "repository": {
+                        "owner": "example-org",
+                        "protected_ref": "refs/tags/v1.0.0",
+                        "repository": "example-server",
+                        "workflow": ".github/workflows/release.yml"
+                      },
+                      "server_name": "example-server",
+                      "server_version": "1.0.0",
+                      "status": "published",
+                      "tools": [],
+                      "versions": [
+                        {
+                          "commit_sha": "abc123",
+                          "image_digest": "sha256:...",
+                          "provenance_reference": "oci://...",
+                          "release_version": "v1.0.0",
+                          "runtime_revision": "runtime-node-v1",
+                          "sbom_reference": "oci://...",
+                          "status": "published",
+                          "version_id": "version_xxx",
+                          "workflow_run_id": "123456"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "Create tool deployment",
+        "description": "Create an account-bound Lambda tool deployment from a strict YAML manifest.",
+        "operationId": "post_tool_deployments",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "idempotency_key": "release-2026-08-27",
+                "manifest_yaml": "apiVersion: tools.valendra.io/v1\\nkind: ToolDeployment\\n...",
+                "repository": {
+                  "owner": "example-org",
+                  "protected_ref": "refs/tags/v1.0.0",
+                  "repository": "example-server",
+                  "workflow": ".github/workflows/release.yml"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "current_version_id": "version_xxx",
+                  "deployment_id": "dep_xxx",
+                  "image_digest": "sha256:...",
+                  "policy_revision": "policy-2026-08-27",
+                  "provider_key": "lambda:dep_xxx",
+                  "repository": {
+                    "owner": "example-org",
+                    "protected_ref": "refs/tags/v1.0.0",
+                    "repository": "example-server",
+                    "workflow": ".github/workflows/release.yml"
+                  },
+                  "server_name": "example-server",
+                  "server_version": "1.0.0",
+                  "status": "published",
+                  "tools": [],
+                  "versions": [
+                    {
+                      "commit_sha": "abc123",
+                      "image_digest": "sha256:...",
+                      "provenance_reference": "oci://...",
+                      "release_version": "v1.0.0",
+                      "runtime_revision": "runtime-node-v1",
+                      "sbom_reference": "oci://...",
+                      "status": "published",
+                      "version_id": "version_xxx",
+                      "workflow_run_id": "123456"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tool-deployments/{deploymentID}": {
+      "get": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "Get tool deployment",
+        "description": "Get an account-bound tool deployment without exposing runtime credentials or tenant internals.",
+        "operationId": "get_tool_deployments_deploymentID",
+        "parameters": [
+          {
+            "description": "Deployment ID",
+            "in": "path",
+            "name": "deploymentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "current_version_id": "version_xxx",
+                  "deployment_id": "dep_xxx",
+                  "image_digest": "sha256:...",
+                  "policy_revision": "policy-2026-08-27",
+                  "provider_key": "lambda:dep_xxx",
+                  "repository": {
+                    "owner": "example-org",
+                    "protected_ref": "refs/tags/v1.0.0",
+                    "repository": "example-server",
+                    "workflow": ".github/workflows/release.yml"
+                  },
+                  "server_name": "example-server",
+                  "server_version": "1.0.0",
+                  "status": "published",
+                  "tools": [],
+                  "versions": [
+                    {
+                      "commit_sha": "abc123",
+                      "image_digest": "sha256:...",
+                      "provenance_reference": "oci://...",
+                      "release_version": "v1.0.0",
+                      "runtime_revision": "runtime-node-v1",
+                      "sbom_reference": "oci://...",
+                      "status": "published",
+                      "version_id": "version_xxx",
+                      "workflow_run_id": "123456"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tool-deployments/{deploymentID}/finalize": {
+      "post": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "Finalize tool deployment",
+        "description": "Verify, discover, provision, and publish an immutable tool deployment.",
+        "operationId": "post_tool_deployments_deploymentID_finalize",
+        "parameters": [
+          {
+            "description": "Deployment ID",
+            "in": "path",
+            "name": "deploymentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs.",
+            "in": "header",
+            "name": "X-Valendra-GitHub-OIDC-Token",
+            "required": true,
+            "schema": {
+              "format": "password",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "commit_sha": "abc123",
+                "image_digest": "sha256:...",
+                "provenance_reference": "oci://...",
+                "release_version": "v1.0.0",
+                "sbom_reference": "oci://...",
+                "session_id": "session_xxx",
+                "workflow_run_id": "123456"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "current_version_id": "version_xxx",
+                  "deployment_id": "dep_xxx",
+                  "image_digest": "sha256:...",
+                  "policy_revision": "policy-2026-08-27",
+                  "provider_key": "lambda:dep_xxx",
+                  "repository": {
+                    "owner": "example-org",
+                    "protected_ref": "refs/tags/v1.0.0",
+                    "repository": "example-server",
+                    "workflow": ".github/workflows/release.yml"
+                  },
+                  "server_name": "example-server",
+                  "server_version": "1.0.0",
+                  "status": "published",
+                  "tools": [],
+                  "versions": [
+                    {
+                      "commit_sha": "abc123",
+                      "image_digest": "sha256:...",
+                      "provenance_reference": "oci://...",
+                      "release_version": "v1.0.0",
+                      "runtime_revision": "runtime-node-v1",
+                      "sbom_reference": "oci://...",
+                      "status": "published",
+                      "version_id": "version_xxx",
+                      "workflow_run_id": "123456"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tool-deployments/{deploymentID}/revoke": {
+      "post": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "Revoke tool deployment",
+        "description": "Revoke a deployment before it can be resolved for invocation.",
+        "operationId": "post_tool_deployments_deploymentID_revoke",
+        "parameters": [
+          {
+            "description": "Deployment ID",
+            "in": "path",
+            "name": "deploymentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "current_version_id": "version_xxx",
+                  "deployment_id": "dep_xxx",
+                  "image_digest": "sha256:...",
+                  "policy_revision": "policy-2026-08-27",
+                  "provider_key": "lambda:dep_xxx",
+                  "repository": {
+                    "owner": "example-org",
+                    "protected_ref": "refs/tags/v1.0.0",
+                    "repository": "example-server",
+                    "workflow": ".github/workflows/release.yml"
+                  },
+                  "server_name": "example-server",
+                  "server_version": "1.0.0",
+                  "status": "published",
+                  "tools": [],
+                  "versions": [
+                    {
+                      "commit_sha": "abc123",
+                      "image_digest": "sha256:...",
+                      "provenance_reference": "oci://...",
+                      "release_version": "v1.0.0",
+                      "runtime_revision": "runtime-node-v1",
+                      "sbom_reference": "oci://...",
+                      "status": "published",
+                      "version_id": "version_xxx",
+                      "workflow_run_id": "123456"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tool-deployments/{deploymentID}/rollback": {
+      "post": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "Rollback tool deployment",
+        "description": "Move the registry pointer to a previously verified immutable version.",
+        "operationId": "post_tool_deployments_deploymentID_rollback",
+        "parameters": [
+          {
+            "description": "Deployment ID",
+            "in": "path",
+            "name": "deploymentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "target_version": "version_xxx"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "current_version_id": "version_xxx",
+                  "deployment_id": "dep_xxx",
+                  "image_digest": "sha256:...",
+                  "policy_revision": "policy-2026-08-27",
+                  "provider_key": "lambda:dep_xxx",
+                  "repository": {
+                    "owner": "example-org",
+                    "protected_ref": "refs/tags/v1.0.0",
+                    "repository": "example-server",
+                    "workflow": ".github/workflows/release.yml"
+                  },
+                  "server_name": "example-server",
+                  "server_version": "1.0.0",
+                  "status": "published",
+                  "tools": [],
+                  "versions": [
+                    {
+                      "commit_sha": "abc123",
+                      "image_digest": "sha256:...",
+                      "provenance_reference": "oci://...",
+                      "release_version": "v1.0.0",
+                      "runtime_revision": "runtime-node-v1",
+                      "sbom_reference": "oci://...",
+                      "status": "published",
+                      "version_id": "version_xxx",
+                      "workflow_run_id": "123456"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tool-deployments/{deploymentID}/upload-session": {
+      "post": {
+        "tags": [
+          "Tool Deployments"
+        ],
+        "summary": "Create upload session",
+        "description": "Create a short-lived artifact upload session after GitHub OIDC claim validation. The artifact digest may be omitted when it is not known until after the image push.",
+        "operationId": "post_tool_deployments_deploymentID_upload_session",
+        "parameters": [
+          {
+            "description": "Deployment ID",
+            "in": "path",
+            "name": "deploymentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs.",
+            "in": "header",
+            "name": "X-Valendra-GitHub-OIDC-Token",
+            "required": true,
+            "schema": {
+              "format": "password",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "artifact_digest": "staging-repository@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "expires_at": "2026-08-27T12:15:00Z",
+                  "region": "eu-west-1",
+                  "repository": "staging-repository",
+                  "role_arn": "arn:aws:iam::...:role/qdiv0-upload",
+                  "session_id": "session_xxx"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/tools": {
       "get": {
         "description": "Lists all available platform tools for the authenticated account.",

@@ -2340,6 +2340,130 @@ export interface paths {
         patch: operations["patchTargetGroup"];
         trace?: never;
     };
+    "/tool-deployments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List tool deployments
+         * @description List deployments owned by the authenticated account.
+         */
+        get: operations["get_tool_deployments"];
+        put?: never;
+        /**
+         * Create tool deployment
+         * @description Create an account-bound Lambda tool deployment from a strict YAML manifest.
+         */
+        post: operations["post_tool_deployments"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tool-deployments/{deploymentID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get tool deployment
+         * @description Get an account-bound tool deployment without exposing runtime credentials or tenant internals.
+         */
+        get: operations["get_tool_deployments_deploymentID"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tool-deployments/{deploymentID}/finalize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finalize tool deployment
+         * @description Verify, discover, provision, and publish an immutable tool deployment.
+         */
+        post: operations["post_tool_deployments_deploymentID_finalize"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tool-deployments/{deploymentID}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke tool deployment
+         * @description Revoke a deployment before it can be resolved for invocation.
+         */
+        post: operations["post_tool_deployments_deploymentID_revoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tool-deployments/{deploymentID}/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rollback tool deployment
+         * @description Move the registry pointer to a previously verified immutable version.
+         */
+        post: operations["post_tool_deployments_deploymentID_rollback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tool-deployments/{deploymentID}/upload-session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create upload session
+         * @description Create a short-lived artifact upload session after GitHub OIDC claim validation. The artifact digest may be omitted when it is not known until after the image push.
+         */
+        post: operations["post_tool_deployments_deploymentID_upload_session"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tools": {
         parameters: {
             query?: never;
@@ -12534,6 +12658,470 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
+            };
+        };
+    };
+    get_tool_deployments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "deployments": [
+                     *         {
+                     *           "current_version_id": "version_xxx",
+                     *           "deployment_id": "dep_xxx",
+                     *           "image_digest": "sha256:...",
+                     *           "policy_revision": "policy-2026-08-27",
+                     *           "provider_key": "lambda:dep_xxx",
+                     *           "repository": {
+                     *             "owner": "example-org",
+                     *             "protected_ref": "refs/tags/v1.0.0",
+                     *             "repository": "example-server",
+                     *             "workflow": ".github/workflows/release.yml"
+                     *           },
+                     *           "server_name": "example-server",
+                     *           "server_version": "1.0.0",
+                     *           "status": "published",
+                     *           "tools": [],
+                     *           "versions": [
+                     *             {
+                     *               "commit_sha": "abc123",
+                     *               "image_digest": "sha256:...",
+                     *               "provenance_reference": "oci://...",
+                     *               "release_version": "v1.0.0",
+                     *               "runtime_revision": "runtime-node-v1",
+                     *               "sbom_reference": "oci://...",
+                     *               "status": "published",
+                     *               "version_id": "version_xxx",
+                     *               "workflow_run_id": "123456"
+                     *             }
+                     *           ]
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_tool_deployments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "idempotency_key": "release-2026-08-27",
+                 *       "manifest_yaml": "apiVersion: tools.valendra.io/v1\\nkind: ToolDeployment\\n...",
+                 *       "repository": {
+                 *         "owner": "example-org",
+                 *         "protected_ref": "refs/tags/v1.0.0",
+                 *         "repository": "example-server",
+                 *         "workflow": ".github/workflows/release.yml"
+                 *       }
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "sha256:...",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "sha256:...",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_tool_deployments_deploymentID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "sha256:...",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "sha256:...",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_tool_deployments_deploymentID_finalize: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs. */
+                "X-Valendra-GitHub-OIDC-Token": string;
+            };
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "commit_sha": "abc123",
+                 *       "image_digest": "sha256:...",
+                 *       "provenance_reference": "oci://...",
+                 *       "release_version": "v1.0.0",
+                 *       "sbom_reference": "oci://...",
+                 *       "session_id": "session_xxx",
+                 *       "workflow_run_id": "123456"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "sha256:...",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "sha256:...",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_tool_deployments_deploymentID_revoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "sha256:...",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "sha256:...",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_tool_deployments_deploymentID_rollback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "target_version": "version_xxx"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "sha256:...",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "sha256:...",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_tool_deployments_deploymentID_upload_session: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs. */
+                "X-Valendra-GitHub-OIDC-Token": string;
+            };
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "artifact_digest": "staging-repository@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "expires_at": "2026-08-27T12:15:00Z",
+                     *       "region": "eu-west-1",
+                     *       "repository": "staging-repository",
+                     *       "role_arn": "arn:aws:iam::...:role/qdiv0-upload",
+                     *       "session_id": "session_xxx"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
