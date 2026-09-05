@@ -235,7 +235,7 @@ export interface paths {
         put?: never;
         /**
          * Authenticate a user
-         * @description Exchanges email and password credentials for access and refresh tokens.
+         * @description Authenticates a user with email and password. If verification is required, the JSON response may include a next_step. Only successful authentication sets the HTTP-only qdiv0_access and qdiv0_refresh browser-session cookies; the JSON response contains no access or refresh token values.
          */
         post: operations["postAuthLogin"];
         delete?: never;
@@ -442,8 +442,8 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Refresh an access token
-         * @description Exchanges a refresh token for a new access token.
+         * Refresh the browser session
+         * @description Consumes the HTTP-only qdiv0_refresh cookie and, on success, resets the qdiv0_access and qdiv0_refresh browser-session cookies. The endpoint has no JSON request body and the JSON response contains no access or refresh token values.
          */
         post: operations["postAuthRefresh"];
         delete?: never;
@@ -463,7 +463,7 @@ export interface paths {
         put?: never;
         /**
          * Register a new user
-         * @description Creates a new account using email and password credentials.
+         * @description Creates a pending account using email and password credentials. Email verification is required; registration does not issue session tokens or cookies, and the JSON response contains no access or refresh token values.
          */
         post: operations["postAuthRegister"];
         delete?: never;
@@ -2355,7 +2355,7 @@ export interface paths {
         put?: never;
         /**
          * Create tool deployment
-         * @description Create an account-bound Lambda tool deployment from a strict YAML manifest.
+         * @description Create an account-bound Lambda tool deployment from a strict YAML manifest. An empty spec.server.image is valid only for a pending registration; the immutable staging artifact is established at finalization.
          */
         post: operations["post_tool_deployments"];
         delete?: never;
@@ -3807,7 +3807,6 @@ export interface components {
             market_type?: string;
             vram_gb?: number;
         };
-        RefreshRequest: Record<string, never>;
         RefreshResponse: Record<string, never>;
         RegisterPasskeyRequest: {
             credential_id: string;
@@ -5617,6 +5616,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /** @description Passkey credential ID */
                 credentialID: string;
             };
             cookie?: never;
@@ -5817,11 +5817,7 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RefreshRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description OK */
             200: {
@@ -12682,7 +12678,7 @@ export interface operations {
                      *         {
                      *           "current_version_id": "version_xxx",
                      *           "deployment_id": "dep_xxx",
-                     *           "image_digest": "sha256:...",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *           "policy_revision": "policy-2026-08-27",
                      *           "provider_key": "lambda:dep_xxx",
                      *           "repository": {
@@ -12698,7 +12694,7 @@ export interface operations {
                      *           "versions": [
                      *             {
                      *               "commit_sha": "abc123",
-                     *               "image_digest": "sha256:...",
+                     *               "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *               "provenance_reference": "oci://...",
                      *               "release_version": "v1.0.0",
                      *               "runtime_revision": "runtime-node-v1",
@@ -12757,9 +12753,8 @@ export interface operations {
                 content: {
                     /**
                      * @example {
-                     *       "current_version_id": "version_xxx",
                      *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "sha256:...",
+                     *       "image_digest": "",
                      *       "policy_revision": "policy-2026-08-27",
                      *       "provider_key": "lambda:dep_xxx",
                      *       "repository": {
@@ -12770,21 +12765,7 @@ export interface operations {
                      *       },
                      *       "server_name": "example-server",
                      *       "server_version": "1.0.0",
-                     *       "status": "published",
-                     *       "tools": [],
-                     *       "versions": [
-                     *         {
-                     *           "commit_sha": "abc123",
-                     *           "image_digest": "sha256:...",
-                     *           "provenance_reference": "oci://...",
-                     *           "release_version": "v1.0.0",
-                     *           "runtime_revision": "runtime-node-v1",
-                     *           "sbom_reference": "oci://...",
-                     *           "status": "published",
-                     *           "version_id": "version_xxx",
-                     *           "workflow_run_id": "123456"
-                     *         }
-                     *       ]
+                     *       "status": "pending_upload"
                      *     }
                      */
                     "application/json": unknown;
@@ -12821,7 +12802,7 @@ export interface operations {
                      * @example {
                      *       "current_version_id": "version_xxx",
                      *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "sha256:...",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *       "policy_revision": "policy-2026-08-27",
                      *       "provider_key": "lambda:dep_xxx",
                      *       "repository": {
@@ -12837,7 +12818,7 @@ export interface operations {
                      *       "versions": [
                      *         {
                      *           "commit_sha": "abc123",
-                     *           "image_digest": "sha256:...",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *           "provenance_reference": "oci://...",
                      *           "release_version": "v1.0.0",
                      *           "runtime_revision": "runtime-node-v1",
@@ -12879,7 +12860,7 @@ export interface operations {
                 /**
                  * @example {
                  *       "commit_sha": "abc123",
-                 *       "image_digest": "sha256:...",
+                 *       "image_digest": "qdiv0/managed-tools-staging@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
                  *       "provenance_reference": "oci://...",
                  *       "release_version": "v1.0.0",
                  *       "sbom_reference": "oci://...",
@@ -12901,7 +12882,7 @@ export interface operations {
                      * @example {
                      *       "current_version_id": "version_xxx",
                      *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "sha256:...",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *       "policy_revision": "policy-2026-08-27",
                      *       "provider_key": "lambda:dep_xxx",
                      *       "repository": {
@@ -12917,7 +12898,7 @@ export interface operations {
                      *       "versions": [
                      *         {
                      *           "commit_sha": "abc123",
-                     *           "image_digest": "sha256:...",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *           "provenance_reference": "oci://...",
                      *           "release_version": "v1.0.0",
                      *           "runtime_revision": "runtime-node-v1",
@@ -12963,7 +12944,7 @@ export interface operations {
                      * @example {
                      *       "current_version_id": "version_xxx",
                      *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "sha256:...",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *       "policy_revision": "policy-2026-08-27",
                      *       "provider_key": "lambda:dep_xxx",
                      *       "repository": {
@@ -12979,7 +12960,7 @@ export interface operations {
                      *       "versions": [
                      *         {
                      *           "commit_sha": "abc123",
-                     *           "image_digest": "sha256:...",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *           "provenance_reference": "oci://...",
                      *           "release_version": "v1.0.0",
                      *           "runtime_revision": "runtime-node-v1",
@@ -13034,7 +13015,7 @@ export interface operations {
                      * @example {
                      *       "current_version_id": "version_xxx",
                      *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "sha256:...",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *       "policy_revision": "policy-2026-08-27",
                      *       "provider_key": "lambda:dep_xxx",
                      *       "repository": {
@@ -13050,7 +13031,7 @@ export interface operations {
                      *       "versions": [
                      *         {
                      *           "commit_sha": "abc123",
-                     *           "image_digest": "sha256:...",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                      *           "provenance_reference": "oci://...",
                      *           "release_version": "v1.0.0",
                      *           "runtime_revision": "runtime-node-v1",

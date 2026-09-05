@@ -2132,7 +2132,8 @@
             "type": "string"
           },
           "price_eur_per_gb_hour": {
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": true,
+            "minimum": 0,
             "type": "number"
           },
           "status": {
@@ -2274,7 +2275,8 @@
             "type": "string"
           },
           "price_eur_per_gb_hour": {
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": true,
+            "minimum": 0,
             "type": "number"
           },
           "status": {
@@ -2418,10 +2420,6 @@
         },
         "type": "object",
         "x-go-name": "RecommendedGPU"
-      },
-      "RefreshRequest": {
-        "type": "object",
-        "x-go-name": "RefreshRequest"
       },
       "RefreshResponse": {
         "type": "object",
@@ -4073,20 +4071,20 @@
     },
     "securitySchemes": {
       "ApiKeyAuth": {
-        "description": "TokenFactory API key in the Authorization header.",
+        "description": "Programmatic API keys use Authorization: Bearer tk_\u003cprefix\u003e.\u003csecret\u003e for account keys and Authorization: Bearer uk_\u003cprefix\u003e.\u003csecret\u003e for user keys.",
         "in": "header",
         "name": "Authorization",
         "type": "apiKey"
       },
       "BearerAuth": {
-        "description": "Bearer access token with the `Bearer ` prefix.",
+        "description": "Registration requires email verification and does not issue a session. Successful login and session flows use HTTP-only qdiv0_access and qdiv0_refresh browser-session cookies. Tool-deployment routes accept Authorization: Bearer tk_\u003cprefix\u003e.\u003csecret\u003e account API keys and Authorization: Bearer uk_\u003cprefix\u003e.\u003csecret\u003e user API keys.",
         "in": "header",
         "name": "Authorization",
         "type": "apiKey"
       },
       "RuntimeJWTAuth": {
         "bearerFormat": "JWT",
-        "description": "Runtime JWT in the Authorization header.",
+        "description": "Runtime JWTs use the Authorization: Bearer \u003cjwt\u003e form on runtime crash-notification requests.",
         "scheme": "bearer",
         "type": "http"
       }
@@ -5194,7 +5192,7 @@
     },
     "/auth/login": {
       "post": {
-        "description": "Exchanges email and password credentials for access and refresh tokens.",
+        "description": "Authenticates a user with email and password. If verification is required, the JSON response may include a next_step. Only successful authentication sets the HTTP-only qdiv0_access and qdiv0_refresh browser-session cookies; the JSON response contains no access or refresh token values.",
         "operationId": "postAuthLogin",
         "requestBody": {
           "content": {
@@ -5667,6 +5665,7 @@
         "operationId": "deleteAuthPasskeys",
         "parameters": [
           {
+            "description": "Passkey credential ID",
             "in": "path",
             "name": "credentialID",
             "required": true,
@@ -5919,18 +5918,8 @@
     },
     "/auth/refresh": {
       "post": {
-        "description": "Exchanges a refresh token for a new access token.",
+        "description": "Consumes the HTTP-only qdiv0_refresh cookie and, on success, resets the qdiv0_access and qdiv0_refresh browser-session cookies. The endpoint has no JSON request body and the JSON response contains no access or refresh token values.",
         "operationId": "postAuthRefresh",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RefreshRequest"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
             "content": {
@@ -5973,7 +5962,7 @@
             "description": "Internal Server Error"
           }
         },
-        "summary": "Refresh an access token",
+        "summary": "Refresh the browser session",
         "tags": [
           "auth"
         ]
@@ -5981,7 +5970,7 @@
     },
     "/auth/register": {
       "post": {
-        "description": "Creates a new account using email and password credentials.",
+        "description": "Creates a pending account using email and password credentials. Email verification is required; registration does not issue session tokens or cookies, and the JSON response contains no access or refresh token values.",
         "operationId": "postAuthRegister",
         "requestBody": {
           "content": {
@@ -11566,10 +11555,6 @@
     },
     "/shared-instances": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "List shared offers",
         "description": "List shared offers owned by the selected account.",
         "operationId": "get_shared_instances",
         "responses": {
@@ -11602,13 +11587,13 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "List shared offers",
+        "tags": [
+          "Shared Instances"
         ]
       },
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Create shared offer",
         "description": "Create a draft offer by adopting an eligible dedicated instance.",
         "operationId": "post_shared_instances",
         "requestBody": {
@@ -11657,15 +11642,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create shared offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/marketplace-policy": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Get Marketplace policy",
         "description": "Return the current server-owned Marketplace currency, pricing policy, and terms.",
         "operationId": "get_shared_instances_marketplace_policy",
         "responses": {
@@ -11691,15 +11676,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Get Marketplace policy",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/adoption-preflight": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Preview shared offer adoption",
         "description": "Check whether a dedicated instance can be adopted without changing instance or offer state.",
         "operationId": "post_shared_instances_owner_adoption_preflight",
         "requestBody": {
@@ -11757,15 +11742,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Preview shared offer adoption",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "List owner offers",
         "description": "List safe Marketplace offer views for the selected account.",
         "operationId": "get_shared_instances_owner_offers",
         "responses": {
@@ -11841,13 +11826,13 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "List owner offers",
+        "tags": [
+          "Shared Instances"
         ]
       },
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Create owner offer",
         "description": "Create a typed Marketplace draft after adopting an eligible dedicated instance.",
         "operationId": "post_shared_instances_owner_offers",
         "requestBody": {
@@ -11948,15 +11933,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create owner offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Get owner offer",
         "description": "Get a safe typed Marketplace offer view.",
         "operationId": "get_shared_instances_owner_offers_offerID",
         "parameters": [
@@ -12039,13 +12024,13 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Get owner offer",
+        "tags": [
+          "Shared Instances"
         ]
       },
       "patch": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Update owner offer",
         "description": "Update typed editable Marketplace configuration. Policy fields are server-owned.",
         "operationId": "patch_shared_instances_owner_offers_offerID",
         "parameters": [
@@ -12156,15 +12141,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Update owner offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/discard": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Discard owner draft",
         "description": "Discard an original pre-publication draft without releasing or exposing its backing instance.",
         "operationId": "post_shared_instances_owner_offers_offerID_discard",
         "parameters": [
@@ -12247,15 +12232,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Discard owner draft",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/memberships": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "List owner memberships",
         "description": "List manager-visible membership status without reservations or provider details.",
         "operationId": "get_shared_instances_owner_offers_offerID_memberships",
         "parameters": [
@@ -12298,15 +12283,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "List owner memberships",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/approve": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Approve owner membership",
         "description": "Approve a pending Marketplace membership as a manager.",
         "operationId": "post_shared_instances_owner_offers_offerID_memberships_membershipID_approve",
         "parameters": [
@@ -12354,15 +12339,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Approve owner membership",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/reject": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Reject owner membership",
         "description": "Reject a pending Marketplace membership as a manager.",
         "operationId": "post_shared_instances_owner_offers_offerID_memberships_membershipID_reject",
         "parameters": [
@@ -12410,15 +12395,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Reject owner membership",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/memberships/{membershipID}/share-links": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Create member share link",
         "description": "Create a member share link and return its plaintext token once.",
         "operationId": "post_shared_instances_owner_offers_offerID_memberships_membershipID_share_links",
         "parameters": [
@@ -12463,15 +12448,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create member share link",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/publish": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Publish owner offer",
         "description": "Publish a current draft after explicit human acceptance of the current Marketplace terms.",
         "operationId": "post_shared_instances_owner_offers_offerID_publish",
         "parameters": [
@@ -12575,15 +12560,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Publish owner offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/retire": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Retire owner offer",
         "description": "Retire an owner offer using the Marketplace lifecycle rules.",
         "operationId": "post_shared_instances_owner_offers_offerID_retire",
         "parameters": [
@@ -12666,15 +12651,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Retire owner offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/share-links": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "List owner share links",
         "description": "List share-link metadata without returning plaintext tokens.",
         "operationId": "get_shared_instances_owner_offers_offerID_share_links",
         "parameters": [
@@ -12714,13 +12699,13 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "List owner share links",
+        "tags": [
+          "Shared Instances"
         ]
       },
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Create owner share link",
         "description": "Create a share link and return its plaintext token once.",
         "operationId": "post_shared_instances_owner_offers_offerID_share_links",
         "parameters": [
@@ -12757,15 +12742,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create owner share link",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/share-links/{linkID}/revoke": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Revoke owner share link",
         "description": "Revoke an owner share link without returning its plaintext token.",
         "operationId": "post_shared_instances_owner_offers_offerID_share_links_linkID_revoke",
         "parameters": [
@@ -12810,15 +12795,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Revoke owner share link",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/owner/offers/{offerID}/unpublish": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Unpublish owner offer",
         "description": "Unpublish an offer and expose its server-derived restored-private management state.",
         "operationId": "post_shared_instances_owner_offers_offerID_unpublish",
         "parameters": [
@@ -12901,15 +12886,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Unpublish owner offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Get shared offer",
         "description": "Get an account-authorized shared offer.",
         "operationId": "get_shared_instances_offerID",
         "parameters": [
@@ -12949,13 +12934,13 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Get shared offer",
+        "tags": [
+          "Shared Instances"
         ]
       },
       "patch": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Update shared offer",
         "description": "Update draft shared offer settings before publication.",
         "operationId": "patch_shared_instances_offerID",
         "parameters": [
@@ -13013,15 +12998,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Update shared offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/eligibility": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Check shared offer eligibility",
         "description": "Return account-scoped eligibility and maximum liability for joining an offer.",
         "operationId": "get_shared_instances_offerID_eligibility",
         "parameters": [
@@ -13066,15 +13051,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Check shared offer eligibility",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/join": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Join shared offer",
         "description": "Join an open or approval-required offer using the selected account.",
         "operationId": "post_shared_instances_offerID_join",
         "parameters": [
@@ -13124,15 +13109,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Join shared offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/links/{linkID}/revoke": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Revoke shared link",
         "description": "Revoke a share link as a resolved manager.",
         "operationId": "post_shared_instances_offerID_links_linkID_revoke",
         "parameters": [
@@ -13175,15 +13160,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Revoke shared link",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/memberships": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "List shared memberships",
         "description": "List memberships visible to the selected account.",
         "operationId": "get_shared_instances_offerID_memberships",
         "parameters": [
@@ -13225,15 +13210,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "List shared memberships",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/memberships/{membershipID}": {
       "get": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Get shared membership",
         "description": "Get membership details visible to the selected account.",
         "operationId": "get_shared_instances_offerID_memberships_membershipID",
         "parameters": [
@@ -13280,15 +13265,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Get shared membership",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/memberships/{membershipID}/approve": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Approve shared membership",
         "description": "Approve a pending membership as a resolved manager.",
         "operationId": "post_shared_instances_offerID_memberships_membershipID_approve",
         "parameters": [
@@ -13346,15 +13331,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Approve shared membership",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/memberships/{membershipID}/leave": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Leave shared membership",
         "description": "Schedule the selected account's membership to leave.",
         "operationId": "post_shared_instances_offerID_memberships_membershipID_leave",
         "parameters": [
@@ -13401,15 +13386,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Leave shared membership",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/memberships/{membershipID}/reject": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Reject shared membership",
         "description": "Reject a pending membership as a resolved manager.",
         "operationId": "post_shared_instances_offerID_memberships_membershipID_reject",
         "parameters": [
@@ -13456,15 +13441,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Reject shared membership",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/memberships/{membershipID}/share-links": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Create member share link",
         "description": "Create an opaque attribution link from an active membership.",
         "operationId": "post_shared_instances_offerID_memberships_membershipID_share_links",
         "parameters": [
@@ -13510,15 +13495,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create member share link",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/publish": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Publish shared offer",
         "description": "Publish an offer after human terms acceptance and owner reservation.",
         "operationId": "post_shared_instances_offerID_publish",
         "parameters": [
@@ -13579,15 +13564,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Publish shared offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/share-links": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Create general share link",
         "description": "Create a general attribution link for an offer.",
         "operationId": "post_shared_instances_offerID_share_links",
         "parameters": [
@@ -13624,15 +13609,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create general share link",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/transfers": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Propose shared ownership transfer",
         "description": "Create an explicit successor proposal without executing technical ownership transfer.",
         "operationId": "post_shared_instances_offerID_transfers",
         "parameters": [
@@ -13679,15 +13664,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Propose shared ownership transfer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
     "/shared-instances/{offerID}/unpublish": {
       "post": {
-        "tags": [
-          "Shared Instances"
-        ],
-        "summary": "Unpublish shared offer",
         "description": "Stop sharing an offer while retaining the backing private instance.",
         "operationId": "post_shared_instances_offerID_unpublish",
         "parameters": [
@@ -13727,6 +13712,10 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Unpublish shared offer",
+        "tags": [
+          "Shared Instances"
         ]
       }
     },
@@ -14607,10 +14596,6 @@
     },
     "/tool-deployments": {
       "get": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "List tool deployments",
         "description": "List deployments owned by the authenticated account.",
         "operationId": "get_tool_deployments",
         "responses": {
@@ -14622,7 +14607,7 @@
                     {
                       "current_version_id": "version_xxx",
                       "deployment_id": "dep_xxx",
-                      "image_digest": "sha256:...",
+                      "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "policy_revision": "policy-2026-08-27",
                       "provider_key": "lambda:dep_xxx",
                       "repository": {
@@ -14638,7 +14623,7 @@
                       "versions": [
                         {
                           "commit_sha": "abc123",
-                          "image_digest": "sha256:...",
+                          "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                           "provenance_reference": "oci://...",
                           "release_version": "v1.0.0",
                           "runtime_revision": "runtime-node-v1",
@@ -14663,14 +14648,14 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "List tool deployments",
+        "tags": [
+          "Tool Deployments"
         ]
       },
       "post": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "Create tool deployment",
-        "description": "Create an account-bound Lambda tool deployment from a strict YAML manifest.",
+        "description": "Create an account-bound Lambda tool deployment from a strict YAML manifest. An empty spec.server.image is valid only for a pending registration; the immutable staging artifact is established at finalization.",
         "operationId": "post_tool_deployments",
         "requestBody": {
           "content": {
@@ -14694,9 +14679,8 @@
             "content": {
               "application/json": {
                 "example": {
-                  "current_version_id": "version_xxx",
                   "deployment_id": "dep_xxx",
-                  "image_digest": "sha256:...",
+                  "image_digest": "",
                   "policy_revision": "policy-2026-08-27",
                   "provider_key": "lambda:dep_xxx",
                   "repository": {
@@ -14707,21 +14691,7 @@
                   },
                   "server_name": "example-server",
                   "server_version": "1.0.0",
-                  "status": "published",
-                  "tools": [],
-                  "versions": [
-                    {
-                      "commit_sha": "abc123",
-                      "image_digest": "sha256:...",
-                      "provenance_reference": "oci://...",
-                      "release_version": "v1.0.0",
-                      "runtime_revision": "runtime-node-v1",
-                      "sbom_reference": "oci://...",
-                      "status": "published",
-                      "version_id": "version_xxx",
-                      "workflow_run_id": "123456"
-                    }
-                  ]
+                  "status": "pending_upload"
                 }
               }
             },
@@ -14735,15 +14705,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create tool deployment",
+        "tags": [
+          "Tool Deployments"
         ]
       }
     },
     "/tool-deployments/{deploymentID}": {
       "get": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "Get tool deployment",
         "description": "Get an account-bound tool deployment without exposing runtime credentials or tenant internals.",
         "operationId": "get_tool_deployments_deploymentID",
         "parameters": [
@@ -14764,7 +14734,7 @@
                 "example": {
                   "current_version_id": "version_xxx",
                   "deployment_id": "dep_xxx",
-                  "image_digest": "sha256:...",
+                  "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "policy_revision": "policy-2026-08-27",
                   "provider_key": "lambda:dep_xxx",
                   "repository": {
@@ -14780,7 +14750,7 @@
                   "versions": [
                     {
                       "commit_sha": "abc123",
-                      "image_digest": "sha256:...",
+                      "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "provenance_reference": "oci://...",
                       "release_version": "v1.0.0",
                       "runtime_revision": "runtime-node-v1",
@@ -14803,15 +14773,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Get tool deployment",
+        "tags": [
+          "Tool Deployments"
         ]
       }
     },
     "/tool-deployments/{deploymentID}/finalize": {
       "post": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "Finalize tool deployment",
         "description": "Verify, discover, provision, and publish an immutable tool deployment.",
         "operationId": "post_tool_deployments_deploymentID_finalize",
         "parameters": [
@@ -14840,7 +14810,7 @@
             "application/json": {
               "example": {
                 "commit_sha": "abc123",
-                "image_digest": "sha256:...",
+                "image_digest": "qdiv0/managed-tools-staging@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
                 "provenance_reference": "oci://...",
                 "release_version": "v1.0.0",
                 "sbom_reference": "oci://...",
@@ -14858,7 +14828,7 @@
                 "example": {
                   "current_version_id": "version_xxx",
                   "deployment_id": "dep_xxx",
-                  "image_digest": "sha256:...",
+                  "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "policy_revision": "policy-2026-08-27",
                   "provider_key": "lambda:dep_xxx",
                   "repository": {
@@ -14874,7 +14844,7 @@
                   "versions": [
                     {
                       "commit_sha": "abc123",
-                      "image_digest": "sha256:...",
+                      "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "provenance_reference": "oci://...",
                       "release_version": "v1.0.0",
                       "runtime_revision": "runtime-node-v1",
@@ -14897,15 +14867,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Finalize tool deployment",
+        "tags": [
+          "Tool Deployments"
         ]
       }
     },
     "/tool-deployments/{deploymentID}/revoke": {
       "post": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "Revoke tool deployment",
         "description": "Revoke a deployment before it can be resolved for invocation.",
         "operationId": "post_tool_deployments_deploymentID_revoke",
         "parameters": [
@@ -14926,7 +14896,7 @@
                 "example": {
                   "current_version_id": "version_xxx",
                   "deployment_id": "dep_xxx",
-                  "image_digest": "sha256:...",
+                  "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "policy_revision": "policy-2026-08-27",
                   "provider_key": "lambda:dep_xxx",
                   "repository": {
@@ -14942,7 +14912,7 @@
                   "versions": [
                     {
                       "commit_sha": "abc123",
-                      "image_digest": "sha256:...",
+                      "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "provenance_reference": "oci://...",
                       "release_version": "v1.0.0",
                       "runtime_revision": "runtime-node-v1",
@@ -14965,15 +14935,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Revoke tool deployment",
+        "tags": [
+          "Tool Deployments"
         ]
       }
     },
     "/tool-deployments/{deploymentID}/rollback": {
       "post": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "Rollback tool deployment",
         "description": "Move the registry pointer to a previously verified immutable version.",
         "operationId": "post_tool_deployments_deploymentID_rollback",
         "parameters": [
@@ -15004,7 +14974,7 @@
                 "example": {
                   "current_version_id": "version_xxx",
                   "deployment_id": "dep_xxx",
-                  "image_digest": "sha256:...",
+                  "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "policy_revision": "policy-2026-08-27",
                   "provider_key": "lambda:dep_xxx",
                   "repository": {
@@ -15020,7 +14990,7 @@
                   "versions": [
                     {
                       "commit_sha": "abc123",
-                      "image_digest": "sha256:...",
+                      "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "provenance_reference": "oci://...",
                       "release_version": "v1.0.0",
                       "runtime_revision": "runtime-node-v1",
@@ -15043,15 +15013,15 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Rollback tool deployment",
+        "tags": [
+          "Tool Deployments"
         ]
       }
     },
     "/tool-deployments/{deploymentID}/upload-session": {
       "post": {
-        "tags": [
-          "Tool Deployments"
-        ],
-        "summary": "Create upload session",
         "description": "Create a short-lived artifact upload session after GitHub OIDC claim validation. The artifact digest may be omitted when it is not known until after the image push.",
         "operationId": "post_tool_deployments_deploymentID_upload_session",
         "parameters": [
@@ -15108,6 +15078,10 @@
           {
             "BearerAuth": []
           }
+        ],
+        "summary": "Create upload session",
+        "tags": [
+          "Tool Deployments"
         ]
       }
     },
@@ -17418,10 +17392,6 @@
     },
     "/v2/public/shared-instance-links/{opaque-token}": {
       "get": {
-        "tags": [
-          "v2"
-        ],
-        "summary": "Get public shared instance from public link v2",
         "description": "Resolves an active opaque link to a complete multi-window public projection. No authentication required.",
         "operationId": "get_v2_public_shared_instance_links_opaque_token",
         "parameters": [
@@ -17494,15 +17464,15 @@
           "502": {
             "description": "Marketplace unavailable"
           }
-        }
+        },
+        "summary": "Get public shared instance from public link v2",
+        "tags": [
+          "v2"
+        ]
       }
     },
     "/v2/public/shared-instances": {
       "get": {
-        "tags": [
-          "v2"
-        ],
-        "summary": "List public shared instances v2",
         "description": "Returns published shared-instance offers with every validated schedule window. No authentication required.",
         "operationId": "get_v2_public_shared_instances",
         "parameters": [
@@ -17604,15 +17574,15 @@
           "502": {
             "description": "Marketplace unavailable"
           }
-        }
+        },
+        "summary": "List public shared instances v2",
+        "tags": [
+          "v2"
+        ]
       }
     },
     "/v2/public/shared-instances/{slug}": {
       "get": {
-        "tags": [
-          "v2"
-        ],
-        "summary": "Get public shared instance v2",
         "description": "Returns one published public shared-instance offer with every validated schedule window. No authentication required.",
         "operationId": "get_v2_public_shared_instances_slug",
         "parameters": [
@@ -17685,7 +17655,11 @@
           "502": {
             "description": "Marketplace unavailable"
           }
-        }
+        },
+        "summary": "Get public shared instance v2",
+        "tags": [
+          "v2"
+        ]
       }
     }
   },
