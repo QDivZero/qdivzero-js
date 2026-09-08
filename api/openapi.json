@@ -168,6 +168,9 @@
           "language": {
             "type": "string"
           },
+          "max_new_tokens": {
+            "type": "integer"
+          },
           "model": {
             "type": "string"
           },
@@ -179,6 +182,9 @@
           },
           "response_format": {
             "type": "string"
+          },
+          "seed": {
+            "type": "integer"
           },
           "speed": {
             "type": "number"
@@ -1720,6 +1726,27 @@
         "type": "object",
         "x-go-name": "MarkAllReadResponse"
       },
+      "MarketplacePolicyResponse": {
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "price_policy_version": {
+            "type": "string"
+          },
+          "terms_hash": {
+            "type": "string"
+          },
+          "terms_text": {
+            "type": "string"
+          },
+          "terms_version": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "MarketplacePolicyResponse"
+      },
       "Model": {
         "properties": {
           "display_name": {
@@ -1873,6 +1900,27 @@
         },
         "type": "object",
         "x-go-name": "NotificationResponse"
+      },
+      "OwnerOfferCreateRequest": {
+        "properties": {
+          "instance_id": {
+            "type": "string"
+          },
+          "maximum_final_price_per_hour_microcents": {
+            "description": "Manual compatibility field; ignored for Smart-backed request flows.",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "OwnerOfferUpdateRequest": {
+        "properties": {
+          "maximum_final_price_per_hour_microcents": {
+            "description": "Manual compatibility field; ignored for Smart-backed request flows.",
+            "type": "integer"
+          }
+        },
+        "type": "object"
       },
       "PasskeyListResponse": {
         "properties": {
@@ -2294,6 +2342,15 @@
           "active_member_count": {
             "type": "integer"
           },
+          "active_snapshot_aggregate_microcents": {
+            "type": "integer"
+          },
+          "active_snapshot_runtime_microcents": {
+            "type": "integer"
+          },
+          "active_snapshot_storage_microcents": {
+            "type": "integer"
+          },
           "availability_mode": {
             "type": "string"
           },
@@ -2344,6 +2401,15 @@
           },
           "slug": {
             "type": "string"
+          },
+          "smart_backed": {
+            "type": "boolean"
+          },
+          "smart_limit_microcents": {
+            "type": "integer"
+          },
+          "smart_unlimited": {
+            "type": "boolean"
           },
           "title": {
             "type": "string"
@@ -3047,6 +3113,12 @@
           "id": {
             "type": "string"
           },
+          "model_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
           "name": {
             "type": "string"
           },
@@ -3170,6 +3242,131 @@
         },
         "type": "object",
         "x-go-name": "ServingTargetResponse"
+      },
+      "SharedOfferAvailabilityResponse": {
+        "properties": {
+          "idle_timeout_seconds": {
+            "type": "integer"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "windows": {
+            "items": {
+              "$ref": "#/components/schemas/SharedOfferScheduleWindowResponse"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "x-go-name": "SharedOfferAvailabilityResponse"
+      },
+      "SharedOfferCapabilitiesResponse": {
+        "properties": {
+          "can_copy": {
+            "type": "boolean"
+          },
+          "can_discard": {
+            "type": "boolean"
+          },
+          "can_edit": {
+            "type": "boolean"
+          },
+          "can_publish": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "x-go-name": "SharedOfferCapabilitiesResponse"
+      },
+      "SharedOfferManagementResponse": {
+        "properties": {
+          "capabilities": {
+            "$ref": "#/components/schemas/SharedOfferCapabilitiesResponse"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "SharedOfferManagementResponse"
+      },
+      "SharedOfferOwnerViewResponse": {
+        "properties": {
+          "can_retry": {
+            "type": "boolean"
+          },
+          "pricing": {
+            "$ref": "#/components/schemas/SharedOfferPricingResponse"
+          }
+        },
+        "type": "object"
+      },
+      "SharedOfferPricingResponse": {
+        "properties": {
+          "active_snapshot_aggregate_microcents": {
+            "type": "integer"
+          },
+          "active_snapshot_runtime_microcents": {
+            "type": "integer"
+          },
+          "active_snapshot_storage_microcents": {
+            "type": "integer"
+          },
+          "maximum_microcents": {
+            "description": "Manual compatibility field; non-authoritative for Smart offers.",
+            "type": "integer"
+          },
+          "smart_backed": {
+            "type": "boolean"
+          },
+          "smart_limit_microcents": {
+            "type": "integer"
+          },
+          "smart_unlimited": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "SharedOfferSafeInstanceResponse": {
+        "properties": {
+          "display_name": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "SharedOfferSafeInstanceResponse"
+      },
+      "SharedOfferScheduleWindowResponse": {
+        "properties": {
+          "end": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "weekdays": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "x-go-name": "SharedOfferScheduleWindowResponse"
       },
       "SmartBalancerRouteDestinationRequest": {
         "properties": {
@@ -11723,11 +11920,17 @@
                     "terms_version": "marketplace-terms-v1"
                   },
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   }
                 }
               }
@@ -11775,6 +11978,7 @@
                           }
                         ]
                       },
+                      "can_retry": false,
                       "current_policy": {
                         "currency": "eur",
                         "price_policy_version": "marketplace-price-policy-v1",
@@ -11802,11 +12006,17 @@
                       "pending_approval_count": 0,
                       "policy_state": "current",
                       "pricing": {
+                        "active_snapshot_aggregate_microcents": 600000,
+                        "active_snapshot_runtime_microcents": 500000,
+                        "active_snapshot_storage_microcents": 100000,
                         "currency": "eur",
                         "current_microcents": 612345,
                         "expected_microcents": 700000,
                         "maximum_microcents": 700000,
-                        "price_policy_version": "marketplace-price-policy-v1"
+                        "price_policy_version": "marketplace-price-policy-v1",
+                        "smart_backed": true,
+                        "smart_limit_microcents": 2750000,
+                        "smart_unlimited": false
                       },
                       "public_slug": "shared-model",
                       "status": "draft",
@@ -11833,7 +12043,7 @@
         ]
       },
       "post": {
-        "description": "Create a typed Marketplace draft after adopting an eligible dedicated instance.",
+        "description": "Create a typed Marketplace draft after adopting an eligible dedicated instance. Smart-backed offers use the persisted Smart snapshot; maximum_final_price_per_hour_microcents is compatibility-only for manual offers.",
         "operationId": "post_shared_instances_owner_offers",
         "requestBody": {
           "content": {
@@ -11859,6 +12069,9 @@
                 "minimum_membership_duration_seconds": 3600,
                 "public_slug": "shared-model",
                 "visibility": "public"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/OwnerOfferCreateRequest"
               }
             }
           },
@@ -11884,6 +12097,7 @@
                       }
                     ]
                   },
+                  "can_retry": false,
                   "current_policy": {
                     "currency": "eur",
                     "price_policy_version": "marketplace-price-policy-v1",
@@ -11911,11 +12125,17 @@
                   "pending_approval_count": 0,
                   "policy_state": "current",
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   },
                   "public_slug": "shared-model",
                   "status": "draft",
@@ -11975,6 +12195,7 @@
                       }
                     ]
                   },
+                  "can_retry": false,
                   "current_policy": {
                     "currency": "eur",
                     "price_policy_version": "marketplace-price-policy-v1",
@@ -12002,11 +12223,17 @@
                   "pending_approval_count": 0,
                   "policy_state": "current",
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   },
                   "public_slug": "shared-model",
                   "status": "draft",
@@ -12031,7 +12258,7 @@
         ]
       },
       "patch": {
-        "description": "Update typed editable Marketplace configuration. Policy fields are server-owned.",
+        "description": "Update typed editable Marketplace configuration. Policy fields are server-owned. Smart-backed offers use the persisted Smart snapshot; maximum_final_price_per_hour_microcents is compatibility-only for manual offers.",
         "operationId": "patch_shared_instances_owner_offers_offerID",
         "parameters": [
           {
@@ -12067,6 +12294,9 @@
                 "minimum_membership_duration_seconds": 3600,
                 "public_slug": "shared-model",
                 "visibility": "public"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/OwnerOfferUpdateRequest"
               }
             }
           },
@@ -12092,6 +12322,7 @@
                       }
                     ]
                   },
+                  "can_retry": false,
                   "current_policy": {
                     "currency": "eur",
                     "price_policy_version": "marketplace-price-policy-v1",
@@ -12119,11 +12350,17 @@
                   "pending_approval_count": 0,
                   "policy_state": "current",
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   },
                   "public_slug": "shared-model",
                   "status": "draft",
@@ -12183,6 +12420,7 @@
                       }
                     ]
                   },
+                  "can_retry": false,
                   "current_policy": {
                     "currency": "eur",
                     "price_policy_version": "marketplace-price-policy-v1",
@@ -12210,11 +12448,17 @@
                   "pending_approval_count": 0,
                   "policy_state": "current",
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   },
                   "public_slug": "shared-model",
                   "status": "draft",
@@ -12501,6 +12745,7 @@
                         }
                       ]
                     },
+                    "can_retry": false,
                     "current_policy": {
                       "currency": "eur",
                       "price_policy_version": "marketplace-price-policy-v1",
@@ -12528,11 +12773,17 @@
                     "pending_approval_count": 0,
                     "policy_state": "current",
                     "pricing": {
+                      "active_snapshot_aggregate_microcents": 600000,
+                      "active_snapshot_runtime_microcents": 500000,
+                      "active_snapshot_storage_microcents": 100000,
                       "currency": "eur",
                       "current_microcents": 612345,
                       "expected_microcents": 700000,
                       "maximum_microcents": 700000,
-                      "price_policy_version": "marketplace-price-policy-v1"
+                      "price_policy_version": "marketplace-price-policy-v1",
+                      "smart_backed": true,
+                      "smart_limit_microcents": 2750000,
+                      "smart_unlimited": false
                     },
                     "public_slug": "shared-model",
                     "status": "draft",
@@ -12602,6 +12853,7 @@
                       }
                     ]
                   },
+                  "can_retry": false,
                   "current_policy": {
                     "currency": "eur",
                     "price_policy_version": "marketplace-price-policy-v1",
@@ -12629,11 +12881,17 @@
                   "pending_approval_count": 0,
                   "policy_state": "current",
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   },
                   "public_slug": "shared-model",
                   "status": "draft",
@@ -12653,6 +12911,113 @@
           }
         ],
         "summary": "Retire owner offer",
+        "tags": [
+          "Shared Instances"
+        ]
+      }
+    },
+    "/shared-instances/owner/offers/{offerID}/retry": {
+      "post": {
+        "description": "Clear the server-owned retry block and return the freshly committed owner projection. Smart snapshot pricing is authoritative; legacy maximum price fields are compatibility-only for manual flows.",
+        "operationId": "post_shared_instances_owner_offers_offerID_retry",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "offerID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "active_member_count": 1,
+                  "availability": {
+                    "mode": "scheduled",
+                    "windows": [
+                      {
+                        "end": "17:00",
+                        "start": "08:00",
+                        "timezone": "Europe/Madrid",
+                        "weekdays": [
+                          1,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "can_retry": false,
+                  "current_policy": {
+                    "currency": "eur",
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                    "terms_text": "Approved Marketplace terms.",
+                    "terms_version": "marketplace-terms-v1"
+                  },
+                  "id": "offer_xxx",
+                  "instance": {
+                    "display_name": "Llama",
+                    "model": "meta/llama",
+                    "region": "eu-west"
+                  },
+                  "join_policy": "open",
+                  "management": {
+                    "capabilities": {
+                      "can_copy": true,
+                      "can_discard": true,
+                      "can_edit": true,
+                      "can_publish": true
+                    },
+                    "state": "draft"
+                  },
+                  "minimum_duration_seconds": 3600,
+                  "pending_approval_count": 0,
+                  "policy_state": "current",
+                  "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
+                    "currency": "eur",
+                    "current_microcents": 612345,
+                    "expected_microcents": 700000,
+                    "maximum_microcents": 700000,
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
+                  },
+                  "public_slug": "shared-model",
+                  "status": "draft",
+                  "visibility": "public"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SharedOfferOwnerViewResponse"
+                }
+              }
+            },
+            "description": "Fresh owner projection"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Retry is not currently available"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Retry a Smart Marketplace owner offer",
         "tags": [
           "Shared Instances"
         ]
@@ -12837,6 +13202,7 @@
                       }
                     ]
                   },
+                  "can_retry": false,
                   "current_policy": {
                     "currency": "eur",
                     "price_policy_version": "marketplace-price-policy-v1",
@@ -12864,11 +13230,17 @@
                   "pending_approval_count": 0,
                   "policy_state": "current",
                   "pricing": {
+                    "active_snapshot_aggregate_microcents": 600000,
+                    "active_snapshot_runtime_microcents": 500000,
+                    "active_snapshot_storage_microcents": 100000,
                     "currency": "eur",
                     "current_microcents": 612345,
                     "expected_microcents": 700000,
                     "maximum_microcents": 700000,
-                    "price_policy_version": "marketplace-price-policy-v1"
+                    "price_policy_version": "marketplace-price-policy-v1",
+                    "smart_backed": true,
+                    "smart_limit_microcents": 2750000,
+                    "smart_unlimited": false
                   },
                   "public_slug": "shared-model",
                   "status": "draft",
@@ -17258,11 +17630,13 @@
                   },
                   "task": {
                     "default": "t2va",
-                    "description": "Generation task: t2va, fl2va, or ref2va",
+                    "description": "Generation task: t2va, fl2va, ref2va, t2v, or i2v",
                     "enum": [
                       "t2va",
                       "fl2va",
-                      "ref2va"
+                      "ref2va",
+                      "t2v",
+                      "i2v"
                     ],
                     "type": "string"
                   },
@@ -17411,6 +17785,9 @@
               "application/json": {
                 "example": {
                   "active_member_count": 2,
+                  "active_snapshot_aggregate_microcents": 600000,
+                  "active_snapshot_runtime_microcents": 500000,
+                  "active_snapshot_storage_microcents": 100000,
                   "availability_mode": "scheduled",
                   "best_effort": true,
                   "currency": "eur",
@@ -17448,6 +17825,9 @@
                     ]
                   },
                   "slug": "shared-model",
+                  "smart_backed": true,
+                  "smart_limit_microcents": 2750000,
+                  "smart_unlimited": false,
                   "title": "Shared Model",
                   "workload_kind": "chat"
                 }
@@ -17521,6 +17901,9 @@
                   "instances": [
                     {
                       "active_member_count": 2,
+                      "active_snapshot_aggregate_microcents": 600000,
+                      "active_snapshot_runtime_microcents": 500000,
+                      "active_snapshot_storage_microcents": 100000,
                       "availability_mode": "scheduled",
                       "best_effort": true,
                       "currency": "eur",
@@ -17558,6 +17941,9 @@
                         ]
                       },
                       "slug": "shared-model",
+                      "smart_backed": true,
+                      "smart_limit_microcents": 2750000,
+                      "smart_unlimited": false,
                       "title": "Shared Model",
                       "workload_kind": "chat"
                     }
@@ -17602,6 +17988,9 @@
               "application/json": {
                 "example": {
                   "active_member_count": 2,
+                  "active_snapshot_aggregate_microcents": 600000,
+                  "active_snapshot_runtime_microcents": 500000,
+                  "active_snapshot_storage_microcents": 100000,
                   "availability_mode": "scheduled",
                   "best_effort": true,
                   "currency": "eur",
@@ -17639,6 +18028,9 @@
                     ]
                   },
                   "slug": "shared-model",
+                  "smart_backed": true,
+                  "smart_limit_microcents": 2750000,
+                  "smart_unlimited": false,
                   "title": "Shared Model",
                   "workload_kind": "chat"
                 }

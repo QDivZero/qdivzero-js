@@ -1698,7 +1698,7 @@ export interface paths {
         put?: never;
         /**
          * Create owner offer
-         * @description Create a typed Marketplace draft after adopting an eligible dedicated instance.
+         * @description Create a typed Marketplace draft after adopting an eligible dedicated instance. Smart-backed offers use the persisted Smart snapshot; maximum_final_price_per_hour_microcents is compatibility-only for manual offers.
          */
         post: operations["post_shared_instances_owner_offers"];
         delete?: never;
@@ -1726,7 +1726,7 @@ export interface paths {
         head?: never;
         /**
          * Update owner offer
-         * @description Update typed editable Marketplace configuration. Policy fields are server-owned.
+         * @description Update typed editable Marketplace configuration. Policy fields are server-owned. Smart-backed offers use the persisted Smart snapshot; maximum_final_price_per_hour_microcents is compatibility-only for manual offers.
          */
         patch: operations["patch_shared_instances_owner_offers_offerID"];
         trace?: never;
@@ -1865,6 +1865,26 @@ export interface paths {
          * @description Retire an owner offer using the Marketplace lifecycle rules.
          */
         post: operations["post_shared_instances_owner_offers_offerID_retire"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/shared-instances/owner/offers/{offerID}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retry a Smart Marketplace owner offer
+         * @description Clear the server-owned retry block and return the freshly committed owner projection. Smart snapshot pricing is authoritative; legacy maximum price fields are compatibility-only for manual flows.
+         */
+        post: operations["post_shared_instances_owner_offers_offerID_retry"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3109,10 +3129,12 @@ export interface components {
             input?: string;
             instructions?: string;
             language?: string;
+            max_new_tokens?: number;
             model?: string;
             ref_audio?: string;
             ref_text?: string;
             response_format?: string;
+            seed?: number;
             speed?: number;
             task_type?: string;
             voice?: string;
@@ -3583,6 +3605,13 @@ export interface components {
         MarkAllReadResponse: {
             marked?: number;
         };
+        MarketplacePolicyResponse: {
+            currency?: string;
+            price_policy_version?: string;
+            terms_hash?: string;
+            terms_text?: string;
+            terms_version?: string;
+        };
         Model: {
             display_name?: string;
             downloads?: number;
@@ -3636,6 +3665,15 @@ export interface components {
                 [key: string]: unknown;
             };
             title_key?: string;
+        };
+        OwnerOfferCreateRequest: {
+            instance_id?: string;
+            /** @description Manual compatibility field; ignored for Smart-backed request flows. */
+            maximum_final_price_per_hour_microcents?: number;
+        };
+        OwnerOfferUpdateRequest: {
+            /** @description Manual compatibility field; ignored for Smart-backed request flows. */
+            maximum_final_price_per_hour_microcents?: number;
         };
         PasskeyListResponse: {
             passkeys?: components["schemas"]["PasskeyResponse"][];
@@ -3766,6 +3804,9 @@ export interface components {
         };
         PublicSharedInstanceResponse: {
             active_member_count?: number;
+            active_snapshot_aggregate_microcents?: number;
+            active_snapshot_runtime_microcents?: number;
+            active_snapshot_storage_microcents?: number;
             availability_mode?: string;
             best_effort?: boolean;
             currency?: string;
@@ -3783,6 +3824,9 @@ export interface components {
             region?: string;
             schedule?: components["schemas"]["PublicSharedInstanceScheduleResponse"];
             slug?: string;
+            smart_backed?: boolean;
+            smart_limit_microcents?: number;
+            smart_unlimited?: boolean;
             title?: string;
             workload_kind?: string;
         };
@@ -4004,6 +4048,7 @@ export interface components {
             enabled?: boolean;
             endpoint_type?: string;
             id?: string;
+            model_ids?: string[];
             name?: string;
             providers?: components["schemas"]["ServingProviderResponse"][];
             public_input_per_million_eur?: number;
@@ -4039,6 +4084,47 @@ export interface components {
             type?: string;
             updated_at?: string;
             weight?: number;
+        };
+        SharedOfferAvailabilityResponse: {
+            idle_timeout_seconds?: number;
+            mode?: string;
+            windows?: components["schemas"]["SharedOfferScheduleWindowResponse"][];
+        };
+        SharedOfferCapabilitiesResponse: {
+            can_copy?: boolean;
+            can_discard?: boolean;
+            can_edit?: boolean;
+            can_publish?: boolean;
+        };
+        SharedOfferManagementResponse: {
+            capabilities?: components["schemas"]["SharedOfferCapabilitiesResponse"];
+            reason?: string;
+            state?: string;
+        };
+        SharedOfferOwnerViewResponse: {
+            can_retry?: boolean;
+            pricing?: components["schemas"]["SharedOfferPricingResponse"];
+        };
+        SharedOfferPricingResponse: {
+            active_snapshot_aggregate_microcents?: number;
+            active_snapshot_runtime_microcents?: number;
+            active_snapshot_storage_microcents?: number;
+            /** @description Manual compatibility field; non-authoritative for Smart offers. */
+            maximum_microcents?: number;
+            smart_backed?: boolean;
+            smart_limit_microcents?: number;
+            smart_unlimited?: boolean;
+        };
+        SharedOfferSafeInstanceResponse: {
+            display_name?: string;
+            model?: string;
+            region?: string;
+        };
+        SharedOfferScheduleWindowResponse: {
+            end?: string;
+            start?: string;
+            timezone?: string;
+            weekdays?: number[];
         };
         SmartBalancerRouteDestinationRequest: {
             ref?: string;
@@ -10224,11 +10310,17 @@ export interface operations {
                      *         "terms_version": "marketplace-terms-v1"
                      *       },
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       }
                      *     }
                      */
@@ -10278,6 +10370,7 @@ export interface operations {
                      *               }
                      *             ]
                      *           },
+                     *           "can_retry": false,
                      *           "current_policy": {
                      *             "currency": "eur",
                      *             "price_policy_version": "marketplace-price-policy-v1",
@@ -10305,11 +10398,17 @@ export interface operations {
                      *           "pending_approval_count": 0,
                      *           "policy_state": "current",
                      *           "pricing": {
+                     *             "active_snapshot_aggregate_microcents": 600000,
+                     *             "active_snapshot_runtime_microcents": 500000,
+                     *             "active_snapshot_storage_microcents": 100000,
                      *             "currency": "eur",
                      *             "current_microcents": 612345,
                      *             "expected_microcents": 700000,
                      *             "maximum_microcents": 700000,
-                     *             "price_policy_version": "marketplace-price-policy-v1"
+                     *             "price_policy_version": "marketplace-price-policy-v1",
+                     *             "smart_backed": true,
+                     *             "smart_limit_microcents": 2750000,
+                     *             "smart_unlimited": false
                      *           },
                      *           "public_slug": "shared-model",
                      *           "status": "draft",
@@ -10363,7 +10462,7 @@ export interface operations {
                  *       "visibility": "public"
                  *     }
                  */
-                "application/json": unknown;
+                "application/json": components["schemas"]["OwnerOfferCreateRequest"];
             };
         };
         responses: {
@@ -10390,6 +10489,7 @@ export interface operations {
                      *           }
                      *         ]
                      *       },
+                     *       "can_retry": false,
                      *       "current_policy": {
                      *         "currency": "eur",
                      *         "price_policy_version": "marketplace-price-policy-v1",
@@ -10417,11 +10517,17 @@ export interface operations {
                      *       "pending_approval_count": 0,
                      *       "policy_state": "current",
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       },
                      *       "public_slug": "shared-model",
                      *       "status": "draft",
@@ -10475,6 +10581,7 @@ export interface operations {
                      *           }
                      *         ]
                      *       },
+                     *       "can_retry": false,
                      *       "current_policy": {
                      *         "currency": "eur",
                      *         "price_policy_version": "marketplace-price-policy-v1",
@@ -10502,11 +10609,17 @@ export interface operations {
                      *       "pending_approval_count": 0,
                      *       "policy_state": "current",
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       },
                      *       "public_slug": "shared-model",
                      *       "status": "draft",
@@ -10560,7 +10673,7 @@ export interface operations {
                  *       "visibility": "public"
                  *     }
                  */
-                "application/json": unknown;
+                "application/json": components["schemas"]["OwnerOfferUpdateRequest"];
             };
         };
         responses: {
@@ -10587,6 +10700,7 @@ export interface operations {
                      *           }
                      *         ]
                      *       },
+                     *       "can_retry": false,
                      *       "current_policy": {
                      *         "currency": "eur",
                      *         "price_policy_version": "marketplace-price-policy-v1",
@@ -10614,11 +10728,17 @@ export interface operations {
                      *       "pending_approval_count": 0,
                      *       "policy_state": "current",
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       },
                      *       "public_slug": "shared-model",
                      *       "status": "draft",
@@ -10672,6 +10792,7 @@ export interface operations {
                      *           }
                      *         ]
                      *       },
+                     *       "can_retry": false,
                      *       "current_policy": {
                      *         "currency": "eur",
                      *         "price_policy_version": "marketplace-price-policy-v1",
@@ -10699,11 +10820,17 @@ export interface operations {
                      *       "pending_approval_count": 0,
                      *       "policy_state": "current",
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       },
                      *       "public_slug": "shared-model",
                      *       "status": "draft",
@@ -10938,6 +11065,7 @@ export interface operations {
                      *             }
                      *           ]
                      *         },
+                     *         "can_retry": false,
                      *         "current_policy": {
                      *           "currency": "eur",
                      *           "price_policy_version": "marketplace-price-policy-v1",
@@ -10965,11 +11093,17 @@ export interface operations {
                      *         "pending_approval_count": 0,
                      *         "policy_state": "current",
                      *         "pricing": {
+                     *           "active_snapshot_aggregate_microcents": 600000,
+                     *           "active_snapshot_runtime_microcents": 500000,
+                     *           "active_snapshot_storage_microcents": 100000,
                      *           "currency": "eur",
                      *           "current_microcents": 612345,
                      *           "expected_microcents": 700000,
                      *           "maximum_microcents": 700000,
-                     *           "price_policy_version": "marketplace-price-policy-v1"
+                     *           "price_policy_version": "marketplace-price-policy-v1",
+                     *           "smart_backed": true,
+                     *           "smart_limit_microcents": 2750000,
+                     *           "smart_unlimited": false
                      *         },
                      *         "public_slug": "shared-model",
                      *         "status": "draft",
@@ -11033,6 +11167,7 @@ export interface operations {
                      *           }
                      *         ]
                      *       },
+                     *       "can_retry": false,
                      *       "current_policy": {
                      *         "currency": "eur",
                      *         "price_policy_version": "marketplace-price-policy-v1",
@@ -11060,11 +11195,17 @@ export interface operations {
                      *       "pending_approval_count": 0,
                      *       "policy_state": "current",
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       },
                      *       "public_slug": "shared-model",
                      *       "status": "draft",
@@ -11076,6 +11217,112 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_shared_instances_owner_offers_offerID_retry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Offer ID */
+                offerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Fresh owner projection */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "active_member_count": 1,
+                     *       "availability": {
+                     *         "mode": "scheduled",
+                     *         "windows": [
+                     *           {
+                     *             "end": "17:00",
+                     *             "start": "08:00",
+                     *             "timezone": "Europe/Madrid",
+                     *             "weekdays": [
+                     *               1,
+                     *               2
+                     *             ]
+                     *           }
+                     *         ]
+                     *       },
+                     *       "can_retry": false,
+                     *       "current_policy": {
+                     *         "currency": "eur",
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "terms_hash": "3a1ce8b8984a2e05dbcd7efcafae9fe52a2083ee5ad25b6ae5fe9b7b194c9b0a",
+                     *         "terms_text": "Approved Marketplace terms.",
+                     *         "terms_version": "marketplace-terms-v1"
+                     *       },
+                     *       "id": "offer_xxx",
+                     *       "instance": {
+                     *         "display_name": "Llama",
+                     *         "model": "meta/llama",
+                     *         "region": "eu-west"
+                     *       },
+                     *       "join_policy": "open",
+                     *       "management": {
+                     *         "capabilities": {
+                     *           "can_copy": true,
+                     *           "can_discard": true,
+                     *           "can_edit": true,
+                     *           "can_publish": true
+                     *         },
+                     *         "state": "draft"
+                     *       },
+                     *       "minimum_duration_seconds": 3600,
+                     *       "pending_approval_count": 0,
+                     *       "policy_state": "current",
+                     *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
+                     *         "currency": "eur",
+                     *         "current_microcents": 612345,
+                     *         "expected_microcents": 700000,
+                     *         "maximum_microcents": 700000,
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
+                     *       },
+                     *       "public_slug": "shared-model",
+                     *       "status": "draft",
+                     *       "visibility": "public"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["SharedOfferOwnerViewResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Retry is not currently available */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -11239,6 +11486,7 @@ export interface operations {
                      *           }
                      *         ]
                      *       },
+                     *       "can_retry": false,
                      *       "current_policy": {
                      *         "currency": "eur",
                      *         "price_policy_version": "marketplace-price-policy-v1",
@@ -11266,11 +11514,17 @@ export interface operations {
                      *       "pending_approval_count": 0,
                      *       "policy_state": "current",
                      *       "pricing": {
+                     *         "active_snapshot_aggregate_microcents": 600000,
+                     *         "active_snapshot_runtime_microcents": 500000,
+                     *         "active_snapshot_storage_microcents": 100000,
                      *         "currency": "eur",
                      *         "current_microcents": 612345,
                      *         "expected_microcents": 700000,
                      *         "maximum_microcents": 700000,
-                     *         "price_policy_version": "marketplace-price-policy-v1"
+                     *         "price_policy_version": "marketplace-price-policy-v1",
+                     *         "smart_backed": true,
+                     *         "smart_limit_microcents": 2750000,
+                     *         "smart_unlimited": false
                      *       },
                      *       "public_slug": "shared-model",
                      *       "status": "draft",
@@ -14657,11 +14911,11 @@ export interface operations {
                     /** @description Output short edge; only valid with aspect_ratio=adaptive */
                     short_edge?: number;
                     /**
-                     * @description Generation task: t2va, fl2va, or ref2va
+                     * @description Generation task: t2va, fl2va, ref2va, t2v, or i2v
                      * @default t2va
                      * @enum {string}
                      */
-                    task?: "t2va" | "fl2va" | "ref2va";
+                    task?: "t2va" | "fl2va" | "ref2va" | "t2v" | "i2v";
                     /** @description Output width; provide with height; may accompany a matching standard aspect_ratio */
                     width?: number;
                 };
@@ -14772,6 +15026,9 @@ export interface operations {
                     /**
                      * @example {
                      *       "active_member_count": 2,
+                     *       "active_snapshot_aggregate_microcents": 600000,
+                     *       "active_snapshot_runtime_microcents": 500000,
+                     *       "active_snapshot_storage_microcents": 100000,
                      *       "availability_mode": "scheduled",
                      *       "best_effort": true,
                      *       "currency": "eur",
@@ -14809,6 +15066,9 @@ export interface operations {
                      *         ]
                      *       },
                      *       "slug": "shared-model",
+                     *       "smart_backed": true,
+                     *       "smart_limit_microcents": 2750000,
+                     *       "smart_unlimited": false,
                      *       "title": "Shared Model",
                      *       "workload_kind": "chat"
                      *     }
@@ -14868,6 +15128,9 @@ export interface operations {
                      *       "instances": [
                      *         {
                      *           "active_member_count": 2,
+                     *           "active_snapshot_aggregate_microcents": 600000,
+                     *           "active_snapshot_runtime_microcents": 500000,
+                     *           "active_snapshot_storage_microcents": 100000,
                      *           "availability_mode": "scheduled",
                      *           "best_effort": true,
                      *           "currency": "eur",
@@ -14905,6 +15168,9 @@ export interface operations {
                      *             ]
                      *           },
                      *           "slug": "shared-model",
+                     *           "smart_backed": true,
+                     *           "smart_limit_microcents": 2750000,
+                     *           "smart_unlimited": false,
                      *           "title": "Shared Model",
                      *           "workload_kind": "chat"
                      *         }
@@ -14952,6 +15218,9 @@ export interface operations {
                     /**
                      * @example {
                      *       "active_member_count": 2,
+                     *       "active_snapshot_aggregate_microcents": 600000,
+                     *       "active_snapshot_runtime_microcents": 500000,
+                     *       "active_snapshot_storage_microcents": 100000,
                      *       "availability_mode": "scheduled",
                      *       "best_effort": true,
                      *       "currency": "eur",
@@ -14989,6 +15258,9 @@ export interface operations {
                      *         ]
                      *       },
                      *       "slug": "shared-model",
+                     *       "smart_backed": true,
+                     *       "smart_limit_microcents": 2750000,
+                     *       "smart_unlimited": false,
                      *       "title": "Shared Model",
                      *       "workload_kind": "chat"
                      *     }
