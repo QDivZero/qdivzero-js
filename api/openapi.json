@@ -1121,6 +1121,9 @@
           "compatible": {
             "type": "boolean"
           },
+          "description": {
+            "type": "string"
+          },
           "downloads": {
             "type": "integer"
           },
@@ -8843,6 +8846,15 @@
             "required": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "description": "Number of models (default 100, max 500)",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer"
             }
           }
         ],

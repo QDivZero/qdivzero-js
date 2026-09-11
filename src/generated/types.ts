@@ -2678,6 +2678,7 @@ export interface components {
         HuggingFaceModelResponse: {
             compatibility_reason?: string;
             compatible?: boolean;
+            description?: string;
             downloads?: number;
             gguf_files?: components["schemas"]["HuggingFaceGGUFFileResponse"][];
             has_gguf?: boolean;
@@ -7297,6 +7298,8 @@ export interface operations {
             query?: {
                 /** @description Search query */
                 q?: string;
+                /** @description Number of models (default 100, max 500) */
+                limit?: number;
             };
             header?: never;
             path?: never;
