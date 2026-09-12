@@ -2990,6 +2990,9 @@
           "public_output_per_million_eur": {
             "type": "number"
           },
+          "realtime_mode": {
+            "type": "string"
+          },
           "state": {
             "type": "string"
           },
@@ -3000,6 +3003,12 @@
             "type": "array"
           },
           "supports_duplex": {
+            "type": "boolean"
+          },
+          "supports_realtime": {
+            "type": "boolean"
+          },
+          "supports_server_vad": {
             "type": "boolean"
           },
           "supports_thinking": {
@@ -13792,7 +13801,7 @@
     },
     "/v1/realtime": {
       "get": {
-        "description": "Proxies a duplex realtime session (/v1/realtime?duplex=1) to the instance serving the requested omni model. Accepts Bearer access tokens or API keys. Exchanges OpenAI-Realtime-style events (session.update, input_audio_buffer.append, response.create, response.audio.delta).",
+        "description": "Proxies a turn-based or native-duplex realtime session to the instance serving the requested Omni model. The legacy duplex=1 alias selects duplex mode; clients must still send the rc1 session.update with ref_audio. Accepts Bearer access tokens or API keys. Exchanges OpenAI-Realtime-style events (session.update, input_audio_buffer.append, response.create, response.audio.delta).",
         "operationId": "getV1Realtime",
         "parameters": [
           {
@@ -13805,7 +13814,25 @@
             }
           },
           {
-            "description": "Resume a duplex session id",
+            "description": "Realtime mode (turn or duplex)",
+            "in": "query",
+            "name": "mode",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Legacy native-duplex alias (1/true/on); requires a duplex-capable model",
+            "in": "query",
+            "name": "duplex",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Resume a realtime session id",
             "in": "query",
             "name": "session_id",
             "required": false,
@@ -13814,7 +13841,7 @@
             }
           },
           {
-            "description": "Auto-start the duplex session (1/true/on)",
+            "description": "Auto-start the realtime session (1/true/on)",
             "in": "query",
             "name": "autostart",
             "required": false,
@@ -13853,7 +13880,7 @@
             "ApiKeyAuth": []
           }
         ],
-        "summary": "Duplex realtime WebSocket proxy",
+        "summary": "Realtime WebSocket proxy",
         "tags": [
           "inference-v1"
         ]

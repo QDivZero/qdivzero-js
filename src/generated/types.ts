@@ -2136,8 +2136,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Duplex realtime WebSocket proxy
-         * @description Proxies a duplex realtime session (/v1/realtime?duplex=1) to the instance serving the requested omni model. Accepts Bearer access tokens or API keys. Exchanges OpenAI-Realtime-style events (session.update, input_audio_buffer.append, response.create, response.audio.delta).
+         * Realtime WebSocket proxy
+         * @description Proxies a turn-based or native-duplex realtime session to the instance serving the requested Omni model. The legacy duplex=1 alias selects duplex mode; clients must still send the rc1 session.update with ref_audio. Accepts Bearer access tokens or API keys. Exchanges OpenAI-Realtime-style events (session.update, input_audio_buffer.append, response.create, response.audio.delta).
          */
         get: operations["getV1Realtime"];
         put?: never;
@@ -3264,9 +3264,12 @@ export interface components {
             providers?: components["schemas"]["ServingProviderResponse"][];
             public_input_per_million_eur?: number;
             public_output_per_million_eur?: number;
+            realtime_mode?: string;
             state?: string;
             supported_protocols?: string[];
             supports_duplex?: boolean;
+            supports_realtime?: boolean;
+            supports_server_vad?: boolean;
             supports_thinking?: boolean;
             targets?: components["schemas"]["ServingTargetResponse"][];
             updated_at?: string;
@@ -11128,9 +11131,13 @@ export interface operations {
             query: {
                 /** @description Model serving name */
                 model: string;
-                /** @description Resume a duplex session id */
+                /** @description Realtime mode (turn or duplex) */
+                mode?: string;
+                /** @description Legacy native-duplex alias (1/true/on); requires a duplex-capable model */
+                duplex?: string;
+                /** @description Resume a realtime session id */
                 session_id?: string;
-                /** @description Auto-start the duplex session (1/true/on) */
+                /** @description Auto-start the realtime session (1/true/on) */
                 autostart?: string;
             };
             header?: never;
