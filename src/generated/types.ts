@@ -56,26 +56,6 @@ export interface paths {
         patch: operations["patchAccountsCurrent"];
         trace?: never;
     };
-    "/accounts/current/fiscal-profile": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * Update the current account fiscal profile
-         * @description Updates only the fiscal-profile fields of the active account context, preserving the existing account name and description.
-         */
-        patch: operations["patchAccountsCurrentFiscalProfile"];
-        trace?: never;
-    };
     "/accounts/current/invitations": {
         parameters: {
             query?: never;
@@ -218,6 +198,26 @@ export interface paths {
          * @description Always returns 200 with a generic message to avoid user enumeration.
          */
         post: operations["postAuthForgotPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/legal-acceptances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Record current legal acceptances
+         * @description Appends server-validated legal acceptance evidence for the authenticated user.
+         */
+        post: operations["postAuthLegalAcceptances"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2683,15 +2683,18 @@ export interface components {
             gguf_files?: components["schemas"]["HuggingFaceGGUFFileResponse"][];
             has_gguf?: boolean;
             has_safetensors?: boolean;
+            last_modified?: string;
             likes?: number;
             pipeline_tag?: string;
             repo_id?: string;
+            siblings?: string[];
             tags?: string[];
             warnings?: string[];
             workload_kind?: string;
         };
         HuggingFaceModelsResponse: {
             models?: components["schemas"]["HuggingFaceModelResponse"][];
+            next_cursor?: string;
         };
         HuggingFaceOrgInfoResponse: {
             avatar_url?: string;
@@ -2828,6 +2831,15 @@ export interface components {
         LedgerHistoryResponse: {
             entries?: components["schemas"]["LedgerEntryResponse"][];
             total?: number;
+        };
+        LegalAcceptanceItem: {
+            context: string;
+            document_type: string;
+            sha256: string;
+            version: string;
+        };
+        LegalAcceptanceRequest: {
+            acceptances: components["schemas"]["LegalAcceptanceItem"][];
         };
         ListDocumentsResponse: {
             documents?: components["schemas"]["ListedDocumentResponse"][];
@@ -3072,7 +3084,13 @@ export interface components {
             cf_turnstile_response?: string;
             email: string;
             password: string;
+            privacy_acknowledged: boolean;
+            privacy_sha256: string;
+            privacy_version: string;
             resend?: boolean;
+            terms_accepted: boolean;
+            terms_sha256: string;
+            terms_version: string;
         };
         RegisterResponse: {
             requires_verification?: boolean;
@@ -3463,9 +3481,6 @@ export interface components {
             prompt?: string;
             slug?: string;
         };
-        UpdateFiscalProfileRequest: {
-            fiscal_customer_type?: string;
-        };
         UpdateInstanceRequest: {
             description?: string;
             gpu_preferences?: components["schemas"]["PublicGPUPreferenceJSON"][];
@@ -3812,75 +3827,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateAccountRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AccountResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    patchAccountsCurrentFiscalProfile: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateFiscalProfileRequest"];
             };
         };
         responses: {
@@ -4474,6 +4420,57 @@ export interface operations {
             };
             /** @description Bad Request */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postAuthLegalAcceptances: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LegalAcceptanceRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7303,6 +7300,10 @@ export interface operations {
                 q?: string;
                 /** @description Number of models (default 100, max 500) */
                 limit?: number;
+                /** @description Catalog sort order */
+                sort?: string;
+                /** @description Pagination cursor */
+                cursor?: string;
             };
             header?: never;
             path?: never;
@@ -7367,6 +7368,15 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Precondition Failed */
+            412: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7465,7 +7475,7 @@ export interface operations {
     getHuggingfaceTrending: {
         parameters: {
             query?: {
-                /** @description Number of models (default 20, max 100) */
+                /** @description Number of models (default 20, max 20) */
                 limit?: number;
             };
             header?: never;

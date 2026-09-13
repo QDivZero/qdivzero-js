@@ -1139,6 +1139,9 @@
           "has_safetensors": {
             "type": "boolean"
           },
+          "last_modified": {
+            "type": "string"
+          },
           "likes": {
             "type": "integer"
           },
@@ -1147,6 +1150,12 @@
           },
           "repo_id": {
             "type": "string"
+          },
+          "siblings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
           },
           "tags": {
             "items": {
@@ -1174,6 +1183,9 @@
               "$ref": "#/components/schemas/HuggingFaceModelResponse"
             },
             "type": "array"
+          },
+          "next_cursor": {
+            "type": "string"
           }
         },
         "type": "object",
@@ -1607,6 +1619,47 @@
         },
         "type": "object",
         "x-go-name": "LedgerHistoryResponse"
+      },
+      "LegalAcceptanceItem": {
+        "properties": {
+          "context": {
+            "type": "string"
+          },
+          "document_type": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "context",
+          "document_type",
+          "sha256",
+          "version"
+        ],
+        "type": "object",
+        "x-go-name": "LegalAcceptanceItem"
+      },
+      "LegalAcceptanceRequest": {
+        "properties": {
+          "acceptances": {
+            "items": {
+              "$ref": "#/components/schemas/LegalAcceptanceItem"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "acceptances"
+        ],
+        "type": "object",
+        "x-go-name": "LegalAcceptanceRequest"
       },
       "ListDocumentsResponse": {
         "properties": {
@@ -2378,13 +2431,37 @@
             "minLength": 8,
             "type": "string"
           },
+          "privacy_acknowledged": {
+            "type": "boolean"
+          },
+          "privacy_sha256": {
+            "type": "string"
+          },
+          "privacy_version": {
+            "type": "string"
+          },
           "resend": {
             "type": "boolean"
+          },
+          "terms_accepted": {
+            "type": "boolean"
+          },
+          "terms_sha256": {
+            "type": "string"
+          },
+          "terms_version": {
+            "type": "string"
           }
         },
         "required": [
           "email",
-          "password"
+          "password",
+          "privacy_acknowledged",
+          "privacy_sha256",
+          "privacy_version",
+          "terms_accepted",
+          "terms_sha256",
+          "terms_version"
         ],
         "type": "object",
         "x-go-name": "RegisterRequest"
@@ -3582,15 +3659,6 @@
         "type": "object",
         "x-go-name": "UpdateFirewallRuleRequest"
       },
-      "UpdateFiscalProfileRequest": {
-        "properties": {
-          "fiscal_customer_type": {
-            "type": "string"
-          }
-        },
-        "type": "object",
-        "x-go-name": "UpdateFiscalProfileRequest"
-      },
       "UpdateInstanceRequest": {
         "properties": {
           "description": {
@@ -4357,93 +4425,6 @@
         ]
       }
     },
-    "/accounts/current/fiscal-profile": {
-      "patch": {
-        "description": "Updates only the fiscal-profile fields of the active account context, preserving the existing account name and description.",
-        "operationId": "patchAccountsCurrentFiscalProfile",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateFiscalProfileRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccountResponse"
-                }
-              }
-            },
-            "description": "OK"
-          },
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Bad Request"
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "description": "missing credentials or invalid access token"
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Forbidden"
-          },
-          "404": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Not Found"
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "summary": "Update the current account fiscal profile",
-        "tags": [
-          "accounts"
-        ]
-      }
-    },
     "/accounts/current/invitations": {
       "post": {
         "description": "Invites a user by email to join the active account context with a given role.",
@@ -5122,6 +5103,73 @@
           }
         },
         "summary": "Request a password reset email",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/legal-acceptances": {
+      "post": {
+        "description": "Appends server-validated legal acceptance evidence for the authenticated user.",
+        "operationId": "postAuthLegalAcceptances",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LegalAcceptanceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Record current legal acceptances",
         "tags": [
           "auth"
         ]
@@ -8865,6 +8913,24 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "description": "Catalog sort order",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Pagination cursor",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -8931,6 +8997,16 @@
               }
             },
             "description": "Unauthorized"
+          },
+          "412": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Precondition Failed"
           }
         },
         "security": [
@@ -9084,7 +9160,7 @@
         "operationId": "getHuggingfaceTrending",
         "parameters": [
           {
-            "description": "Number of models (default 20, max 100)",
+            "description": "Number of models (default 20, max 20)",
             "in": "query",
             "name": "limit",
             "required": false,
