@@ -401,6 +401,9 @@
           "model": {
             "type": "string"
           },
+          "speaker": {
+            "type": "string"
+          },
           "stream": {
             "type": "boolean"
           },

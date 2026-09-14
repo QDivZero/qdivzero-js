@@ -2458,6 +2458,7 @@ export interface components {
             messages?: components["schemas"]["ChatMessageEnvelope"][];
             modalities?: string[];
             model?: string;
+            speaker?: string;
             stream?: boolean;
             temperature?: number;
             top_p?: number;
