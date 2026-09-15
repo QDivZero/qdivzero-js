@@ -2448,6 +2448,8 @@ export interface components {
         };
         ChatMessageEnvelope: {
             content?: number[];
+            reasoning?: string;
+            reasoning_content?: string;
             role?: string;
             tool_call_id?: string;
             tool_calls?: components["schemas"]["ChatToolCallEnvelope"][];
