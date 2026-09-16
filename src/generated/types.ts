@@ -244,6 +244,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/auth/login/resend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resend a password sign-in email
+         * @description Revalidates the supplied password and sends a fresh sign-in email when the account uses email sign-in verification. The response is intentionally generic.
+         */
+        post: operations["postAuthLoginResend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/auth/me": {
         parameters: {
             query?: never;
@@ -472,6 +492,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/auth/resend-activation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resend an activation email
+         * @description Replaces the activation link for an eligible pending account. The response is intentionally generic.
+         */
+        post: operations["postAuthActivationResend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/auth/reset-password": {
         parameters: {
             query?: never;
@@ -547,6 +587,26 @@ export interface paths {
          */
         post: operations["postAuthTotpConfirm"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/trusted-browsers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke trusted browsers
+         * @description Revokes every trusted-browser token for the authenticated user and clears the current browser cookie.
+         */
+        delete: operations["deleteAuthTrustedBrowsers"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1948,6 +2008,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/me/tutorial-progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get incremental tutorial progress
+         * @description Returns the onboarding tutorial progress for the authenticated user in the active account. New users have found=false.
+         */
+        get: operations["getTutorialProgress"];
+        /**
+         * Update incremental tutorial progress
+         * @description Persists onboarding tutorial progress for the authenticated user in the active account. Completed step ids are merged server-side so steps are never lost.
+         */
+        put: operations["putTutorialProgress"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/audio/speech": {
         parameters: {
             query?: never;
@@ -2082,6 +2166,26 @@ export interface paths {
          * @description Generates images from a prompt. Accepts Bearer access tokens or API keys.
          */
         post: operations["postV1ImageGenerations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/endpoints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List public serving endpoints
+         * @description Returns all publicly available model-serving endpoints and their token prices. No authentication required.
+         */
+        get: operations["getV1PublicEndpoints"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2367,7 +2471,6 @@ export interface components {
         AccountResponse: {
             created_at_unix?: number;
             description?: string;
-            fiscal_customer_type?: string;
             id?: string;
             name?: string;
         };
@@ -3024,6 +3127,17 @@ export interface components {
             compact_threshold?: number;
             type?: string;
         };
+        PublicEndpointPriceResponse: {
+            input_per_million_eur?: number;
+            output_per_million_eur?: number;
+        };
+        PublicEndpointResponse: {
+            name?: string;
+            price?: components["schemas"]["PublicEndpointPriceResponse"];
+        };
+        PublicEndpointsResponse: {
+            endpoints?: components["schemas"]["PublicEndpointResponse"][];
+        };
         PublicGPUPreferenceJSON: {
             count?: number;
             public_gpu_id?: string;
@@ -3129,6 +3243,18 @@ export interface components {
             target_group_id?: string;
             updated_at?: string;
             workload_kind?: string;
+        };
+        ResendActivationEmailRequest: {
+            cf_turnstile_response?: string;
+            email: string;
+        };
+        ResendEmailResponse: {
+            message?: string;
+        };
+        ResendLoginEmailRequest: {
+            cf_turnstile_response?: string;
+            email: string;
+            password: string;
         };
         ResetPasswordRequest: {
             cf_turnstile_response?: string;
@@ -3454,6 +3580,12 @@ export interface components {
             locale?: string;
             name?: string;
         };
+        TutorialProgressResponse: {
+            completed_step_ids?: string[];
+            content_version?: number;
+            found?: boolean;
+            state?: string;
+        };
         UnreadCountResponse: {
             by_severity?: {
                 [key: string]: number;
@@ -3465,7 +3597,6 @@ export interface components {
         };
         UpdateAccountRequest: {
             description?: string;
-            fiscal_customer_type?: string;
             name?: string;
         };
         UpdateFirewallRequest: {
@@ -3538,6 +3669,11 @@ export interface components {
             enabled?: boolean;
             members?: components["schemas"]["TargetGroupMemberRequest"][];
             selection_policy?: string;
+        };
+        UpdateTutorialProgressRequest: {
+            completed_step_ids?: string[];
+            content_version?: number;
+            state?: string;
         };
         UpdateVectorDatabaseRequest: {
             description?: string;
@@ -4543,6 +4679,75 @@ export interface operations {
             };
         };
     };
+    postAuthLoginResend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResendLoginEmailRequest"];
+            };
+        };
+        responses: {
+            /** @description Accepted */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResendEmailResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     getAuthMe: {
         parameters: {
             query?: never;
@@ -5167,6 +5372,57 @@ export interface operations {
             };
         };
     };
+    postAuthActivationResend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResendActivationEmailRequest"];
+            };
+        };
+        responses: {
+            /** @description Accepted */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResendEmailResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     postAuthResetPassword: {
         parameters: {
             query?: never;
@@ -5350,6 +5606,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteAuthTrustedBrowsers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
                 };
             };
             /** @description Unauthorized */
@@ -10653,6 +10947,104 @@ export interface operations {
             };
         };
     };
+    getTutorialProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorialProgressResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    putTutorialProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTutorialProgressRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorialProgressResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     postV1AudioSpeech: {
         parameters: {
             query?: never;
@@ -11065,6 +11457,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicEndpoints: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicEndpointsResponse"];
                 };
             };
         };

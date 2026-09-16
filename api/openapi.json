@@ -99,9 +99,6 @@
           "description": {
             "type": "string"
           },
-          "fiscal_customer_type": {
-            "type": "string"
-          },
           "id": {
             "type": "string"
           },
@@ -2238,6 +2235,42 @@
         "type": "object",
         "x-go-name": "Protocol.ContextManagement"
       },
+      "PublicEndpointPriceResponse": {
+        "properties": {
+          "input_per_million_eur": {
+            "type": "number"
+          },
+          "output_per_million_eur": {
+            "type": "number"
+          }
+        },
+        "type": "object",
+        "x-go-name": "PublicEndpointPriceResponse"
+      },
+      "PublicEndpointResponse": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/PublicEndpointPriceResponse"
+          }
+        },
+        "type": "object",
+        "x-go-name": "PublicEndpointResponse"
+      },
+      "PublicEndpointsResponse": {
+        "properties": {
+          "endpoints": {
+            "items": {
+              "$ref": "#/components/schemas/PublicEndpointResponse"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "x-go-name": "PublicEndpointsResponse"
+      },
       "PublicGPUPreferenceJSON": {
         "properties": {
           "count": {
@@ -2588,6 +2621,49 @@
         },
         "type": "object",
         "x-go-name": "ReplicaSetResponse"
+      },
+      "ResendActivationEmailRequest": {
+        "properties": {
+          "cf_turnstile_response": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "x-go-name": "ResendActivationEmailRequest"
+      },
+      "ResendEmailResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "ResendEmailResponse"
+      },
+      "ResendLoginEmailRequest": {
+        "properties": {
+          "cf_turnstile_response": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "x-go-name": "ResendLoginEmailRequest"
       },
       "ResetPasswordRequest": {
         "properties": {
@@ -3577,6 +3653,27 @@
         "type": "object",
         "x-go-name": "Translation"
       },
+      "TutorialProgressResponse": {
+        "properties": {
+          "completed_step_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "content_version": {
+            "type": "integer"
+          },
+          "found": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "TutorialProgressResponse"
+      },
       "UnreadCountResponse": {
         "properties": {
           "by_severity": {
@@ -3605,9 +3702,6 @@
       "UpdateAccountRequest": {
         "properties": {
           "description": {
-            "type": "string"
-          },
-          "fiscal_customer_type": {
             "type": "string"
           },
           "name": {
@@ -3850,6 +3944,24 @@
         },
         "type": "object",
         "x-go-name": "UpdateTargetGroupRequest"
+      },
+      "UpdateTutorialProgressRequest": {
+        "properties": {
+          "completed_step_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "content_version": {
+            "type": "integer"
+          },
+          "state": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "UpdateTutorialProgressRequest"
       },
       "UpdateVectorDatabaseRequest": {
         "properties": {
@@ -5246,6 +5358,88 @@
         ]
       }
     },
+    "/auth/login/resend": {
+      "post": {
+        "description": "Revalidates the supplied password and sends a fresh sign-in email when the account uses email sign-in verification. The response is intentionally generic.",
+        "operationId": "postAuthLoginResend",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendLoginEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendEmailResponse"
+                }
+              }
+            },
+            "description": "Accepted"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Resend a password sign-in email",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/auth/me": {
       "get": {
         "description": "Resolves the user attached to the bearer token.",
@@ -6024,6 +6218,68 @@
         ]
       }
     },
+    "/auth/resend-activation": {
+      "post": {
+        "description": "Replaces the activation link for an eligible pending account. The response is intentionally generic.",
+        "operationId": "postAuthActivationResend",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendActivationEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendEmailResponse"
+                }
+              }
+            },
+            "description": "Accepted"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Resend an activation email",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/auth/reset-password": {
       "post": {
         "description": "Consumes the reset token, updates the password, and returns a fresh session.",
@@ -6272,6 +6528,53 @@
           }
         ],
         "summary": "Confirm TOTP enrollment",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/trusted-browsers": {
+      "delete": {
+        "description": "Revokes every trusted-browser token for the authenticated user and clears the current browser cookie.",
+        "operationId": "deleteAuthTrustedBrowsers",
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Revoke trusted browsers",
         "tags": [
           "auth"
         ]
@@ -13221,6 +13524,128 @@
         ]
       }
     },
+    "/users/me/tutorial-progress": {
+      "get": {
+        "description": "Returns the onboarding tutorial progress for the authenticated user in the active account. New users have found=false.",
+        "operationId": "getTutorialProgress",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TutorialProgressResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "missing credentials or invalid access token"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Get incremental tutorial progress",
+        "tags": [
+          "tutorial"
+        ]
+      },
+      "put": {
+        "description": "Persists onboarding tutorial progress for the authenticated user in the active account. Completed step ids are merged server-side so steps are never lost.",
+        "operationId": "putTutorialProgress",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTutorialProgressRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TutorialProgressResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "missing credentials or invalid access token"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Update incremental tutorial progress",
+        "tags": [
+          "tutorial"
+        ]
+      }
+    },
     "/v1/audio/speech": {
       "post": {
         "description": "Generates audio from text. Accepts Bearer access tokens or API keys.",
@@ -13796,6 +14221,28 @@
         "summary": "OpenAI-compatible image generations",
         "tags": [
           "inference-v1"
+        ]
+      }
+    },
+    "/v1/public/endpoints": {
+      "get": {
+        "description": "Returns all publicly available model-serving endpoints and their token prices. No authentication required.",
+        "operationId": "getV1PublicEndpoints",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicEndpointsResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "List public serving endpoints",
+        "tags": [
+          "pricing"
         ]
       }
     },
