@@ -4,7 +4,7 @@ const client = createQDivZeroClient({
   apiKey: process.env.QDIV0_API_KEY ?? "",
 });
 
-const { data, error, response } = await client.GET("/accounts");
+const { data, error, response } = await client.GET("/v1/accounts");
 if (response.status !== 200) {
   console.error(`get accounts: status ${response.status}`, error);
   process.exit(1);

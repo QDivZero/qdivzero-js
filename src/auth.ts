@@ -22,6 +22,7 @@ export class TokenManager {
     private baseUrl: string,
     opts: AuthOptions = {},
   ) {
+    this.baseUrl = baseUrl.replace(/\/+$/, "");
     this.apply(opts);
   }
 
@@ -39,60 +40,131 @@ export class TokenManager {
   }
 
   applyAuth(request: Request): void {
-    if (request.headers.has("Authorization")) return;
-    if (this.rawAuth) request.headers.set("Authorization", this.rawAuth);
-    else if (this.accessToken)
-      request.headers.set("Authorization", `Bearer ${this.accessToken}`);
-    else if (this.apiKey)
-      request.headers.set("Authorization", `Bearer ${this.apiKey}`);
+    const url = new URL(request.url);
+    if (url.origin !== new URL(this.baseUrl).origin) return;
+    if (!request.headers.has("Authorization")) {
+      if (this.rawAuth) request.headers.set("Authorization", this.rawAuth);
+      else if (this.accessToken)
+        this.setCookie(request, "qdiv0_access", this.accessToken);
+      else if (this.apiKey)
+        request.headers.set("Authorization", `Bearer ${this.apiKey}`);
+    }
+    if (url.pathname.endsWith("/auth/refresh") && this.refreshToken) {
+      this.setCookie(request, "qdiv0_refresh", this.refreshToken);
+    }
   }
 
-  canRefresh(path: string): boolean {
+  private setCookie(request: Request, name: string, value: string): void {
+    const parts = (request.headers.get("cookie") ?? "")
+      .split(";")
+      .map((part) => part.trim())
+      .filter((part) => part && part.split("=", 1)[0] !== name);
+    parts.push(`${name}=${value}`);
+    request.headers.set("cookie", parts.join("; "));
+  }
+
+  canRefresh(url: string): boolean {
+    const parsed = new URL(url);
     return (
-      path !== "/auth/login" &&
-      path !== "/auth/refresh" &&
+      parsed.origin === new URL(this.baseUrl).origin &&
+      !parsed.pathname.endsWith("/auth/login") &&
+      !parsed.pathname.endsWith("/auth/refresh") &&
       (this.refreshToken !== "" || (this.email !== "" && this.password !== ""))
     );
   }
 
-  async refreshNow(): Promise<void> {
-    if (this.refreshing) return this.refreshing;
-    this.refreshing = this.doRefresh().finally(() => {
+  async login(email: string, password: string): Promise<void> {
+    if (this.refreshing) {
+      try {
+        await this.refreshing;
+      } catch {
+        // A new explicit login can recover from an earlier failed refresh.
+      }
+    }
+    this.email = email;
+    this.password = password;
+    this.refreshing = this.doRefresh(true).finally(() => {
       this.refreshing = null;
     });
     return this.refreshing;
   }
 
-  private async doRefresh(): Promise<void> {
-    if (this.refreshToken) {
-      const res = await fetch(`${this.baseUrl}/auth/refresh`, {
+  async refreshNow(sentAccess?: string): Promise<void> {
+    if (
+      sentAccess !== undefined &&
+      this.accessToken &&
+      this.accessToken !== sentAccess
+    )
+      return;
+    if (this.refreshing) return this.refreshing;
+    this.refreshing = this.doRefresh(false).finally(() => {
+      this.refreshing = null;
+    });
+    return this.refreshing;
+  }
+
+  captureSession(response: Response): boolean {
+    if (
+      response.url &&
+      new URL(response.url).origin !== new URL(this.baseUrl).origin
+    )
+      return false;
+    let access = "";
+    let refresh = "";
+    for (const raw of response.headers.getSetCookie()) {
+      const [pair, ...attributes] = raw.split(";");
+      if (
+        attributes.some((part) => {
+          const match = /^\s*max-age\s*=\s*(-?\d+)\s*$/i.exec(part);
+          return match !== null && Number(match[1]) <= 0;
+        })
+      )
+        continue;
+      const pos = pair.indexOf("=");
+      if (pos < 0) continue;
+      const name = pair.slice(0, pos).trim();
+      const value = pair.slice(pos + 1).trim();
+      if (name === "qdiv0_access") access = value;
+      if (name === "qdiv0_refresh") refresh = value;
+    }
+    if (!access || !refresh) return false;
+    this.accessToken = access;
+    this.refreshToken = refresh;
+    return true;
+  }
+
+  private async doRefresh(forceLogin: boolean): Promise<void> {
+    if (this.refreshToken && !forceLogin) {
+      const res = await fetch(`${this.baseUrl}/v1/auth/refresh`, {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ refresh_token: this.refreshToken }),
+        headers: { cookie: `qdiv0_refresh=${this.refreshToken}` },
+        redirect: "manual",
       });
-      if (!res.ok)
+      if (res.status !== 200)
         throw new Error(`qdivzero: refresh token: status ${res.status}`);
-      const body = (await res.json()) as { access_token?: string };
-      if (!body.access_token)
-        throw new Error("qdivzero: refresh token: empty access token");
-      this.accessToken = body.access_token;
+      if (!this.captureSession(res))
+        throw new Error("qdivzero: refresh token: missing session cookies");
       return;
     }
     if (this.email && this.password) {
-      const res = await fetch(`${this.baseUrl}/auth/login`, {
+      const res = await fetch(`${this.baseUrl}/v1/auth/login`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ email: this.email, password: this.password }),
+        redirect: "manual",
       });
-      if (!res.ok) throw new Error(`qdivzero: login: status ${res.status}`);
-      const body = (await res.json()) as {
-        access_token?: string;
-        refresh_token?: string;
-      };
-      if (!body.access_token)
-        throw new Error("qdivzero: login: empty access token");
-      this.accessToken = body.access_token;
-      if (body.refresh_token) this.refreshToken = body.refresh_token;
+      if (res.status !== 200)
+        throw new Error(`qdivzero: login: status ${res.status}`);
+      if (!this.captureSession(res)) {
+        const body = (await res.json().catch(() => ({}))) as {
+          next_step?: string;
+        };
+        if (body.next_step)
+          throw new Error(
+            `qdivzero: login: verification required: ${body.next_step}`,
+          );
+        throw new Error("qdivzero: login: missing session cookies");
+      }
       return;
     }
     throw new Error("qdivzero: no refresh token or credentials available");
@@ -100,23 +172,28 @@ export class TokenManager {
 }
 
 export function authMiddleware(manager: TokenManager): Middleware {
-  const sent = new WeakMap<Request, Request>();
+  const sent = new WeakMap<Request, { original: Request; access: string }>();
   return {
     async onRequest({ request }) {
       // Cache a pristine clone BEFORE dispatch: cloning after the request is
       // sent throws "Body is unusable" for body-bearing requests.
-      sent.set(request, request.clone());
+      sent.set(request, { original: request.clone(), access: manager.token });
       manager.applyAuth(request);
     },
     async onResponse({ request, response }) {
+      const pathname = new URL(request.url).pathname;
       if (
-        response.status === 401 &&
-        manager.canRefresh(new URL(request.url).pathname)
+        response.status === 200 &&
+        (pathname.endsWith("/auth/login") || pathname.endsWith("/auth/refresh"))
       ) {
-        const original = sent.get(request);
+        manager.captureSession(response);
+      }
+      if (response.status === 401 && manager.canRefresh(request.url)) {
+        const entry = sent.get(request);
         sent.delete(request);
-        if (original) {
-          await manager.refreshNow();
+        if (entry) {
+          const { original, access } = entry;
+          await manager.refreshNow(access);
           original.headers.delete("Authorization"); // defensive: clone is pristine (taken before auth)
           manager.applyAuth(original);
           return fetch(original);

@@ -4,59 +4,7 @@
  */
 
 export interface paths {
-    "/accounts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List user accounts
-         * @description Returns the accounts and memberships visible to the authenticated user.
-         */
-        get: operations["getAccounts"];
-        put?: never;
-        /**
-         * Create an account
-         * @description Creates a new account owned by the authenticated user.
-         */
-        post: operations["postAccounts"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounts/current": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get the selected account
-         * @description Returns the account resolved from the active account context.
-         */
-        get: operations["getAccountsCurrent"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete the selected account
-         * @description Deletes the active account context.
-         */
-        delete: operations["deleteAccountsCurrent"];
-        options?: never;
-        head?: never;
-        /**
-         * Update the selected account
-         * @description Updates editable metadata for the active account context.
-         */
-        patch: operations["patchAccountsCurrent"];
-        trace?: never;
-    };
-    "/accounts/current/invitations": {
+    "/api/show": {
         parameters: {
             query?: never;
             header?: never;
@@ -66,1039 +14,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Create an invitation for the selected account
-         * @description Invites a user by email to join the active account context with a given role.
+         * Show model metadata
+         * @description Returns the enabled account model's effective context and capabilities in Ollama-compatible form. This metadata query does not run inference or start instances.
          */
-        post: operations["postAccountsCurrentInvitations"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounts/current/invitations/{invitationID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Cancel an invitation for the selected account
-         * @description Cancels a pending invitation issued by the active account context.
-         */
-        delete: operations["deleteAccountsCurrentInvitationsByInvitationID"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounts/current/members": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List selected account members
-         * @description Returns the members and roles for the active account context.
-         */
-        get: operations["getAccountsCurrentMembers"];
-        put?: never;
-        /**
-         * Add a member to the selected account
-         * @description Adds a registered user to the active account context or updates their role if they already belong to it.
-         */
-        post: operations["postAccountsCurrentMembers"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounts/current/members/{userID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * Update a selected account member role
-         * @description Updates the role of an existing user within the active account context.
-         */
-        patch: operations["patchAccountsCurrentMembersByUserID"];
-        trace?: never;
-    };
-    "/api-keys": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List API keys for the selected account
-         * @description Returns the API keys issued for the active account context.
-         */
-        get: operations["getApiKeys"];
-        put?: never;
-        /**
-         * Create an API key for the selected account
-         * @description Issues a new API key for the active account context and returns the plaintext key once.
-         */
-        post: operations["postApiKeys"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api-keys/{keyID}/revoke": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Revoke an API key
-         * @description Revokes an API key issued for the active account context.
-         */
-        post: operations["postApiKeysKeyIDRevoke"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/forgot-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Request a password reset email
-         * @description Always returns 200 with a generic message to avoid user enumeration.
-         */
-        post: operations["postAuthForgotPassword"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/legal-acceptances": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Record current legal acceptances
-         * @description Appends server-validated legal acceptance evidence for the authenticated user.
-         */
-        post: operations["postAuthLegalAcceptances"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Authenticate a user
-         * @description Authenticates a user with email and password. If verification is required, the JSON response may include a next_step. Only successful authentication sets the HTTP-only qdiv0_access and qdiv0_refresh browser-session cookies; the JSON response contains no access or refresh token values.
-         */
-        post: operations["postAuthLogin"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/login/resend": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Resend a password sign-in email
-         * @description Revalidates the supplied password and sends a fresh sign-in email when the account uses email sign-in verification. The response is intentionally generic.
-         */
-        post: operations["postAuthLoginResend"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Return the current authenticated user
-         * @description Resolves the user attached to the bearer token.
-         */
-        get: operations["getAuthMe"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/passkeys": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List passkeys
-         * @description Returns the current user's passkey credentials.
-         */
-        get: operations["getAuthPasskeys"];
-        put?: never;
-        /**
-         * Register a passkey
-         * @description Stores a passkey credential for the authenticated user.
-         */
-        post: operations["postAuthPasskeys"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/passkeys/begin-login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Begin passkey login
-         * @description Creates a passkey login challenge for the provided email.
-         */
-        post: operations["postAuthPasskeysBeginLogin"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/passkeys/begin-registration": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Begin passkey registration
-         * @description Creates a passkey registration challenge for the authenticated user.
-         */
-        post: operations["postAuthPasskeysBeginRegistration"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/passkeys/finish-login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Finish passkey login
-         * @description Consumes a passkey login challenge and returns a session.
-         */
-        post: operations["postAuthPasskeysFinishLogin"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/passkeys/finish-registration": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Finish passkey registration
-         * @description Consumes a passkey registration challenge and stores the credential.
-         */
-        post: operations["postAuthPasskeysFinishRegistration"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/passkeys/{credentialID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Remove a passkey
-         * @description Deletes a passkey credential from the authenticated user.
-         */
-        delete: operations["deleteAuthPasskeys"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * Change the current user's password
-         * @description Requires the authenticated user to provide the current password and a new password.
-         */
-        patch: operations["patchAuthPassword"];
-        trace?: never;
-    };
-    "/auth/preferences": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get the current user's security preferences
-         * @description Returns the per-user security toggles for the authenticated user.
-         */
-        get: operations["getAuthPreferences"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * Update the current user's security preferences
-         * @description Partial update of the per-user security toggles. Only fields present in the body are applied.
-         */
-        patch: operations["patchAuthPreferences"];
-        trace?: never;
-    };
-    "/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Refresh the browser session
-         * @description Consumes the HTTP-only qdiv0_refresh cookie and, on success, resets the qdiv0_access and qdiv0_refresh browser-session cookies. The endpoint has no JSON request body and the JSON response contains no access or refresh token values.
-         */
-        post: operations["postAuthRefresh"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/register": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Register a new user
-         * @description Creates a pending account using email and password credentials. Email verification is required; registration does not issue session tokens or cookies, and the JSON response contains no access or refresh token values.
-         */
-        post: operations["postAuthRegister"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/resend-activation": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Resend an activation email
-         * @description Replaces the activation link for an eligible pending account. The response is intentionally generic.
-         */
-        post: operations["postAuthActivationResend"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/reset-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Reset a password using a one-time token
-         * @description Consumes the reset token, updates the password, and returns a fresh session.
-         */
-        post: operations["postAuthResetPassword"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/totp": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Disable TOTP
-         * @description Removes the current user's TOTP credential.
-         */
-        delete: operations["deleteAuthTotp"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/totp/begin": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Start TOTP enrollment
-         * @description Returns a new TOTP secret and otpauth URI for the authenticated user.
-         */
-        post: operations["postAuthTotpBegin"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/totp/confirm": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Confirm TOTP enrollment
-         * @description Stores a TOTP secret for the authenticated user after verifying the code.
-         */
-        post: operations["postAuthTotpConfirm"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/trusted-browsers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Revoke trusted browsers
-         * @description Revokes every trusted-browser token for the authenticated user and clears the current browser cookie.
-         */
-        delete: operations["deleteAuthTrustedBrowsers"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/verify-email": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Verify an email activation link
-         * @description Consumes the activation token and returns a session.
-         */
-        get: operations["getAuthVerifyEmail"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/balance": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get the current account balance
-         * @description Returns the billing balance of the authenticated account.
-         */
-        get: operations["getBillingBalance"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/checkout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Create a checkout session
-         * @description Creates a billing checkout session for the authenticated account.
-         */
-        post: operations["postBillingCheckout"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/debit": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Debit the current account balance
-         * @description Debits a positive amount from the authenticated account.
-         */
-        post: operations["postBillingDebit"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/debit/operations/{operationID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get a debit operation */
-        get: operations["getBillingDebitOperation"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/ledger": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List ledger entries
-         * @description Returns ledger movements for the authenticated account.
-         */
-        get: operations["getBillingLedger"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/payments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List payments for the authenticated account
-         * @description Returns the payment history for the active account context.
-         */
-        get: operations["getBillingPayments"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/payments/{paymentID}/invoice.pdf": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Download a payment invoice PDF
-         * @description Returns the invoice PDF for a given payment of the active account context.
-         */
-        get: operations["getBillingPaymentsPaymentIDInvoicePDF"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/firewall-rules": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List firewall rules
-         * @description Returns all firewall rules for the authenticated account.
-         */
-        get: operations["getFirewallRules"];
-        put?: never;
-        /**
-         * Create a firewall rule
-         * @description Creates a new firewall rule for the authenticated account.
-         */
-        post: operations["postFirewallRule"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/firewall-rules/{ruleSlug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a firewall rule
-         * @description Returns a single firewall rule by slug.
-         */
-        get: operations["getFirewallRule"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete a firewall rule
-         * @description Removes a firewall rule by slug.
-         */
-        delete: operations["deleteFirewallRule"];
-        options?: never;
-        head?: never;
-        /**
-         * Update a firewall rule
-         * @description Partially updates a firewall rule by slug.
-         */
-        patch: operations["patchFirewallRule"];
-        trace?: never;
-    };
-    "/firewall-rules/{ruleSlug}:evaluate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Evaluate a firewall rule
-         * @description Runs input against a single firewall rule and returns the evaluation result.
-         */
-        post: operations["postFirewallRuleEvaluate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/firewalls": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List firewalls
-         * @description Returns all firewalls for the authenticated account.
-         */
-        get: operations["getFirewalls"];
-        put?: never;
-        /**
-         * Create a firewall
-         * @description Creates a new firewall for the authenticated account.
-         */
-        post: operations["postFirewall"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/firewalls/{firewallSlug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a firewall
-         * @description Returns a single firewall by slug.
-         */
-        get: operations["getFirewall"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete a firewall
-         * @description Removes a firewall by slug.
-         */
-        delete: operations["deleteFirewall"];
-        options?: never;
-        head?: never;
-        /**
-         * Update a firewall
-         * @description Partially updates a firewall by slug.
-         */
-        patch: operations["patchFirewall"];
-        trace?: never;
-    };
-    "/firewalls/{firewallSlug}:evaluate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Evaluate a firewall
-         * @description Runs input against a firewall and returns the evaluation result.
-         */
-        post: operations["postFirewallEvaluate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List vector databases
-         * @description Returns the vector databases owned by the authenticated account.
-         */
-        get: operations["getVectorDatabases"];
-        put?: never;
-        /**
-         * Create a vector database
-         * @description Creates a new vector database for the authenticated account.
-         */
-        post: operations["postVectorDatabases"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a vector database
-         * @description Returns a single vector database owned by the authenticated account.
-         */
-        get: operations["getVectorDatabase"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete a vector database
-         * @description Removes a vector database owned by the authenticated account.
-         */
-        delete: operations["deleteVectorDatabase"];
-        options?: never;
-        head?: never;
-        /**
-         * Update a vector database
-         * @description Updates the slug, name, or description of an existing vector database.
-         */
-        patch: operations["patchVectorDatabase"];
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/documents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List documents in a vector database
-         * @description Returns documents stored in a vector database with optional pagination.
-         */
-        get: operations["getVectorDatabaseDocuments"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/index-direct": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Index documents directly
-         * @description Indexes documents into a vector database synchronously.
-         */
-        post: operations["postVectorDatabaseIndexDirect"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/index-jobs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Enqueue an index job
-         * @description Enqueues documents for asynchronous indexing into a vector database.
-         */
-        post: operations["postVectorDatabaseIndexJobs"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/index-jobs/{jobID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get an index job
-         * @description Returns the status of an asynchronous index job.
-         */
-        get: operations["getVectorDatabaseIndexJob"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/recommend": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Recommend documents
-         * @description Returns recommended documents for a recommend token.
-         */
-        post: operations["postVectorDatabaseRecommend"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Search a vector database
-         * @description Searches a vector database by query text and/or image URL.
-         */
-        post: operations["postVectorDatabaseSearch"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/flexible-vector-databases/{databaseID}/view-element": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * View an element
-         * @description Records a view for a document and returns a recommend token.
-         */
-        post: operations["postVectorDatabaseViewElement"];
+        post: operations["postOllamaShow"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1144,503 +63,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/huggingface/embeddings": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Search embedding models
-         * @description Searches Hugging Face for embedding models.
-         */
-        get: operations["getHuggingfaceEmbeddings"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/huggingface/files": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Hugging Face file sizes
-         * @description Returns GGUF file sizes and quantization for a Hugging Face repository.
-         */
-        get: operations["getHuggingfaceFiles"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/huggingface/models": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Search Hugging Face models
-         * @description Searches Hugging Face for compatible models matching the query.
-         */
-        get: operations["getHuggingfaceModels"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/huggingface/orgs/{org}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Hugging Face organization info
-         * @description Returns profile information for a Hugging Face organization.
-         */
-        get: operations["getHuggingfaceOrgs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/huggingface/search-tag": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Search Hugging Face models by tag
-         * @description Searches Hugging Face for models matching a query and pipeline tag.
-         */
-        get: operations["getHuggingfaceSearchTag"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/huggingface/trending": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Trending Hugging Face models
-         * @description Returns trending Hugging Face models.
-         */
-        get: operations["getHuggingfaceTrending"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instance-config/gpus": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List available GPUs
-         * @description Returns the GPU catalog with pricing, regions, and availability for the authenticated account.
-         */
-        get: operations["getInstanceConfigGpus"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instances": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List inference instances */
-        get: operations["getInstances"];
-        put?: never;
-        /** Create an inference instance */
-        post: operations["postInstances"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instances/{instanceID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get an inference instance */
-        get: operations["getInstanceByID"];
-        put?: never;
-        post?: never;
-        /** Delete an inference instance */
-        delete: operations["deleteInstance"];
-        options?: never;
-        head?: never;
-        /** Update an inference instance */
-        patch: operations["patchInstance"];
-        trace?: never;
-    };
-    "/instances/{instanceID}/preview": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Preview smart selection for an existing instance update
-         * @description Previews the compatibility and smart selection for an existing instance while applying smart-setting overrides from the request body. Lets the instance settings page fetch the same backend-filtered GPU list used at launch time instead of reimplementing compatibility filtering in the UI.
-         */
-        post: operations["postInstancePreviewUpdate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instances/{instanceID}/schedule-rules": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List schedule rules for an instance */
-        get: operations["getInstanceScheduleRules"];
-        put?: never;
-        /** Create a schedule rule for an instance */
-        post: operations["postInstanceScheduleRule"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instances/{instanceID}/schedule-rules/{ruleID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Delete a schedule rule for an instance */
-        delete: operations["deleteInstanceScheduleRule"];
-        options?: never;
-        head?: never;
-        /** Update a schedule rule for an instance */
-        patch: operations["patchInstanceScheduleRule"];
-        trace?: never;
-    };
-    "/instances/{instanceID}/start": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Start an inference instance */
-        post: operations["postInstanceStart"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instances/{instanceID}/stop": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Stop an inference instance */
-        post: operations["postInstanceStop"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/instances/{instanceID}/usage": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get an inference instance usage and cost breakdown */
-        get: operations["getInstanceUsage"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invitations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List pending invitations for the authenticated user
-         * @description Returns invitations pending acceptance that were sent to the authenticated user's email.
-         */
-        get: operations["getInvitations"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invitations/accept": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Accept an invitation
-         * @description Accepts a pending invitation by token or invitation ID and attaches the authenticated user to the account.
-         */
-        post: operations["postInvitationsAccept"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/models/fixed": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List fixed models
-         * @description Returns the catalog of fixed (curated) models supported by the platform.
-         */
-        get: operations["getModelsFixed"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List notifications
-         * @description Returns notifications for the authenticated account, newest first.
-         */
-        get: operations["getNotifications"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/notifications/dismiss": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Dismiss notifications
-         * @description Dismisses the given notifications for the authenticated account.
-         */
-        post: operations["postNotificationsDismiss"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/notifications/read-all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Mark all notifications as read
-         * @description Marks all notifications matching the optional filters as read.
-         */
-        post: operations["postNotificationsMarkAllRead"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/notifications/unread-count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get unread notification count
-         * @description Returns the number of unread notifications for the authenticated account.
-         */
-        get: operations["getNotificationsUnreadCount"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/notifications/{notificationID}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Mark a notification as read
-         * @description Marks a single notification as read for the authenticated account.
-         */
-        post: operations["postNotificationsMarkRead"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/replica-sets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List replica sets */
-        get: operations["getReplicaSets"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/replica-sets/{replicaSetID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get a replica set */
-        get: operations["getReplicaSet"];
-        put?: never;
-        post?: never;
-        /** Delete a replica set */
-        delete: operations["deleteReplicaSet"];
-        options?: never;
-        head?: never;
-        /** Update a replica set */
-        patch: operations["patchReplicaSet"];
-        trace?: never;
-    };
-    "/replica-sets/{replicaSetID}/scale": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Scale a replica set */
-        post: operations["postReplicaSetScale"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/runtime/notify/crash": {
         parameters: {
             query?: never;
@@ -1661,43 +83,99 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/serving-endpoints": {
+    "/runtime/notify/progress": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List serving endpoints */
-        get: operations["getServingEndpoints"];
+        get?: never;
         put?: never;
-        /** Create a serving endpoint */
-        post: operations["postServingEndpoint"];
+        /**
+         * Report runtime startup progress
+         * @description Authenticated runtime-only endpoint. Send attempt_id and phase to advance startup (204). Once per launcher boot, send launch_id and phase=preparing_runtime to resolve the current attempt, including resumed containers (200). Unknown or stale attempts cannot advance progress. Readiness is verified independently.
+         */
+        post: operations["postRuntimeNotifyProgress"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/smart-balancers": {
+    "/v1/accounts": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List smart balancers */
-        get: operations["getSmartBalancers"];
+        /**
+         * List user accounts
+         * @description Returns the accounts and memberships visible to the authenticated user.
+         */
+        get: operations["getAccounts"];
         put?: never;
-        /** Create a smart balancer */
-        post: operations["postSmartBalancer"];
+        /**
+         * Create an account
+         * @description Creates a new account owned by the authenticated user.
+         */
+        post: operations["postAccounts"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/smart-balancers/{smartBalancerID}": {
+    "/v1/accounts/current": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the selected account
+         * @description Returns the account resolved from the active account context.
+         */
+        get: operations["getAccountsCurrent"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete the selected account
+         * @description Deletes the active account context.
+         */
+        delete: operations["deleteAccountsCurrent"];
+        options?: never;
+        head?: never;
+        /**
+         * Update the selected account
+         * @description Updates editable metadata for the active account context.
+         */
+        patch: operations["patchAccountsCurrent"];
+        trace?: never;
+    };
+    "/v1/accounts/current/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create an invitation for the selected account
+         * @description Invites a user by email to join the active account context with a given role.
+         */
+        post: operations["postAccountsCurrentInvitations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/accounts/current/invitations/{invitationID}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1707,15 +185,17 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Delete a smart balancer */
-        delete: operations["deleteSmartBalancer"];
+        /**
+         * Cancel an invitation for the selected account
+         * @description Cancels a pending invitation issued by the active account context.
+         */
+        delete: operations["deleteAccountsCurrentInvitationsByInvitationID"];
         options?: never;
         head?: never;
-        /** Update a smart balancer */
-        patch: operations["patchSmartBalancer"];
+        patch?: never;
         trace?: never;
     };
-    "/storage/volumes": {
+    "/v1/accounts/current/members": {
         parameters: {
             query?: never;
             header?: never;
@@ -1723,128 +203,43 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * List storage volumes
-         * @description Lists all persistent storage volumes owned by the authenticated account.
+         * List selected account members
+         * @description Returns the members and roles for the active account context.
          */
-        get: operations["getStorageVolumes"];
+        get: operations["getAccountsCurrentMembers"];
         put?: never;
         /**
-         * Create a storage volume
-         * @description Creates a persistent storage volume for model checkpoints and caches.
+         * Add a member to the selected account
+         * @description Adds a registered user to the active account context or updates their role if they already belong to it.
          */
-        post: operations["postStorageVolumes"];
+        post: operations["postAccountsCurrentMembers"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/storage/volumes/{volumeID}": {
+    "/v1/accounts/current/members/{userID}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Get a storage volume
-         * @description Returns details for a specific persistent storage volume.
-         */
-        get: operations["getStorageVolume"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete a storage volume
-         * @description Deletes a persistent storage volume and its contents.
-         */
-        delete: operations["deleteStorageVolume"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/target-groups": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List target groups */
-        get: operations["getTargetGroups"];
-        put?: never;
-        /** Create a target group */
-        post: operations["postTargetGroup"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/target-groups/{targetGroupID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get a target group */
-        get: operations["getTargetGroup"];
-        put?: never;
-        post?: never;
-        /** Delete a target group */
-        delete: operations["deleteTargetGroup"];
-        options?: never;
-        head?: never;
-        /** Update a target group */
-        patch: operations["patchTargetGroup"];
-        trace?: never;
-    };
-    "/tool-deployments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List tool deployments
-         * @description List deployments owned by the authenticated account.
-         */
-        get: operations["get_tool_deployments"];
-        put?: never;
-        /**
-         * Create tool deployment
-         * @description Create an account-bound Lambda tool deployment from a strict YAML manifest. An empty spec.server.image is valid only for a pending registration; the immutable staging artifact is established at finalization.
-         */
-        post: operations["post_tool_deployments"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tool-deployments/{deploymentID}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get tool deployment
-         * @description Get an account-bound tool deployment without exposing runtime credentials or tenant internals.
-         */
-        get: operations["get_tool_deployments_deploymentID"];
+        get?: never;
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Update a selected account member role
+         * @description Updates the role of an existing user within the active account context.
+         */
+        patch: operations["patchAccountsCurrentMembersByUserID"];
         trace?: never;
     };
-    "/tool-deployments/{deploymentID}/finalize": {
+    "/v1/agent/chat": {
         parameters: {
             query?: never;
             header?: never;
@@ -1854,17 +249,41 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Finalize tool deployment
-         * @description Verify, discover, provision, and publish an immutable tool deployment.
+         * Chat with the agent
+         * @description Stream an agent conversation over server-sent events. Messages may include tool calls returned by a previous turn.
          */
-        post: operations["post_tool_deployments_deploymentID_finalize"];
+        post: operations["post_v1_agent_chat"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/tool-deployments/{deploymentID}/revoke": {
+    "/v1/api-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List API keys for the selected account
+         * @description Returns the API keys issued for the active account context.
+         */
+        get: operations["getApiKeys"];
+        put?: never;
+        /**
+         * Create an API key for the selected account
+         * @description Issues a new API key for the active account context and returns the plaintext key once.
+         */
+        post: operations["postApiKeys"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/api-keys/{keyID}/revoke": {
         parameters: {
             query?: never;
             header?: never;
@@ -1874,158 +293,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Revoke tool deployment
-         * @description Revoke a deployment before it can be resolved for invocation.
+         * Revoke an API key
+         * @description Revokes an API key issued for the active account context.
          */
-        post: operations["post_tool_deployments_deploymentID_revoke"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tool-deployments/{deploymentID}/rollback": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Rollback tool deployment
-         * @description Move the registry pointer to a previously verified immutable version.
-         */
-        post: operations["post_tool_deployments_deploymentID_rollback"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tool-deployments/{deploymentID}/upload-session": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Create upload session
-         * @description Create a short-lived artifact upload session after GitHub OIDC claim validation. The artifact digest may be omitted when it is not known until after the image push.
-         */
-        post: operations["post_tool_deployments_deploymentID_upload_session"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tools": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List tools
-         * @description Lists all available platform tools for the authenticated account.
-         */
-        get: operations["getTools"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tools/{toolType}/try": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Try a tool
-         * @description Runs a single platform tool with the given configuration and returns the raw tool output.
-         */
-        post: operations["tryTool"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/me/api-keys": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List API keys for the authenticated user
-         * @description Returns the API keys issued for the authenticated user identity.
-         */
-        get: operations["getUserAPIKeys"];
-        put?: never;
-        /**
-         * Create an API key for the authenticated user
-         * @description Issues a new API key for the authenticated user identity and returns the plaintext key once.
-         */
-        post: operations["postUserAPIKeys"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/me/api-keys/{keyID}/revoke": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Revoke a user API key
-         * @description Revokes an API key issued for the authenticated user identity.
-         */
-        post: operations["postUserAPIKeysKeyIDRevoke"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/me/tutorial-progress": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get incremental tutorial progress
-         * @description Returns the onboarding tutorial progress for the authenticated user in the active account. New users have found=false.
-         */
-        get: operations["getTutorialProgress"];
-        /**
-         * Update incremental tutorial progress
-         * @description Persists onboarding tutorial progress for the authenticated user in the active account. Completed step ids are merged server-side so steps are never lost.
-         */
-        put: operations["putTutorialProgress"];
-        post?: never;
+        post: operations["postApiKeysKeyIDRevoke"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2063,7 +334,7 @@ export interface paths {
         put?: never;
         /**
          * OpenAI-compatible audio transcription (STT)
-         * @description Transcribes an uploaded audio file. Accepts Bearer access tokens or API keys. Handles POST /v1/audio/transcriptions (multipart/form-data).
+         * @description Transcribes an uploaded audio file. Supports json, verbose_json with segment/word timestamps, and diarized_json when the selected model supports them. Accepts Bearer access tokens or API keys.
          */
         post: operations["postV1AudioTranscriptions"];
         delete?: never;
@@ -2092,6 +363,1014 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List audit events
+         * @description List audit events for the authenticated account with optional filters.
+         */
+        get: operations["get_v1_audit"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/forgot-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Request a password reset email
+         * @description Always returns 200 with a generic message to avoid user enumeration.
+         */
+        post: operations["postAuthForgotPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/legal-acceptances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Record current legal acceptances
+         * @description Appends server-validated legal acceptance evidence for the authenticated user.
+         */
+        post: operations["postAuthLegalAcceptances"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Authenticate a user
+         * @description Authenticates a user with email and password. If verification is required, the JSON response may include a next_step. Only successful authentication sets the HTTP-only qdiv0_access and qdiv0_refresh browser-session cookies; the JSON response contains no access or refresh token values.
+         */
+        post: operations["postAuthLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/login/resend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resend a password sign-in email
+         * @description Revalidates the supplied password and sends a fresh sign-in email when the account uses email sign-in verification. The response is intentionally generic.
+         */
+        post: operations["postAuthLoginResend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Log out
+         * @description Clear the HTTP-only qdiv0_access and qdiv0_refresh browser-session cookies.
+         */
+        post: operations["post_v1_auth_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Return the current authenticated user
+         * @description Resolves the user attached to the bearer token.
+         */
+        get: operations["getAuthMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/identities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List linked OAuth identities
+         * @description Returns the authenticated user's linked providers without exposing secrets.
+         */
+        get: operations["getAuthOauthIdentities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/identities/{provider}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Unlink an OAuth identity
+         * @description Removes a provider identity. The auth service enforces the last-access-method invariant.
+         */
+        delete: operations["deleteAuthOauthIdentitiesProvider"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/signup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete OAuth signup
+         * @description Completes an OAuth-only signup with the continuation token and legal acceptance payload, then sets the browser session.
+         */
+        post: operations["postAuthOauthSignup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/totp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete OAuth TOTP challenge
+         * @description Redeems a totp_required continuation and sets the browser session.
+         */
+        post: operations["postAuthOauthTotp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/{provider}/begin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Start OAuth sign-in
+         * @description Redirects the browser to the selected provider. The optional redirect URI must be allowlisted by the auth service.
+         */
+        get: operations["getAuthOauthProviderBegin"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/{provider}/callback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Finish OAuth callback
+         * @description Exchanges the provider authorization code and redirects to the frontend. Tokens are stored in HttpOnly cookies or a continuation is returned in the URL fragment.
+         */
+        get: operations["getAuthOauthProviderCallback"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/oauth/{provider}/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Link an OAuth provider
+         * @description Redirects an authenticated user to the selected provider to link that identity.
+         */
+        post: operations["postAuthOauthProviderLink"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/passkeys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List passkeys
+         * @description Returns the current user's passkey credentials.
+         */
+        get: operations["getAuthPasskeys"];
+        put?: never;
+        /**
+         * Register a passkey
+         * @description Stores a passkey credential for the authenticated user.
+         */
+        post: operations["postAuthPasskeys"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/passkeys/begin-login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Begin passkey login
+         * @description Creates a passkey login challenge for the provided email.
+         */
+        post: operations["postAuthPasskeysBeginLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/passkeys/begin-registration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Begin passkey registration
+         * @description Creates a passkey registration challenge for the authenticated user.
+         */
+        post: operations["postAuthPasskeysBeginRegistration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/passkeys/finish-login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finish passkey login
+         * @description Consumes a passkey login challenge and returns a session.
+         */
+        post: operations["postAuthPasskeysFinishLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/passkeys/finish-registration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finish passkey registration
+         * @description Consumes a passkey registration challenge and stores the credential.
+         */
+        post: operations["postAuthPasskeysFinishRegistration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/passkeys/{credentialID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove a passkey
+         * @description Deletes a passkey credential from the authenticated user.
+         */
+        delete: operations["deleteAuthPasskeys"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Change the current user's password
+         * @description Requires the authenticated user to provide the current password and a new password.
+         */
+        patch: operations["patchAuthPassword"];
+        trace?: never;
+    };
+    "/v1/auth/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the current user's security preferences
+         * @description Returns the per-user security toggles for the authenticated user.
+         */
+        get: operations["getAuthPreferences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update the current user's security preferences
+         * @description Partial update of the per-user security toggles. Only fields present in the body are applied.
+         */
+        patch: operations["patchAuthPreferences"];
+        trace?: never;
+    };
+    "/v1/auth/private-beta/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Check private beta access
+         * @description Check whether the request is allowed to use private-beta routes. When private-beta protection is disabled, the endpoint returns 204.
+         */
+        get: operations["get_v1_auth_private_beta_check"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh the browser session
+         * @description Consumes the HTTP-only qdiv0_refresh cookie and, on success, resets the qdiv0_access and qdiv0_refresh browser-session cookies. The endpoint has no JSON request body and the JSON response contains no access or refresh token values.
+         */
+        post: operations["postAuthRefresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Register a new user
+         * @description Creates a pending account using email and password credentials. Email verification is required; registration does not issue session tokens or cookies, and the JSON response contains no access or refresh token values.
+         */
+        post: operations["postAuthRegister"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/resend-activation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resend an activation email
+         * @description Replaces the activation link for an eligible pending account. The response is intentionally generic.
+         */
+        post: operations["postAuthActivationResend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reset a password using a one-time token
+         * @description Consumes the reset token, updates the password, and returns a fresh session.
+         */
+        post: operations["postAuthResetPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/totp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Disable TOTP
+         * @description Removes the current user's TOTP credential.
+         */
+        delete: operations["deleteAuthTotp"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/totp/begin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start TOTP enrollment
+         * @description Returns a new TOTP secret and otpauth URI for the authenticated user.
+         */
+        post: operations["postAuthTotpBegin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/totp/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm TOTP enrollment
+         * @description Stores a TOTP secret for the authenticated user after verifying the code.
+         */
+        post: operations["postAuthTotpConfirm"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/trusted-browsers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke trusted browsers
+         * @description Revokes every trusted-browser token for the authenticated user and clears the current browser cookie.
+         */
+        delete: operations["deleteAuthTrustedBrowsers"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/verify-email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify an email activation link
+         * @description Consumes the activation token and returns a session.
+         */
+        get: operations["getAuthVerifyEmail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/automations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List automations
+         * @description List automations belonging to the current account.
+         */
+        get: operations["get_v1_automations"];
+        put?: never;
+        /**
+         * Create automation
+         * @description Create an account-scoped automation connecting input, processor, and output resources.
+         */
+        post: operations["post_v1_automations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/automations/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List automation types
+         * @description List automation processor types supported by the platform.
+         */
+        get: operations["get_v1_automations_types"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/automations/{automationID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get automation
+         * @description Get an account-scoped automation by ID.
+         */
+        get: operations["get_v1_automations_automationID"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete automation
+         * @description Delete an account-scoped automation.
+         */
+        delete: operations["delete_v1_automations_automationID"];
+        options?: never;
+        head?: never;
+        /**
+         * Update automation
+         * @description Update an account-scoped automation.
+         */
+        patch: operations["patch_v1_automations_automationID"];
+        trace?: never;
+    };
+    "/v1/automations/{automationID}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause automation
+         * @description Pause an active automation.
+         */
+        post: operations["post_v1_automations_automationID_pause"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/automations/{automationID}/resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resume automation
+         * @description Resume a paused automation.
+         */
+        post: operations["post_v1_automations_automationID_resume"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/automations/{automationID}/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Validate automation
+         * @description Validate an automation's connector and processor configuration.
+         */
+        post: operations["post_v1_automations_automationID_validate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/balance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the current account balance
+         * @description Returns the billing balance of the authenticated account.
+         */
+        get: operations["getBillingBalance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/checkout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a checkout session
+         * @description Creates a billing checkout session for the authenticated account.
+         */
+        post: operations["postBillingCheckout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/debit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Debit the current account balance
+         * @description Debits a positive amount from the authenticated account.
+         */
+        post: operations["postBillingDebit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/debit/operations/{operationID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a debit operation */
+        get: operations["getBillingDebitOperation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/ledger": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List ledger entries
+         * @description Returns ledger movements for the authenticated account.
+         */
+        get: operations["getBillingLedger"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List payments for the authenticated account
+         * @description Returns the payment history for the active account context.
+         */
+        get: operations["getBillingPayments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/payments/{paymentID}/invoice.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download a payment invoice PDF
+         * @description Returns the invoice PDF for a given payment of the active account context.
+         */
+        get: operations["getBillingPaymentsPaymentIDInvoicePDF"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biomolecular/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Check operator MSA connectivity without starting a GPU instance */
+        get: operations["getV1BiomolecularCapabilities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biomolecular/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit a durable Boltz prediction job
+         * @description Validated native version-1 Boltz input, up to 32 text attachments (8 MiB), 32 chains and 4096 polymer residues. Account-scoped idempotency. Eight nonterminal jobs per account; one prediction per instance. Terminal results/artifacts expire after seven days.
+         */
+        post: operations["postV1BiomolecularJob"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biomolecular/jobs/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an account-owned Boltz job */
+        get: operations["getV1BiomolecularJob"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biomolecular/jobs/{job_id}/artifacts/{artifact_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download a persisted Boltz artifact
+         * @description Bounded binary stream, available independently of the original instance for seven days after job completion.
+         */
+        get: operations["downloadV1BiomolecularArtifact"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biomolecular/jobs/{job_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request idempotent Boltz job cancellation */
+        post: operations["cancelV1BiomolecularJob"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/chat/completions": {
         parameters: {
             query?: never;
@@ -2112,6 +1391,238 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/connectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List connectors
+         * @description List connectors belonging to the current account.
+         */
+        get: operations["get_v1_connectors"];
+        put?: never;
+        /**
+         * Create connector
+         * @description Create an account-scoped connector.
+         */
+        post: operations["post_v1_connectors"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List connector types
+         * @description List connector types supported by the platform.
+         */
+        get: operations["get_v1_connectors_types"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get connector
+         * @description Get an account-scoped connector by ID.
+         */
+        get: operations["get_v1_connectors_connectorID"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete connector
+         * @description Delete an account-scoped connector.
+         */
+        delete: operations["delete_v1_connectors_connectorID"];
+        options?: never;
+        head?: never;
+        /**
+         * Update connector
+         * @description Update an account-scoped connector configuration.
+         */
+        patch: operations["patch_v1_connectors_connectorID"];
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/access-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List connector access requests
+         * @description List access requests for a connector.
+         */
+        get: operations["get_v1_connectors_connectorID_access_requests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/access-requests/{requestID}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve connector access request
+         * @description Approve a pending connector access request.
+         */
+        post: operations["post_v1_connectors_connectorID_access_requests_requestID_approve"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/access-requests/{requestID}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject connector access request
+         * @description Reject a pending connector access request.
+         */
+        post: operations["post_v1_connectors_connectorID_access_requests_requestID_reject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause connector
+         * @description Pause a connector without deleting its configuration.
+         */
+        post: operations["post_v1_connectors_connectorID_pause"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/principals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List connector principals
+         * @description List active principals associated with a connector.
+         */
+        get: operations["get_v1_connectors_connectorID_principals"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resume connector
+         * @description Resume a paused connector.
+         */
+        post: operations["post_v1_connectors_connectorID_resume"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/rotate-webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rotate connector webhook
+         * @description Rotate the webhook credentials for a connector.
+         */
+        post: operations["post_v1_connectors_connectorID_rotate_webhook"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/connectors/{connectorID}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verify connector
+         * @description Verify that a connector can reach its provider.
+         */
+        post: operations["post_v1_connectors_connectorID_verify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/embeddings": {
         parameters: {
             query?: never;
@@ -2126,6 +1637,503 @@ export interface paths {
          * @description Generates embeddings for a text or multimodal input. Accepts Bearer access tokens or API keys.
          */
         post: operations["postV1Embeddings"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/firewall-rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List firewall rules
+         * @description Returns all firewall rules for the authenticated account.
+         */
+        get: operations["getFirewallRules"];
+        put?: never;
+        /**
+         * Create a firewall rule
+         * @description Creates a new firewall rule for the authenticated account.
+         */
+        post: operations["postFirewallRule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/firewall-rules/{ruleSlug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a firewall rule
+         * @description Returns a single firewall rule by slug.
+         */
+        get: operations["getFirewallRule"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a firewall rule
+         * @description Removes a firewall rule by slug.
+         */
+        delete: operations["deleteFirewallRule"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a firewall rule
+         * @description Partially updates a firewall rule by slug.
+         */
+        patch: operations["patchFirewallRule"];
+        trace?: never;
+    };
+    "/v1/firewall-rules/{ruleSlug}:evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Evaluate a firewall rule
+         * @description Runs input against a single firewall rule and returns the evaluation result.
+         */
+        post: operations["postFirewallRuleEvaluate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/firewalls": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List firewalls
+         * @description Returns all firewalls for the authenticated account.
+         */
+        get: operations["getFirewalls"];
+        put?: never;
+        /**
+         * Create a firewall
+         * @description Creates a new firewall for the authenticated account.
+         */
+        post: operations["postFirewall"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/firewalls/{firewallSlug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a firewall
+         * @description Returns a single firewall by slug.
+         */
+        get: operations["getFirewall"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a firewall
+         * @description Removes a firewall by slug.
+         */
+        delete: operations["deleteFirewall"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a firewall
+         * @description Partially updates a firewall by slug.
+         */
+        patch: operations["patchFirewall"];
+        trace?: never;
+    };
+    "/v1/firewalls/{firewallSlug}:evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Evaluate a firewall
+         * @description Runs input against a firewall and returns the evaluation result.
+         */
+        post: operations["postFirewallEvaluate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List vector databases
+         * @description Returns the vector databases owned by the authenticated account.
+         */
+        get: operations["getVectorDatabases"];
+        put?: never;
+        /**
+         * Create a vector database
+         * @description Creates a new vector database for the authenticated account.
+         */
+        post: operations["postVectorDatabases"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a vector database
+         * @description Returns a single vector database owned by the authenticated account.
+         */
+        get: operations["getVectorDatabase"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a vector database
+         * @description Removes a vector database owned by the authenticated account.
+         */
+        delete: operations["deleteVectorDatabase"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a vector database
+         * @description Updates the slug, name, description, or compatible embedding model of an existing vector database. Changing models requires identical vectors for the text test.
+         */
+        patch: operations["patchVectorDatabase"];
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List documents in a vector database
+         * @description Returns documents stored in a vector database with optional pagination.
+         */
+        get: operations["getVectorDatabaseDocuments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/index-direct": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Index documents directly
+         * @description Indexes documents into a vector database synchronously.
+         */
+        post: operations["postVectorDatabaseIndexDirect"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/index-jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enqueue an index job
+         * @description Enqueues documents for asynchronous indexing into a vector database.
+         */
+        post: operations["postVectorDatabaseIndexJobs"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/index-jobs/{jobID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get an index job
+         * @description Returns the status of an asynchronous index job.
+         */
+        get: operations["getVectorDatabaseIndexJob"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/recommend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Recommend documents
+         * @description Returns recommended documents for a recommend token.
+         */
+        post: operations["postVectorDatabaseRecommend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search a vector database
+         * @description Searches a vector database by query text and/or image URL.
+         */
+        post: operations["postVectorDatabaseSearch"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/view-element": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * View an element
+         * @description Records a view for a document and returns a recommend token.
+         */
+        post: operations["postVectorDatabaseViewElement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/huggingface/embeddings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search embedding models
+         * @description Searches Hugging Face for embedding models.
+         */
+        get: operations["getHuggingfaceEmbeddings"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/huggingface/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Hugging Face file sizes
+         * @description Returns GGUF files by default, or compatible YOLO .pt checkpoints when format=yolo. Repository revisions are supported.
+         */
+        get: operations["getHuggingfaceFiles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/huggingface/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Hugging Face models
+         * @description Searches Hugging Face for compatible models matching the query.
+         */
+        get: operations["getHuggingfaceModels"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/huggingface/orgs/{org}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Hugging Face organization info
+         * @description Returns profile information for a Hugging Face organization.
+         */
+        get: operations["getHuggingfaceOrgs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/huggingface/search-tag": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Hugging Face models by tag
+         * @description Searches Hugging Face for models matching a query and pipeline tag.
+         */
+        get: operations["getHuggingfaceSearchTag"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/huggingface/trending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Trending Hugging Face models
+         * @description Returns trending Hugging Face models.
+         */
+        get: operations["getHuggingfaceTrending"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/images/detections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Detect objects or pose keypoints in an uploaded image
+         * @description Detects objects or estimates poses using an existing serving name or running instance UUID. Pose models return boxes with optional keypoints in checkpoint order, each with pixel x/y coordinates and optional confidence (0-1). At most 256 keypoints per detection. PNG/JPEG images up to 16 MiB, dimensions up to 16384 pixels per side and 40 million pixels total. Accepts Bearer access tokens or API keys.
+         */
+        post: operations["postV1ImageDetections"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/images/detections/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Stream image detection, pose and object tracking over WebSocket
+         * @description Upgrades to a WebSocket and sends session.ready with normalized options and max_frame_bytes. Send optional session.configure JSON options patches and receive session.configured. Binary messages contain one PNG/JPEG image up to 16 MiB, 16384 pixels per side and 40 million pixels total; each returns frame.result with increasing frame_id, processing_ms and the existing typed detection result including optional pose keypoints. Text controls are limited to 32 KiB. Errors contain type, status, optional frame_id and error code/message. One frame executes at a time with at most one pending message; overload closes the session. Inference timeout 60 seconds, idle timeout 90 seconds, session limit 30 minutes. Browser cookies require a configured allowed Origin; native clients use Bearer API keys. account_id is membership-resolved for user credentials and cannot override an account API key. Query credentials are not accepted.
+         *     Opt in with session.configure options.tracking=true for ByteTrack. Detections include optional positive track_id integers scoped to this connection. Tracking pins frames to the same replica; changing inference options resets identities, an empty patch preserves them. Disconnect/reconnect starts a new identity space. Tracking state expires after 90 seconds without a processed frame; unavailable state or inference errors close the tracking connection after an error event. Still-image requests remain stateless.
+         */
+        get: operations["getV1ImageDetectionsStream"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2172,6 +2180,459 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/instance-config/gpus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List available GPUs
+         * @description Returns the GPU catalog with pricing, regions, and availability for the authenticated account.
+         */
+        get: operations["getInstanceConfigGpus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List inference instances */
+        get: operations["getInstances"];
+        put?: never;
+        /**
+         * Create an inference instance
+         * @description Workload is derived from the repository. Optional workload_kind=decision selects an approved decision checkpoint; Qwen/Qwen3.5-9B defaults to chat.
+         */
+        post: operations["postInstances"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview an inference deployment
+         * @description Workload is derived from the repository. Set optional workload_kind to decision for an approved decision checkpoint; Qwen/Qwen3.5-9B remains chat when omitted.
+         */
+        post: operations["postInstancesPreview"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an inference instance */
+        get: operations["getInstanceByID"];
+        put?: never;
+        post?: never;
+        /** Delete an inference instance */
+        delete: operations["deleteInstance"];
+        options?: never;
+        head?: never;
+        /** Update an inference instance */
+        patch: operations["patchInstance"];
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview smart selection for an existing instance update
+         * @description Previews the compatibility and smart selection for an existing instance while applying smart-setting overrides from the request body. Lets the instance settings page fetch the same backend-filtered GPU list used at launch time instead of reimplementing compatibility filtering in the UI.
+         */
+        post: operations["postInstancePreviewUpdate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/schedule-rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List schedule rules for an instance */
+        get: operations["getInstanceScheduleRules"];
+        put?: never;
+        /** Create a schedule rule for an instance */
+        post: operations["postInstanceScheduleRule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/schedule-rules/{ruleID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a schedule rule for an instance */
+        delete: operations["deleteInstanceScheduleRule"];
+        options?: never;
+        head?: never;
+        /** Update a schedule rule for an instance */
+        patch: operations["patchInstanceScheduleRule"];
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/shared-capacity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enable shared capacity for an instance */
+        post: {
+            parameters: {
+                query?: never;
+                header: {
+                    /** @description Enable idempotency key */
+                    "Idempotency-Key": string;
+                };
+                path: {
+                    /** @description Instance ID */
+                    instanceID: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["EnableSharedCapacityRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start an inference instance */
+        post: operations["postInstanceStart"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/stop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stop an inference instance */
+        post: operations["postInstanceStop"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/instances/{instanceID}/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an inference instance usage and cost breakdown */
+        get: operations["getInstanceUsage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List pending invitations for the authenticated user
+         * @description Returns invitations pending acceptance that were sent to the authenticated user's email.
+         */
+        get: operations["getInvitations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/invitations/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Accept an invitation
+         * @description Accepts a pending invitation by token or invitation ID and attaches the authenticated user to the account.
+         */
+        post: operations["postInvitationsAccept"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List available models
+         * @description OpenAI-compatible model list for the account's enabled serving endpoints. Includes effective context_length and capabilities when known.
+         */
+        get: operations["getV1Models"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/models/fixed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List fixed models
+         * @description Returns the catalog of fixed (curated) models supported by the platform.
+         */
+        get: operations["getModelsFixed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List notifications
+         * @description Returns notifications for the authenticated account, newest first.
+         */
+        get: operations["getNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notifications/dismiss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Dismiss notifications
+         * @description Dismisses the given notifications for the authenticated account.
+         */
+        post: operations["postNotificationsDismiss"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark all notifications as read
+         * @description Marks all notifications matching the optional filters as read.
+         */
+        post: operations["postNotificationsMarkAllRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notifications/unread-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get unread notification count
+         * @description Returns the number of unread notifications for the authenticated account.
+         */
+        get: operations["getNotificationsUnreadCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notifications/{notificationID}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark a notification as read
+         * @description Marks a single notification as read for the authenticated account.
+         */
+        post: operations["postNotificationsMarkRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/prometheus/targets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Prometheus targets
+         * @description Return running inference instances in Prometheus HTTP service-discovery format.
+         */
+        get: operations["getPrometheusTargets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/prometheus/vllm/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get vLLM Prometheus metrics
+         * @description Proxy an instance's native vLLM Prometheus metrics.
+         */
+        get: operations["getPrometheusVLLMMetrics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/endpoints": {
         parameters: {
             query?: never;
@@ -2181,7 +2642,7 @@ export interface paths {
         };
         /**
          * List public serving endpoints
-         * @description Returns all publicly available model-serving endpoints and their token prices. No authentication required.
+         * @description Returns all publicly available model-serving endpoints and their token or audio-duration prices. No authentication required.
          */
         get: operations["getV1PublicEndpoints"];
         put?: never;
@@ -2232,6 +2693,140 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/shared-capacities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List public shared capacities */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityPublicListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/shared-capacities/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a public shared capacity */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Public shared capacity slug */
+                    slug: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityPublicResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/shared-capacity-links/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolve a public shared capacity link */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Referral token */
+                    token: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityPublicResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/token-usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Public platform token usage
+         * @description Public aggregate token totals, daily counts and top_models as an ordered name-only list. No authentication required. totals covers all recorded usage; period_totals, days and top_models cover [from,to) in the IANA timezone (UTC by default). Dates default to the last 30 calendar days including today, with a maximum of 366 days. Token figures apply APIGW_PUBLIC_TOKEN_USAGE_MULTIPLIER (default 1); decimals round to the nearest token, halves up. The model list ranks up to ten approved public names by total recorded tokens, independent of the display multiplier; anonymous legacy events and private/custom names are excluded from the ranking. measured_since is the first recorded invocation, or null when empty. Today's count is partial; pre-instrumentation, unreported provider usage and non-token workloads are unavailable.
+         */
+        get: operations["getV1PublicTokenUsage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/realtime": {
         parameters: {
             query?: never;
@@ -2241,11 +2836,64 @@ export interface paths {
         };
         /**
          * Realtime WebSocket proxy
-         * @description Proxies a turn-based or native-duplex realtime session to the instance serving the requested Omni model. The legacy duplex=1 alias selects duplex mode; clients must still send the rc1 session.update with ref_audio. Accepts Bearer access tokens or API keys. Exchanges OpenAI-Realtime-style events (session.update, input_audio_buffer.append, response.create, response.audio.delta).
+         * @description Proxies a turn-based or native-duplex Omni session, or a realtime ASR transcription session, to the selected model. The legacy duplex=1 alias selects duplex mode. ASR transcription uses incremental PCM audio events and returns transcription.delta events. Accepts Bearer access tokens or API keys.
          */
         get: operations["getV1Realtime"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/replica-sets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List replica sets */
+        get: operations["getReplicaSets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/replica-sets/{replicaSetID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a replica set */
+        get: operations["getReplicaSet"];
+        put?: never;
+        post?: never;
+        /** Delete a replica set */
+        delete: operations["deleteReplicaSet"];
+        options?: never;
+        head?: never;
+        /** Update a replica set */
+        patch: operations["patchReplicaSet"];
+        trace?: never;
+    };
+    "/v1/replica-sets/{replicaSetID}/scale": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Scale a replica set */
+        post: operations["postReplicaSetScale"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2356,6 +3004,391 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/serving-endpoints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List serving endpoints */
+        get: operations["getServingEndpoints"];
+        put?: never;
+        /** Create a serving endpoint */
+        post: operations["postServingEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List shared capacities for the current account */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Join a shared capacity */
+        post: {
+            parameters: {
+                query?: never;
+                header: {
+                    /** @description Join idempotency key */
+                    "Idempotency-Key": string;
+                };
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["JoinSharedCapacityRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityMembershipResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities/{groupID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an account shared capacity */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Shared capacity group ID */
+                    groupID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities/{groupID}/disable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Disable shared capacity */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Shared capacity group ID */
+                    groupID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities/{groupID}/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Leave a shared capacity */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Shared capacity group ID */
+                    groupID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityMembershipResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities/{groupID}/links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a shared capacity referral link */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Shared capacity group ID */
+                    groupID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SharedCapacityLinkResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shared-capacities/{groupID}/links/{linkID}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke a shared capacity referral link */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Shared capacity group ID */
+                    groupID: string;
+                    /** @description Referral link ID */
+                    linkID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/smart-balancers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List smart balancers */
+        get: operations["getSmartBalancers"];
+        put?: never;
+        /** Create a smart balancer */
+        post: operations["postSmartBalancer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/smart-balancers/{smartBalancerID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a smart balancer */
+        delete: operations["deleteSmartBalancer"];
+        options?: never;
+        head?: never;
+        /** Update a smart balancer */
+        patch: operations["patchSmartBalancer"];
+        trace?: never;
+    };
+    "/v1/systemone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Answer typed questions about a text or JSON state
+         * @description Account-owned decision serving name or instance UUID, public:clef-flash, or subscription:cloudflare/clef-flash when configured. Up to 64 questions, choice 1..26 options, noul optional true/false descriptions, score 2..10 ordered levels. Request limit 32 MiB with 1 MiB of non-image metadata; Clef Flash requests are limited to 20 MB including the RunPod input envelope. Response limit 1 MiB, nesting 64. Optional images accepts up to four inline base64 PNG, JPEG or WebP data URLs, at most 5 MiB decoded and 16 million pixels per image. Images require Clef Flash or a compatible managed decision instance. Nested media and unknown fields are rejected. Question instructions and descriptions are strings or null. Optional global instructions are supported by native Qwen and DiffusionGemma; Clef and Nimble reject nonempty global instructions. Timeout two minutes after readiness.
+         */
+        post: operations["postV1SystemOne"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/target-groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List target groups */
+        get: operations["getTargetGroups"];
+        put?: never;
+        /** Create a target group */
+        post: operations["postTargetGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/target-groups/{targetGroupID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a target group */
+        get: operations["getTargetGroup"];
+        put?: never;
+        post?: never;
+        /** Delete a target group */
+        delete: operations["deleteTargetGroup"];
+        options?: never;
+        head?: never;
+        /** Update a target group */
+        patch: operations["patchTargetGroup"];
+        trace?: never;
+    };
     "/v1/templates": {
         parameters: {
             query?: never;
@@ -2416,6 +3449,342 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/timeseries/forecasts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Forecast channel-major time series
+         * @description Account-owned serving name or instance UUID. Horizon 1..1024, 1..32 records, 1..32 channels, context 1..15360. Input/output budgets are one million numbers; request/response limits are 16/32 MiB. Quantiles default true; inference timeout is two minutes after readiness.
+         */
+        post: operations["postV1TimeseriesForecast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tool-deployments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List tool deployments
+         * @description List deployments owned by the authenticated account.
+         */
+        get: operations["get_v1_tool_deployments"];
+        put?: never;
+        /**
+         * Create tool deployment
+         * @description Create an account-bound Lambda tool deployment from a strict YAML manifest. An empty spec.server.image is valid only for a pending registration; the immutable staging artifact is established at finalization.
+         */
+        post: operations["post_v1_tool_deployments"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tool-deployments/{deploymentID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get tool deployment
+         * @description Get an account-bound tool deployment without exposing runtime credentials or tenant internals.
+         */
+        get: operations["get_v1_tool_deployments_deploymentID"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tool-deployments/{deploymentID}/finalize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finalize tool deployment
+         * @description Verify, discover, provision, and publish an immutable tool deployment.
+         */
+        post: operations["post_v1_tool_deployments_deploymentID_finalize"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tool-deployments/{deploymentID}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke tool deployment
+         * @description Revoke a deployment before it can be resolved for invocation.
+         */
+        post: operations["post_v1_tool_deployments_deploymentID_revoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tool-deployments/{deploymentID}/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rollback tool deployment
+         * @description Move the registry pointer to a previously verified immutable version.
+         */
+        post: operations["post_v1_tool_deployments_deploymentID_rollback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tool-deployments/{deploymentID}/upload-session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create upload session
+         * @description Create a short-lived artifact upload session after GitHub OIDC claim validation. The artifact digest may be omitted when it is not known until after the image push.
+         */
+        post: operations["post_v1_tool_deployments_deploymentID_upload_session"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tools": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List tools
+         * @description Lists all available platform tools for the authenticated account.
+         */
+        get: operations["getTools"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tools/{toolType}/try": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Try a tool
+         * @description Runs a single platform tool with the given configuration and returns the raw tool output.
+         */
+        post: operations["tryTool"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/users/me/api-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List API keys for the authenticated user
+         * @description Returns the API keys issued for the authenticated user identity.
+         */
+        get: operations["getUserAPIKeys"];
+        put?: never;
+        /**
+         * Create an API key for the authenticated user
+         * @description Issues a new API key for the authenticated user identity and returns the plaintext key once.
+         */
+        post: operations["postUserAPIKeys"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/users/me/api-keys/{keyID}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke a user API key
+         * @description Revokes an API key issued for the authenticated user identity.
+         */
+        post: operations["postUserAPIKeysKeyIDRevoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/users/me/tutorial-progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get incremental tutorial progress
+         * @description Returns the onboarding tutorial progress for the authenticated user in the active account. New users have found=false.
+         */
+        get: operations["getTutorialProgress"];
+        /**
+         * Update incremental tutorial progress
+         * @description Persists onboarding tutorial progress for the authenticated user in the active account. Completed step ids are merged server-side so steps are never lost.
+         */
+        put: operations["putTutorialProgress"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/video-jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List recent account-owned video jobs
+         * @description Returns up to 100 unexpired jobs, newest first. Includes pending and terminal jobs so clients can recover work after navigation or closing the browser.
+         */
+        get: operations["listV1VideoJobs"];
+        put?: never;
+        /**
+         * Submit a recoverable video generation job
+         * @description Uses the same JSON or multipart fields, validation, defaults and upload limits as POST /v1/videos. Generation continues after the client disconnects. Account-scoped Idempotency-Key prevents repeat submissions; a reused key with different input returns 409. Successful MP4 results remain downloadable for seven days after completion. Poll the returned Location for status and explicitly cancel active jobs when needed.
+         */
+        post: operations["postV1VideoJob"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/video-jobs/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read an account-owned video job
+         * @description Missing, foreign and expired jobs return 404.
+         */
+        get: operations["getV1VideoJob"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/video-jobs/{job_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Request explicit video job cancellation
+         * @description Cancellation is idempotent and account-scoped. A completed result is preserved if completion wins the cancellation race.
+         */
+        post: operations["cancelV1VideoJob"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/video-jobs/{job_id}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get direct URLs for a completed video job's MP4
+         * @description Returns short-lived inline and attachment URLs for direct object storage access, valid for at most 15 minutes and never beyond the seven-day job retention. The attachment URL signs Content-Disposition for generated.mp4. Pending, failed or cancelled jobs return 409; missing, foreign and expired jobs return 404.
+         */
+        get: operations["downloadV1VideoJob"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/videos": {
         parameters: {
             query?: never;
@@ -2427,7 +3796,7 @@ export interface paths {
         put?: never;
         /**
          * Synchronous video generation
-         * @description Generates a video from a prompt and optional image, video, and audio references. Accepts Bearer access tokens or API keys. MiniMax-H3 prompts are limited to 7,000 Unicode characters; image references are limited to 30 MiB, video references to 50 MiB, audio references to 15 MiB, and the aggregate input-reference plus audio bytes to 64 MiB. HTTP(S) audio_reference_url values are limited to 16 KiB; data URLs are limited by the 15 MiB decoded audio payload.
+         * @description Generates a video from a prompt and optional image, video, and audio references. Accepts Bearer access tokens or API keys. MiniMax-H3 Ref2VA accepts mixed image/video references with optional audio, up to nine images, three videos, one audio reference, and twelve references total; audio requires at least one image or video. FL2VA accepts up to two images. MiniMax-H3 prompts are limited to 7,000 Unicode characters; image references are limited to 30 MiB, video references to 50 MiB, audio references to 15 MiB, and the aggregate input-reference plus audio bytes to 64 MiB. HTTP(S) audio_reference_url values are limited to 16 KiB; data URLs are limited by the 15 MiB decoded audio payload.
          */
         post: operations["postV1VideoGenerations"];
         delete?: never;
@@ -2519,6 +3888,10 @@ export interface components {
             otpauth_uri?: string;
             secret?: string;
         };
+        BiomolecularCapabilities: {
+            checked_at?: string;
+            msa_status?: string;
+        };
         CatalogGPUResponse: {
             availability_count?: number;
             availability_total?: number;
@@ -2533,11 +3906,19 @@ export interface components {
             cuda_max_good?: number;
             disk_bandwidth_mbps?: number;
             display_name?: string;
+            download_size_bytes?: number;
             enabled?: boolean;
+            estimated_download_cost_eur?: number;
+            estimated_one_hour_cost_eur?: number;
+            estimated_spot_reserve_eur?: number;
             gpu_count?: number;
             internet_down_mbps?: number;
             internet_up_mbps?: number;
             market_type?: string;
+            network_download_price_per_gb_eur?: number;
+            network_estimate_available?: boolean;
+            network_pricing_known?: boolean;
+            network_upload_price_per_gb_eur?: number;
             price_per_hour_eur?: number;
             provider_codename?: string;
             public_gpu_id?: string;
@@ -2613,6 +3994,10 @@ export interface components {
             slug?: string;
         };
         CreateInstanceRequest: {
+            /** @description Opt into automatic replacement with cheaper compatible Smart capacity. Defaults to false; requires smart scheduling. */
+            cost_optimization_enabled?: boolean;
+            /** @description Minimum percentage saving required for replacement. Defaults to 20; must be finite, greater than 0 and less than 100. Decimals are accepted. */
+            cost_optimization_min_savings_percent?: number;
             description?: string;
             download_size_bytes?: number;
             gguf_model_path?: string;
@@ -2637,6 +4022,8 @@ export interface components {
             smart_regions?: string[];
             smart_selection_label?: string;
             supported_protocols?: string[];
+            /** @enum {string} */
+            workload_kind?: "decision";
         };
         CreateInvitationRequest: {
             email: string;
@@ -2655,11 +4042,17 @@ export interface components {
             router_model?: components["schemas"]["SmartBalancerRouterModelRequest"];
             routes?: components["schemas"]["SmartBalancerRouteRequest"][];
             routing_mode?: string;
+            /**
+             * @description Requests in the rolling window required before starting stopped serverless destinations.
+             * @default 1
+             */
+            serverless_start_requests: number;
+            /**
+             * @description Rolling request window in seconds.
+             * @default 60
+             */
+            serverless_start_window_seconds: number;
             workload_kind?: string;
-        };
-        CreateStorageVolumeRequest: {
-            description?: string;
-            name?: string;
         };
         CreateTargetGroupRequest: {
             description?: string;
@@ -2693,6 +4086,29 @@ export interface components {
             status?: string;
             updated_at?: string;
         };
+        DetectionStreamError: {
+            code?: string;
+            message?: string;
+        };
+        DetectionStreamEvent: {
+            error?: components["schemas"]["DetectionStreamError"];
+            frame_id?: number;
+            max_frame_bytes?: number;
+            model?: string;
+            options?: components["schemas"]["DetectionStreamOptions"];
+            processing_ms?: number;
+            result?: components["schemas"]["ImageDetectionOutput"];
+            status?: number;
+            type?: string;
+        };
+        DetectionStreamOptions: {
+            classes?: number[];
+            confidence?: number;
+            image_size?: number;
+            iou?: number;
+            max_detections?: number;
+            tracking?: boolean;
+        };
         DismissRequest: {
             ids?: string[];
         };
@@ -2703,8 +4119,172 @@ export interface components {
             input?: number[];
             model?: string;
         };
+        EnableSharedCapacityRequest: {
+            terms_hash?: string;
+            terms_version?: string;
+            visibility?: string;
+        };
         ErrorResponse: {
             error?: string;
+        };
+        "Execution.DecisionAnswer": components["schemas"]["Execution.DecisionChoiceAnswer"] | components["schemas"]["Execution.DecisionNoulAnswer"] | components["schemas"]["Execution.DecisionScoreAnswer"];
+        "Execution.DecisionChoiceAnswer": {
+            /** @description A declared option with maximal normalized probability. */
+            choice: string;
+            confidence: components["schemas"]["Execution.DecisionProbability"];
+            /** @description Complete distribution over declared options; probabilities sum to one within rounding tolerance. */
+            probabilities: {
+                [key: string]: components["schemas"]["Execution.DecisionProbability"];
+            };
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "choice";
+        };
+        "Execution.DecisionChoiceQuestion": {
+            /** @description Nonblank option IDs (up to 256 UTF-8 bytes) map to text or null descriptions. */
+            criteria: {
+                [key: string]: string | null;
+            };
+            /** @description Question instructions as text or null. */
+            instructions?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "choice";
+        };
+        "Execution.DecisionDiagnostics": {
+            argmax_is_label: boolean;
+            label_mass: components["schemas"]["Execution.DecisionProbability"];
+        };
+        "Execution.DecisionNoulAnswer": {
+            confidence?: components["schemas"]["Execution.DecisionProbability"];
+            noul: components["schemas"]["Execution.DecisionProbability"];
+            /** @description Complete distribution over declared options; probabilities sum to one within rounding tolerance. */
+            probabilities?: {
+                no: components["schemas"]["Execution.DecisionProbability"];
+                yes: components["schemas"]["Execution.DecisionProbability"];
+            } | {
+                false: components["schemas"]["Execution.DecisionProbability"];
+                true: components["schemas"]["Execution.DecisionProbability"];
+            };
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "noul";
+        };
+        "Execution.DecisionNoulQuestion": {
+            criteria?: {
+                false?: string | null;
+                true?: string | null;
+            } | null;
+            /** @description Question instructions as text or null. */
+            instructions?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "noul";
+        };
+        /**
+         * Format: double
+         * @description Finite probability. Confidence may be lower than the normalized option probability because native models also report mass outside the answer labels.
+         */
+        "Execution.DecisionProbability": number;
+        "Execution.DecisionQuestion": components["schemas"]["Execution.DecisionChoiceQuestion"] | components["schemas"]["Execution.DecisionNoulQuestion"] | components["schemas"]["Execution.DecisionScoreQuestion"];
+        "Execution.DecisionScoreAnswer": {
+            confidence: components["schemas"]["Execution.DecisionProbability"];
+            /** @description Every 0-indexed key matches its requested level description. Native null descriptions are returned as the string None. */
+            legend: {
+                [key: string]: string | null;
+            };
+            /** @description Complete distribution over declared options; probabilities sum to one within rounding tolerance. */
+            probabilities: {
+                [key: string]: components["schemas"]["Execution.DecisionProbability"];
+            };
+            /**
+             * Format: double
+             * @description Expected 0-indexed level; bounded by the final declared level.
+             */
+            score: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "score";
+        };
+        "Execution.DecisionScoreQuestion": {
+            criteria: (string | null)[];
+            /** @description Question instructions as text or null. */
+            instructions?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "score";
+        };
+        "Execution.DecisionUsage": {
+            /** Format: int64 */
+            input_tokens: number;
+            /** Format: int64 */
+            output_tokens: number;
+        };
+        "Execution.ForecastInput": {
+            id?: string;
+            past_future_covariates?: number[][];
+            past_only_covariates?: number[][];
+            target?: number[][];
+        };
+        "Execution.ForecastPrediction": {
+            forecast?: number[][];
+            id?: string;
+            quantiles?: number[][][];
+        };
+        "Execution.ForecastRequest": {
+            horizon: number;
+            inputs: components["schemas"]["Execution.ForecastInput"][];
+            model: string;
+            return_quantiles?: boolean;
+            use_symmetric_averaging?: boolean;
+        };
+        "Execution.ForecastResponse": {
+            horizon?: number;
+            model?: string;
+            predictions?: components["schemas"]["Execution.ForecastPrediction"][];
+            quantile_levels?: number[];
+        };
+        /** @description Request up to 32 MiB and depth 64, with at most 1 MiB of original JSON excluding only the top-level images value; at most 64 questions. Each instructions/criteria value is bounded to 64 KiB of JSON. Images require Qwen3.5-9B, DiffusionGemma, Clef or Clef Flash; Nimble rejects images. Nested media inputs and unknown fields are rejected. */
+        "Execution.SystemOneRequest": {
+            /** @description Inline images only, in attachment order. At most 5 MiB decoded and 16 million pixels each. Runtime validates actual image content and its declared MIME type. Remote and file URLs, malformed base64 and null are rejected. */
+            images?: string[];
+            /** @description Native Qwen/DiffusionGemma global instructions; Clef/Nimble reject nonempty global instructions. */
+            instructions?: string | null;
+            model: string;
+            /** @description Nonblank question IDs up to 256 UTF-8 bytes; insertion order is retained. */
+            questions: {
+                [key: string]: components["schemas"]["Execution.DecisionQuestion"];
+            };
+            state: string | Record<string, never> | unknown[];
+        };
+        /** @description Response up to 1 MiB. Answer keys exactly match the requested question IDs; answer types/options match their declarations. */
+        "Execution.SystemOneResponse": {
+            answers: {
+                [key: string]: components["schemas"]["Execution.DecisionAnswer"];
+            };
+            /** Format: int64 */
+            created?: number;
+            /** @description When present, contains one diagnostic for every requested question. */
+            diagnostics?: {
+                [key: string]: components["schemas"]["Execution.DecisionDiagnostics"];
+            };
+            id?: string;
+            /** @description The account-owned serving name or instance UUID used by the caller. */
+            model: string;
+            object?: string;
+            usage: components["schemas"]["Execution.DecisionUsage"];
         };
         FinishPasskeyRegistrationRequest: {
             challenge_id: string;
@@ -2776,6 +4356,20 @@ export interface components {
             provider_codename?: string;
             public_gpu_id?: string;
         };
+        HttpTarget: {
+            labels?: {
+                [key: string]: string;
+            };
+            targets?: string[];
+        };
+        HuggingFaceFileResponse: {
+            filename?: string;
+            quantization?: string;
+            size_bytes?: number;
+        };
+        HuggingFaceFilesResponse: {
+            files?: components["schemas"]["HuggingFaceFileResponse"][];
+        };
         HuggingFaceGGUFFileResponse: {
             filename?: string;
             quantization?: string;
@@ -2797,6 +4391,7 @@ export interface components {
             tags?: string[];
             warnings?: string[];
             workload_kind?: string;
+            yolo_files?: components["schemas"]["HuggingFaceYOLOFileResponse"][];
         };
         HuggingFaceModelsResponse: {
             models?: components["schemas"]["HuggingFaceModelResponse"][];
@@ -2805,6 +4400,35 @@ export interface components {
         HuggingFaceOrgInfoResponse: {
             avatar_url?: string;
             fullname?: string;
+        };
+        HuggingFaceYOLOFileResponse: {
+            filename?: string;
+            size_bytes?: number;
+        };
+        ImageDetectionBoxOutput: {
+            x1?: number;
+            x2?: number;
+            y1?: number;
+            y2?: number;
+        };
+        ImageDetectionKeypointOutput: {
+            confidence?: number;
+            x?: number;
+            y?: number;
+        };
+        ImageDetectionOutput: {
+            detections?: components["schemas"]["ImageDetectionResultOutput"][];
+            height?: number;
+            model?: string;
+            width?: number;
+        };
+        ImageDetectionResultOutput: {
+            box?: components["schemas"]["ImageDetectionBoxOutput"];
+            class_id?: number;
+            class_name?: string;
+            confidence?: number;
+            keypoints?: components["schemas"]["ImageDetectionKeypointOutput"][];
+            track_id?: number;
         };
         ImageGenerationRequest: {
             guidance_scale?: number;
@@ -2821,10 +4445,15 @@ export interface components {
             user?: string;
             width?: number;
         };
+        ImpersonationInfo: {
+            impersonator_email?: string;
+            impersonator_user_id?: string;
+        };
         IndexDocumentRequest: {
             content?: string;
             content_image_url?: string;
             id?: string;
+            /** @description Up to 28 exact-match filterable metadata fields per document. */
             metadata?: {
                 [key: string]: string;
             };
@@ -2854,6 +4483,8 @@ export interface components {
         InstanceResponse: {
             account_id?: string;
             capacity_tier?: string;
+            cost_optimization_enabled?: boolean;
+            cost_optimization_min_savings_percent?: number;
             created_at?: string;
             description?: string;
             estimated_required_vram_gb?: number;
@@ -2884,8 +4515,10 @@ export interface components {
             smart_regions?: string[];
             smart_selection_label?: string;
             started_at?: string;
+            startup_progress?: components["schemas"]["StartupProgress"];
             state?: string;
             stopped_at?: string;
+            storage_price_per_hour_eur?: number;
             supported_protocols?: string[];
             workload_kind?: string;
         };
@@ -2924,6 +4557,13 @@ export interface components {
             role?: string;
             status?: string;
             token?: string;
+        };
+        JoinSharedCapacityRequest: {
+            group_id?: string;
+            public_slug?: string;
+            referral_token?: string;
+            terms_hash?: string;
+            terms_version?: string;
         };
         LedgerEntryResponse: {
             account_id?: string;
@@ -3038,6 +4678,21 @@ export interface components {
             };
             title_key?: string;
         };
+        OauthSignupRequest: {
+            cf_turnstile_response?: string;
+            continuation_token: string;
+            privacy_acknowledged: boolean;
+            privacy_sha256: string;
+            privacy_version: string;
+            terms_accepted: boolean;
+            terms_sha256: string;
+            terms_version: string;
+        };
+        OauthTOTPRequest: {
+            cf_turnstile_response?: string;
+            continuation_token: string;
+            totp_code: string;
+        };
         PasskeyListResponse: {
             passkeys?: components["schemas"]["PasskeyResponse"][];
         };
@@ -3075,6 +4730,26 @@ export interface components {
         };
         PaymentsResponse: {
             items?: components["schemas"]["PaymentResponse"][];
+        };
+        PreviewInstanceRequest: {
+            download_size_bytes?: number;
+            gguf_model_path?: string;
+            huggingface_repo_id?: string;
+            runtime_config?: components["schemas"]["RuntimeConfigRequest"];
+            runtime_preset?: string;
+            scheduling_mode?: string;
+            smart_allow_community?: boolean;
+            smart_allow_spot?: boolean;
+            smart_max_price_per_hour_eur?: number;
+            smart_min_gpu_class?: string;
+            smart_min_total_tflops?: number;
+            smart_provider_filter_mode?: string;
+            smart_provider_preference?: string;
+            smart_region?: string;
+            smart_regions?: string[];
+            smart_selection_label?: string;
+            /** @enum {string} */
+            workload_kind?: "decision";
         };
         PreviewInstanceResponse: {
             capacity_tier?: string;
@@ -3128,6 +4803,7 @@ export interface components {
             type?: string;
         };
         PublicEndpointPriceResponse: {
+            audio_per_hour_eur?: number;
             input_per_million_eur?: number;
             output_per_million_eur?: number;
         };
@@ -3153,8 +4829,16 @@ export interface components {
             city?: string;
             country?: string;
             display_name?: string;
+            download_size_bytes?: number;
+            estimated_download_cost_eur?: number;
+            estimated_one_hour_cost_eur?: number;
+            estimated_spot_reserve_eur?: number;
             gpu_count?: number;
             market_type?: string;
+            network_download_price_per_gb_eur?: number;
+            network_estimate_available?: boolean;
+            network_pricing_known?: boolean;
+            network_upload_price_per_gb_eur?: number;
             price_eur_per_hour?: number;
             provider_codename?: string;
             public_gpu_id?: string;
@@ -3175,6 +4859,24 @@ export interface components {
             price_eur_per_gb_hour?: number;
             status?: string;
             unit?: string;
+        };
+        PublicTokenUsageDay: {
+            date?: string;
+            total_tokens?: number;
+        };
+        PublicTokenUsageResponse: {
+            as_of?: string;
+            days?: components["schemas"]["PublicTokenUsageDay"][];
+            from?: string;
+            measured_since?: string;
+            period_totals?: components["schemas"]["PublicTokenUsageTotal"];
+            timezone?: string;
+            to?: string;
+            top_models?: string[];
+            totals?: components["schemas"]["PublicTokenUsageTotal"];
+        };
+        PublicTokenUsageTotal: {
+            total_tokens?: number;
         };
         QueuedDebitResponse: {
             operation_id?: string;
@@ -3225,6 +4927,7 @@ export interface components {
             min_replicas?: number;
             model_ref?: string;
             name?: string;
+            runtime_config_snapshot?: string;
             scheduling_mode?: string;
             serving_endpoint_id?: string;
             serving_name?: string;
@@ -3267,8 +4970,12 @@ export interface components {
         };
         ResourceMetricSnapshot: {
             e2e_request_latency_p95_seconds?: number;
+            generation_tokens_per_second?: number;
             generation_tokens_total?: number;
+            inter_token_latency_p95_seconds?: number;
             kv_cache_usage_percent?: number;
+            prefix_cache_hit_percent?: number;
+            prompt_tokens_per_second?: number;
             prompt_tokens_total?: number;
             requests_running?: number;
             requests_waiting?: number;
@@ -3287,6 +4994,7 @@ export interface components {
             context_management?: components["schemas"]["Protocol.ContextManagement"][];
             input?: number[];
             instructions?: string;
+            max_output_tokens?: number;
             metadata?: {
                 [key: string]: string;
             };
@@ -3306,9 +5014,12 @@ export interface components {
             context_size?: number;
             dtype?: string;
             duplex?: boolean;
+            enable_chunked_prefill?: boolean;
+            enable_prefix_caching?: boolean;
             gpu_memory_utilization?: number;
             kv_cache_dtype?: string;
             max_num_batched_tokens?: number;
+            max_num_seqs?: number;
             profile?: string;
             quantization?: string;
             storage_mounts?: {
@@ -3318,14 +5029,18 @@ export interface components {
                 volume_id?: string;
             }[];
             tensor_parallel_size?: number;
+            yolo_model_file?: string;
         };
         RuntimeConfigResponse: {
             context_size?: number;
             dtype?: string;
             duplex?: boolean;
+            enable_chunked_prefill?: boolean;
+            enable_prefix_caching?: boolean;
             gpu_memory_utilization?: number;
             kv_cache_dtype?: string;
             max_num_batched_tokens?: number;
+            max_num_seqs?: number;
             profile?: string;
             quantization?: string;
             storage_mounts?: {
@@ -3334,7 +5049,9 @@ export interface components {
                 subpath?: string;
                 volume_id?: string;
             }[];
+            task_type?: string;
             tensor_parallel_size?: number;
+            yolo_model_file?: string;
         };
         RuntimeMemoryEstimateResponse: {
             active_parameter_count?: number;
@@ -3346,6 +5063,13 @@ export interface components {
             per_gpu_required_vram_gb?: number;
             required_vram_gb?: number;
             tensor_parallel_size?: number;
+        };
+        RuntimeProgressRequest: {
+            /** @description Current observation attempt for ordinary phase notifications. */
+            attempt_id?: string;
+            /** @description Retained launch identity, sent only once per boot to resolve attempt_id. */
+            launch_id?: string;
+            phase?: string;
         };
         ScaleReplicaSetRequest: {
             desired_replicas?: number;
@@ -3400,6 +5124,80 @@ export interface components {
             recommend?: components["schemas"]["SearchRecommendRequest"];
             top_k?: number;
         };
+        "Service.BiomolecularArtifact": {
+            filename?: string;
+            id?: string;
+            media_type?: string;
+            size_bytes?: number;
+        };
+        "Service.BiomolecularAttachment": {
+            content?: string;
+            name?: string;
+        };
+        "Service.BiomolecularJobResult": {
+            affinity?: {
+                [key: string]: unknown;
+            };
+            artifacts?: components["schemas"]["Service.BiomolecularArtifact"][];
+            completed_at?: string;
+            confidence?: {
+                [key: string]: unknown;
+            }[];
+            created_at?: string;
+            error?: string;
+            id?: string;
+            metadata?: {
+                [key: string]: unknown;
+            };
+            model?: string;
+            started_at?: string;
+            status?: string;
+        };
+        "Service.BiomolecularOptions": {
+            affinity_mw_correction?: boolean;
+            diffusion_samples?: number;
+            diffusion_samples_affinity?: number;
+            max_msa_seqs?: number;
+            msa_pairing_strategy?: string;
+            output_format?: string;
+            recycling_steps?: number;
+            sampling_steps?: number;
+            sampling_steps_affinity?: number;
+            seed?: number;
+            use_msa_server?: boolean;
+            use_potentials?: boolean;
+        };
+        "Service.BiomolecularSubmitRequest": {
+            attachments?: components["schemas"]["Service.BiomolecularAttachment"][];
+            input: {
+                [key: string]: unknown;
+            };
+            model: string;
+            options?: components["schemas"]["Service.BiomolecularOptions"];
+        };
+        "Service.VideoJobContentURL": {
+            download_url?: string;
+            expires_at?: string;
+            url?: string;
+        };
+        "Service.VideoJobResult": {
+            cancel_requested: boolean;
+            /** @description RFC3339 timestamp, or an empty string before this lifecycle event. */
+            completed_at: string;
+            /** Format: date-time */
+            created_at: string;
+            error?: string;
+            /** @description RFC3339 timestamp, or an empty string before this lifecycle event. */
+            expires_at: string;
+            /** Format: uuid */
+            id: string;
+            model: string;
+            prompt: string;
+            /** @description RFC3339 timestamp, or an empty string before this lifecycle event. */
+            started_at: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
+        };
         ServingEndpointResponse: {
             created_at?: string;
             display_name?: string;
@@ -3409,9 +5207,11 @@ export interface components {
             model_ids?: string[];
             name?: string;
             providers?: components["schemas"]["ServingProviderResponse"][];
+            public_audio_per_hour_eur?: number;
             public_input_per_million_eur?: number;
             public_output_per_million_eur?: number;
             realtime_mode?: string;
+            realtime_profile?: string;
             state?: string;
             supported_protocols?: string[];
             supports_duplex?: boolean;
@@ -3445,6 +5245,105 @@ export interface components {
             type?: string;
             updated_at?: string;
             weight?: number;
+        };
+        SharedCapacityInstanceResponse: {
+            capacity_tier?: string;
+            created_at?: string;
+            gpu?: string;
+            gpu_count?: number;
+            model_ref?: string;
+            public_price_per_hour_microcents?: number;
+            started_at?: string;
+            state?: string;
+            storage_price_per_hour_microcents?: number;
+            workload_kind?: string;
+        };
+        SharedCapacityLinkResponse: {
+            created_by_account_id?: string;
+            expires_at?: string;
+            group_id?: string;
+            id?: string;
+            token?: string;
+            url?: string;
+        };
+        SharedCapacityListResponse: {
+            capacities?: components["schemas"]["SharedCapacityResponse"][];
+        };
+        SharedCapacityMembershipResponse: {
+            accepted_at?: string;
+            accepted_terms_hash?: string;
+            accepted_terms_version?: string;
+            active_member_count?: number;
+            amount_microcents?: number;
+            base_price_eur_per_hour?: number;
+            base_price_microcents_per_hour?: number;
+            base_price_microcents_per_second?: number;
+            created_at?: string;
+            current_member_price_eur_per_hour?: number;
+            current_member_price_microcents_per_hour?: number;
+            effective_from?: string;
+            group_id?: string;
+            instance?: components["schemas"]["SharedCapacityInstanceResponse"];
+            leave_effective_at?: string;
+            left_at?: string;
+            max_members?: number;
+            member_price_microcents_per_second?: number;
+            membership_id?: string;
+            reservation_attached?: boolean;
+            reservation_state?: string;
+            role?: string;
+            serving_alias_id?: string;
+            status?: string;
+            suspended_at?: string;
+            updated_at?: string;
+        };
+        SharedCapacityPublicListResponse: {
+            capacities?: components["schemas"]["SharedCapacityPublicResponse"][];
+            next_cursor?: string;
+        };
+        SharedCapacityPublicResponse: {
+            active_member_count?: number;
+            availability_mode?: string;
+            base_price_eur_per_hour?: number;
+            base_price_microcents_per_hour?: number;
+            base_price_microcents_per_second?: number;
+            capacity_tier?: string;
+            estimated_join_price_eur_per_hour?: number;
+            estimated_join_price_microcents_per_hour?: number;
+            gpu?: string;
+            instance_state?: string;
+            max_members?: number;
+            member_price_microcents_per_second?: number;
+            model_description?: string;
+            model_ref?: string;
+            selection_mode?: string;
+            slug?: string;
+            status?: string;
+            terms_hash?: string;
+            terms_version?: string;
+            visibility?: string;
+            workload_kind?: string;
+        };
+        SharedCapacityResponse: {
+            active_member_count?: number;
+            backing_instance_id?: string;
+            base_price_eur_per_hour?: number;
+            base_price_microcents_per_hour?: number;
+            base_price_microcents_per_second?: number;
+            close_reason?: string;
+            current_member_price_eur_per_hour?: number;
+            current_member_price_microcents_per_hour?: number;
+            group_id?: string;
+            instance?: components["schemas"]["SharedCapacityInstanceResponse"];
+            max_members?: number;
+            member_price_microcents_per_second?: number;
+            members?: components["schemas"]["SharedCapacityMembershipResponse"][];
+            membership?: components["schemas"]["SharedCapacityMembershipResponse"];
+            public_slug?: string;
+            status?: string;
+            terms_hash?: string;
+            terms_version?: string;
+            visibility?: string;
         };
         SmartBalancerRouteDestinationRequest: {
             ref?: string;
@@ -3492,21 +5391,17 @@ export interface components {
             router_model?: components["schemas"]["SmartBalancerRouterModelResponse"];
             routes?: components["schemas"]["SmartBalancerRouteResponse"][];
             routing_mode?: string;
+            /** @description Requests in the rolling window required before starting stopped serverless destinations. */
+            serverless_start_requests?: number;
+            /** @description Rolling request window in seconds. */
+            serverless_start_window_seconds?: number;
             serving_endpoint_id?: string;
             updated_at?: string;
             workload_kind?: string;
         };
-        StorageVolumeResponse: {
-            account_id?: string;
-            bucket?: string;
-            created_at?: string;
-            description?: string;
-            error_message?: string;
-            id?: string;
-            name?: string;
-            prefix?: string;
-            provider?: string;
-            status?: string;
+        StartupProgress: {
+            phase?: string;
+            source?: string;
             updated_at?: string;
         };
         TargetGroupMemberRequest: {
@@ -3570,7 +5465,7 @@ export interface components {
             nanos?: number;
             /**
              * @description Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must
-             *     be between -315576000000 and 315576000000 inclusive (which corresponds to
+             *     be between -62135596800 and 253402300799 inclusive (which corresponds to
              *     0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z).
              */
             seconds?: number;
@@ -3616,6 +5511,10 @@ export interface components {
             slug?: string;
         };
         UpdateInstanceRequest: {
+            /** @description Opt into automatic Smart cost optimization. Omission preserves the saved setting; switching to manual disables it. */
+            cost_optimization_enabled?: boolean;
+            /** @description Minimum percentage saving required for replacement. Defaults to 20; must be finite, greater than 0 and less than 100. Decimals are accepted. */
+            cost_optimization_min_savings_percent?: number;
             description?: string;
             gpu_preferences?: components["schemas"]["PublicGPUPreferenceJSON"][];
             idle_timeout_seconds?: number;
@@ -3661,6 +5560,10 @@ export interface components {
             router_model?: components["schemas"]["SmartBalancerRouterModelRequest"];
             routes?: components["schemas"]["SmartBalancerRouteRequest"][];
             routing_mode?: string;
+            /** @description Requests in the rolling window required before starting stopped serverless destinations. Omitted settings retain their stored values. */
+            serverless_start_requests?: number;
+            /** @description Rolling request window in seconds. */
+            serverless_start_window_seconds?: number;
             workload_kind?: string;
         };
         UpdateTargetGroupRequest: {
@@ -3677,11 +5580,13 @@ export interface components {
         };
         UpdateVectorDatabaseRequest: {
             description?: string;
+            embedding_serving_name?: string;
             name?: string;
             slug?: string;
         };
         UserInfoResponse: {
             email?: string;
+            impersonating?: components["schemas"]["ImpersonationInfo"];
             user_id?: string;
         };
         UserPreferencesResponse: {
@@ -3743,6 +5648,9 @@ export interface components {
             email?: string;
             user_id?: string;
         };
+        VideoJobsListResponse: {
+            data: components["schemas"]["Service.VideoJobResult"][];
+        };
         ViewElementRequest: {
             document_id?: string;
             recommend_token?: string;
@@ -3757,6 +5665,168 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    postOllamaShow: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postRuntimeNotifyCrash: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postRuntimeNotifyProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RuntimeProgressRequest"];
+            };
+        };
+        responses: {
+            /** @description Current attempt_id, or empty for an inactive/replaced launch */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Phase accepted or stale notification ignored */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     getAccounts: {
         parameters: {
             query?: never;
@@ -4375,6 +6445,47 @@ export interface operations {
             };
         };
     };
+    post_v1_agent_chat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "messages": [
+                 *         {
+                 *           "content": "How do I deploy a model?",
+                 *           "role": "user"
+                 *         }
+                 *       ]
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Server-sent event stream */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": string;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getApiKeys: {
         parameters: {
             query?: never;
@@ -4532,6 +6643,236 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
+            };
+        };
+    };
+    postV1AudioSpeech: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AudioSpeechRequest"];
+            };
+        };
+        responses: {
+            /** @description Audio bytes */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1AudioTranscriptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Audio file
+                     */
+                    file: string;
+                    /** @description Source language */
+                    language?: string;
+                    /** @description Model ID */
+                    model: string;
+                    /** @description Response format: json, verbose_json, or diarized_json */
+                    response_format?: string;
+                    /** @description Timestamp granularity (word or segment); requires verbose_json */
+                    "timestamp_granularities[]"?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Transcription text and optional timestamps or speaker segments */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1AudioVoices: {
+        parameters: {
+            query: {
+                /** @description Model ID */
+                model: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description voices and languages */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_v1_audit: {
+        parameters: {
+            query?: {
+                /** @description Filter by user ID */
+                user_id?: string;
+                /** @description Filter by semantic action */
+                action?: string;
+                /** @description Filter by HTTP method */
+                method?: string;
+                /** @description Filter by route path */
+                path?: string;
+                /** @description RFC3339 lower time bound */
+                from?: string;
+                /** @description RFC3339 upper time bound */
+                to?: string;
+                /** @description Filter by HTTP status code */
+                status?: string;
+                /** @description Maximum number of events */
+                limit?: number;
+                /** @description Pagination offset */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "events": [
+                     *         {
+                     *           "action": "instances.start",
+                     *           "created_at": "2026-01-15T10:00:00Z",
+                     *           "id": "audit_xxx",
+                     *           "method": "POST",
+                     *           "path": "/v1/instances/{instanceID}/start",
+                     *           "status_code": 200
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -4748,6 +7089,24 @@ export interface operations {
             };
         };
     };
+    post_v1_auth_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getAuthMe: {
         parameters: {
             query?: never;
@@ -4773,6 +7132,416 @@ export interface operations {
                 };
                 content: {
                     "application/json": string;
+                };
+            };
+        };
+    };
+    getAuthOauthIdentities: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteAuthOauthIdentitiesProvider: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description OAuth provider */
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postAuthOauthSignup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OauthSignupRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postAuthOauthTotp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OauthTOTPRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getAuthOauthProviderBegin: {
+        parameters: {
+            query?: {
+                /** @description Optional allowlisted callback URI */
+                redirect_uri?: string;
+            };
+            header?: never;
+            path: {
+                /** @description OAuth provider */
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Provider authorization redirect */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getAuthOauthProviderCallback: {
+        parameters: {
+            query?: {
+                /** @description Provider authorization code */
+                code?: string;
+                /** @description OAuth state */
+                state?: string;
+                /** @description Provider error */
+                error?: string;
+            };
+            header?: never;
+            path: {
+                /** @description OAuth provider */
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Frontend redirect */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postAuthOauthProviderLink: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description OAuth provider */
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Provider authorization redirect */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -5274,6 +8043,31 @@ export interface operations {
             };
         };
     };
+    get_v1_auth_private_beta_check: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     postAuthRefresh: {
         parameters: {
             query?: never;
@@ -5725,6 +8519,384 @@ export interface operations {
             };
         };
     };
+    get_v1_automations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "automations": [
+                     *         {
+                     *           "config_json": "{}",
+                     *           "id": "automation_xxx",
+                     *           "input_connector_id": "connector_in",
+                     *           "name": "Support triage",
+                     *           "output_connector_id": "connector_out",
+                     *           "processor_ref": "endpoint_xxx",
+                     *           "processor_type": "agent",
+                     *           "status": "active"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_automations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "config_json": "{}",
+                 *       "input_connector_id": "connector_in",
+                 *       "name": "Support triage",
+                 *       "output_connector_id": "connector_out",
+                 *       "processor_ref": "endpoint_xxx",
+                 *       "processor_type": "agent"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{}",
+                     *       "id": "automation_xxx",
+                     *       "input_connector_id": "connector_in",
+                     *       "name": "Support triage",
+                     *       "output_connector_id": "connector_out",
+                     *       "processor_ref": "endpoint_xxx",
+                     *       "processor_type": "agent",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_automations_types: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "types": [
+                     *         {
+                     *           "display_name": "Agent",
+                     *           "type": "agent"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_automations_automationID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Automation ID */
+                automationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{}",
+                     *       "id": "automation_xxx",
+                     *       "input_connector_id": "connector_in",
+                     *       "name": "Support triage",
+                     *       "output_connector_id": "connector_out",
+                     *       "processor_ref": "endpoint_xxx",
+                     *       "processor_type": "agent",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    delete_v1_automations_automationID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Automation ID */
+                automationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    patch_v1_automations_automationID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Automation ID */
+                automationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "config_json": "{}",
+                 *       "input_connector_id": "connector_in",
+                 *       "name": "Support triage",
+                 *       "output_connector_id": "connector_out",
+                 *       "processor_ref": "endpoint_xxx",
+                 *       "processor_type": "agent"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{}",
+                     *       "id": "automation_xxx",
+                     *       "input_connector_id": "connector_in",
+                     *       "name": "Support triage",
+                     *       "output_connector_id": "connector_out",
+                     *       "processor_ref": "endpoint_xxx",
+                     *       "processor_type": "agent",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_automations_automationID_pause: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Automation ID */
+                automationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{}",
+                     *       "id": "automation_xxx",
+                     *       "input_connector_id": "connector_in",
+                     *       "name": "Support triage",
+                     *       "output_connector_id": "connector_out",
+                     *       "processor_ref": "endpoint_xxx",
+                     *       "processor_type": "agent",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_automations_automationID_resume: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Automation ID */
+                automationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{}",
+                     *       "id": "automation_xxx",
+                     *       "input_connector_id": "connector_in",
+                     *       "name": "Support triage",
+                     *       "output_connector_id": "connector_out",
+                     *       "processor_ref": "endpoint_xxx",
+                     *       "processor_type": "agent",
+                     *       "status": "active"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_automations_automationID_validate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Automation ID */
+                automationID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "valid": true
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getBillingBalance: {
         parameters: {
             query?: never;
@@ -6115,6 +9287,1001 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1BiomolecularCapabilities: {
+        parameters: {
+            query: {
+                /** @description Account-owned serving name or instance UUID */
+                model: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BiomolecularCapabilities"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1BiomolecularJob: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Account-scoped request identity */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Service.BiomolecularSubmitRequest"];
+            };
+        };
+        responses: {
+            /** @description Accepted */
+            202: {
+                headers: {
+                    /** @description Job status URL */
+                    Location?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.BiomolecularJobResult"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unsupported Media Type */
+            415: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1BiomolecularJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Job UUID */
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.BiomolecularJobResult"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    downloadV1BiomolecularArtifact: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Job UUID */
+                job_id: string;
+                /** @description Artifact UUID */
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    cancelV1BiomolecularJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Job UUID */
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.BiomolecularJobResult"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1ChatCompletions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChatRequestEnvelope"];
+            };
+        };
+        responses: {
+            /** @description OpenAI chat.completion response or SSE stream */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description firewall blocked */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_v1_connectors: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "connectors": [
+                     *         {
+                     *           "config_json": "{\"chat_id\":\"123\"}",
+                     *           "id": "connector_xxx",
+                     *           "name": "Support Telegram",
+                     *           "status": "active",
+                     *           "type": "telegram"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "bot_token": "bot-token",
+                 *       "config_json": "{\"chat_id\":\"123\"}",
+                 *       "name": "Support Telegram",
+                 *       "type": "telegram"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_connectors_types: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "types": [
+                     *         {
+                     *           "display_name": "Telegram",
+                     *           "type": "telegram"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_connectors_connectorID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    delete_v1_connectors_connectorID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    patch_v1_connectors_connectorID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "config_json": "{\"chat_id\":\"456\"}",
+                 *       "name": "Updated Telegram",
+                 *       "type": "telegram"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_connectors_connectorID_access_requests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "requests": [
+                     *         {
+                     *           "connector_id": "connector_xxx",
+                     *           "created_at": "2026-01-15T10:00:00Z",
+                     *           "id": "request_xxx",
+                     *           "status": "pending"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors_connectorID_access_requests_requestID_approve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+                /** @description Access request ID */
+                requestID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {} */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors_connectorID_access_requests_requestID_reject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+                /** @description Access request ID */
+                requestID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {} */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors_connectorID_pause: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_connectors_connectorID_principals: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "principals": [
+                     *         {
+                     *           "active": true,
+                     *           "connector_id": "connector_xxx",
+                     *           "display_name": "Support Bot",
+                     *           "id": "principal_xxx"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors_connectorID_resume: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors_connectorID_rotate_webhook: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_connectors_connectorID_verify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Connector ID */
+                connectorID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "config_json": "{\"chat_id\":\"123\"}",
+                     *       "id": "connector_xxx",
+                     *       "name": "Support Telegram",
+                     *       "status": "active",
+                     *       "type": "telegram"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    postV1Embeddings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmbeddingsRequestEnvelope"];
+            };
+        };
+        responses: {
+            /** @description OpenAI embeddings list response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7554,6 +11721,8 @@ export interface operations {
             query: {
                 /** @description Hugging Face repository ID (e.g. owner/model) */
                 repo: string;
+                /** @description Checkpoint format: gguf (default) or yolo */
+                format?: string;
             };
             header?: never;
             path?: never;
@@ -7567,7 +11736,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HuggingFaceGGUFFileResponse"];
+                    "application/json": components["schemas"]["HuggingFaceFilesResponse"];
                 };
             };
             /** @description Bad Request */
@@ -7841,6 +12010,294 @@ export interface operations {
             };
         };
     };
+    postV1ImageDetections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** @description Comma-separated nonnegative class IDs */
+                    classes?: string;
+                    /** @description Confidence threshold (0-1, default 0.25) */
+                    confidence?: number;
+                    /**
+                     * Format: binary
+                     * @description PNG or JPEG image (maximum 16 MiB)
+                     */
+                    image: string;
+                    /** @description Inference image size (32-2048, divisible by 32, default 640) */
+                    image_size?: number;
+                    /** @description IoU threshold (0-1, default 0.7) */
+                    iou?: number;
+                    /** @description Maximum detections (1-1000, default 300) */
+                    max_detections?: number;
+                    /** @description Serving name or instance UUID */
+                    model: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImageDetectionOutput"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1ImageDetectionsStream: {
+        parameters: {
+            query: {
+                /** @description Serving name or instance UUID */
+                model: string;
+                /** @description Preferred account; validated through user membership */
+                account_id?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description WebSocket upgraded; subsequent text events describe session, frame result or error */
+            101: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectionStreamEvent"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1ImageEdits: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** @description Guidance scale (0-20) */
+                    guidance_scale?: number;
+                    /**
+                     * Format: binary
+                     * @description Source image file
+                     */
+                    image: string;
+                    /**
+                     * Format: binary
+                     * @description Mask image file
+                     */
+                    mask?: string;
+                    /** @description Model ID */
+                    model: string;
+                    /** @description Inference steps (1-200) */
+                    num_inference_steps?: number;
+                    /** @description Edit prompt */
+                    prompt: string;
+                    /** @description Random seed */
+                    seed?: number;
+                    /** @description Output size (WIDTHxHEIGHT) */
+                    size?: string;
+                    /** @description Denoising strength (0-1, lower preserves original) */
+                    strength?: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Edited images with b64_json data */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1ImageGenerations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImageGenerationRequest"];
+            };
+        };
+        responses: {
+            /** @description OpenAI image generation response with b64_json data */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     getInstanceConfigGpus: {
         parameters: {
             query?: never;
@@ -8001,6 +12458,75 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postInstancesPreview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreviewInstanceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PreviewInstanceResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8866,6 +13392,64 @@ export interface operations {
             };
         };
     };
+    getV1Models: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "capabilities": [
+                     *             "completion",
+                     *             "tools"
+                     *           ],
+                     *           "context_length": 32768,
+                     *           "created": 0,
+                     *           "id": "my-model",
+                     *           "object": "model",
+                     *           "owned_by": "valendra"
+                     *         }
+                     *       ],
+                     *       "object": "list"
+                     *     }
+                     */
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     getModelsFixed: {
         parameters: {
             query?: never;
@@ -9132,6 +13716,301 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getPrometheusTargets: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HttpTarget"][];
+                };
+            };
+            /** @description missing or invalid metrics API key */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description failed to list metrics targets */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    getPrometheusVLLMMetrics: {
+        parameters: {
+            query: {
+                /** @description Inference instance ID */
+                instance: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Prometheus text exposition */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": string;
+                };
+            };
+            /** @description missing instance query parameter */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description missing or invalid metrics API key */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description upstream metrics unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    getV1PublicEndpoints: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicEndpointsResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicModelPrices: {
+        parameters: {
+            query?: {
+                /** @description Search query for model prices */
+                query?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelPricesResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gateway Timeout */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicPricing: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicPricingResponse"];
+                };
+            };
+            /** @description Bad Gateway */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1PublicTokenUsage: {
+        parameters: {
+            query?: {
+                /** @description Inclusive date YYYY-MM-DD; supply with to */
+                from?: string;
+                /** @description Exclusive date YYYY-MM-DD; supply with from */
+                to?: string;
+                /** @description IANA timezone; default UTC */
+                timezone?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Recorded aggregate token usage with the configured public display multiplier */
+            200: {
+                headers: {
+                    /** @example public, max-age=60 */
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: date-time */
+                        as_of: string;
+                        days: {
+                            /** Format: date */
+                            date: string;
+                            /** Format: int64 */
+                            total_tokens: number;
+                        }[];
+                        /** Format: date */
+                        from: string;
+                        /** Format: date-time */
+                        measured_since: string | null;
+                        period_totals: {
+                            /** Format: int64 */
+                            total_tokens: number;
+                        };
+                        /** @example Europe/Madrid */
+                        timezone: string;
+                        /** Format: date */
+                        to: string;
+                        /** @description Up to ten canonical public model names, ordered by total recorded tokens in the selected period (ties by name); no per-model quantities */
+                        top_models: string[];
+                        totals: {
+                            /** Format: int64 */
+                            total_tokens: number;
+                        };
+                    };
+                };
+            };
+            /** @description Invalid calendar dates or timezone; from and to must be supplied together within 366 calendar days */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Usage report unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getV1Realtime: {
+        parameters: {
+            query: {
+                /** @description Model serving name */
+                model: string;
+                /** @description Realtime mode (turn, duplex, or transcription) */
+                mode?: string;
+                /** @description Legacy native-duplex alias (1/true/on); requires a duplex-capable model */
+                duplex?: string;
+                /** @description Resume a realtime session id */
+                session_id?: string;
+                /** @description Auto-start the realtime session (1/true/on) */
+                autostart?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description WebSocket upgrade */
+            101: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9448,2140 +14327,6 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postRuntimeNotifyCrash: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
-        responses: {
-            /** @description No content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getServingEndpoints: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description endpoints */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: components["schemas"]["ServingEndpointResponse"][];
-                    };
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postServingEndpoint: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateServingEndpointRequest"];
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ServingEndpointResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description name conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: string;
-                    };
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getSmartBalancers: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description smart_balancers */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: components["schemas"]["SmartBalancerViewResponse"][];
-                    };
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postSmartBalancer: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateSmartBalancerRequest"];
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SmartBalancerViewResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    deleteSmartBalancer: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Smart balancer ID */
-                smartBalancerID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    patchSmartBalancer: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Smart balancer ID */
-                smartBalancerID: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateSmartBalancerRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SmartBalancerViewResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getStorageVolumes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StorageVolumeResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postStorageVolumes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateStorageVolumeRequest"];
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StorageVolumeResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getStorageVolume: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Volume ID */
-                volumeID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StorageVolumeResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    deleteStorageVolume: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Volume ID */
-                volumeID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No Content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getTargetGroups: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description groups */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: components["schemas"]["TargetGroupResponse"][];
-                    };
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postTargetGroup: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateTargetGroupRequest"];
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TargetGroupResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getTargetGroup: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Target group ID */
-                targetGroupID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TargetGroupResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    deleteTargetGroup: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Target group ID */
-                targetGroupID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    patchTargetGroup: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Target group ID */
-                targetGroupID: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateTargetGroupRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TargetGroupResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    get_tool_deployments: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "deployments": [
-                     *         {
-                     *           "current_version_id": "version_xxx",
-                     *           "deployment_id": "dep_xxx",
-                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *           "policy_revision": "policy-2026-08-27",
-                     *           "provider_key": "lambda:dep_xxx",
-                     *           "repository": {
-                     *             "owner": "example-org",
-                     *             "protected_ref": "refs/tags/v1.0.0",
-                     *             "repository": "example-server",
-                     *             "workflow": ".github/workflows/release.yml"
-                     *           },
-                     *           "server_name": "example-server",
-                     *           "server_version": "1.0.0",
-                     *           "status": "published",
-                     *           "tools": [],
-                     *           "versions": [
-                     *             {
-                     *               "commit_sha": "abc123",
-                     *               "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *               "provenance_reference": "oci://...",
-                     *               "release_version": "v1.0.0",
-                     *               "runtime_revision": "runtime-node-v1",
-                     *               "sbom_reference": "oci://...",
-                     *               "status": "published",
-                     *               "version_id": "version_xxx",
-                     *               "workflow_run_id": "123456"
-                     *             }
-                     *           ]
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    post_tool_deployments: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "idempotency_key": "release-2026-08-27",
-                 *       "manifest_yaml": "apiVersion: tools.valendra.io/v1\\nkind: ToolDeployment\\n...",
-                 *       "repository": {
-                 *         "owner": "example-org",
-                 *         "protected_ref": "refs/tags/v1.0.0",
-                 *         "repository": "example-server",
-                 *         "workflow": ".github/workflows/release.yml"
-                 *       }
-                 *     }
-                 */
-                "application/json": unknown;
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "",
-                     *       "policy_revision": "policy-2026-08-27",
-                     *       "provider_key": "lambda:dep_xxx",
-                     *       "repository": {
-                     *         "owner": "example-org",
-                     *         "protected_ref": "refs/tags/v1.0.0",
-                     *         "repository": "example-server",
-                     *         "workflow": ".github/workflows/release.yml"
-                     *       },
-                     *       "server_name": "example-server",
-                     *       "server_version": "1.0.0",
-                     *       "status": "pending_upload"
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    get_tool_deployments_deploymentID: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Deployment ID */
-                deploymentID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "current_version_id": "version_xxx",
-                     *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *       "policy_revision": "policy-2026-08-27",
-                     *       "provider_key": "lambda:dep_xxx",
-                     *       "repository": {
-                     *         "owner": "example-org",
-                     *         "protected_ref": "refs/tags/v1.0.0",
-                     *         "repository": "example-server",
-                     *         "workflow": ".github/workflows/release.yml"
-                     *       },
-                     *       "server_name": "example-server",
-                     *       "server_version": "1.0.0",
-                     *       "status": "published",
-                     *       "tools": [],
-                     *       "versions": [
-                     *         {
-                     *           "commit_sha": "abc123",
-                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *           "provenance_reference": "oci://...",
-                     *           "release_version": "v1.0.0",
-                     *           "runtime_revision": "runtime-node-v1",
-                     *           "sbom_reference": "oci://...",
-                     *           "status": "published",
-                     *           "version_id": "version_xxx",
-                     *           "workflow_run_id": "123456"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    post_tool_deployments_deploymentID_finalize: {
-        parameters: {
-            query?: never;
-            header: {
-                /** @description Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs. */
-                "X-Valendra-GitHub-OIDC-Token": string;
-            };
-            path: {
-                /** @description Deployment ID */
-                deploymentID: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "commit_sha": "abc123",
-                 *       "image_digest": "qdiv0/managed-tools-staging@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-                 *       "provenance_reference": "oci://...",
-                 *       "release_version": "v1.0.0",
-                 *       "sbom_reference": "oci://...",
-                 *       "session_id": "session_xxx",
-                 *       "workflow_run_id": "123456"
-                 *     }
-                 */
-                "application/json": unknown;
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "current_version_id": "version_xxx",
-                     *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *       "policy_revision": "policy-2026-08-27",
-                     *       "provider_key": "lambda:dep_xxx",
-                     *       "repository": {
-                     *         "owner": "example-org",
-                     *         "protected_ref": "refs/tags/v1.0.0",
-                     *         "repository": "example-server",
-                     *         "workflow": ".github/workflows/release.yml"
-                     *       },
-                     *       "server_name": "example-server",
-                     *       "server_version": "1.0.0",
-                     *       "status": "published",
-                     *       "tools": [],
-                     *       "versions": [
-                     *         {
-                     *           "commit_sha": "abc123",
-                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *           "provenance_reference": "oci://...",
-                     *           "release_version": "v1.0.0",
-                     *           "runtime_revision": "runtime-node-v1",
-                     *           "sbom_reference": "oci://...",
-                     *           "status": "published",
-                     *           "version_id": "version_xxx",
-                     *           "workflow_run_id": "123456"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    post_tool_deployments_deploymentID_revoke: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Deployment ID */
-                deploymentID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "current_version_id": "version_xxx",
-                     *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *       "policy_revision": "policy-2026-08-27",
-                     *       "provider_key": "lambda:dep_xxx",
-                     *       "repository": {
-                     *         "owner": "example-org",
-                     *         "protected_ref": "refs/tags/v1.0.0",
-                     *         "repository": "example-server",
-                     *         "workflow": ".github/workflows/release.yml"
-                     *       },
-                     *       "server_name": "example-server",
-                     *       "server_version": "1.0.0",
-                     *       "status": "published",
-                     *       "tools": [],
-                     *       "versions": [
-                     *         {
-                     *           "commit_sha": "abc123",
-                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *           "provenance_reference": "oci://...",
-                     *           "release_version": "v1.0.0",
-                     *           "runtime_revision": "runtime-node-v1",
-                     *           "sbom_reference": "oci://...",
-                     *           "status": "published",
-                     *           "version_id": "version_xxx",
-                     *           "workflow_run_id": "123456"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    post_tool_deployments_deploymentID_rollback: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Deployment ID */
-                deploymentID: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "target_version": "version_xxx"
-                 *     }
-                 */
-                "application/json": unknown;
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "current_version_id": "version_xxx",
-                     *       "deployment_id": "dep_xxx",
-                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *       "policy_revision": "policy-2026-08-27",
-                     *       "provider_key": "lambda:dep_xxx",
-                     *       "repository": {
-                     *         "owner": "example-org",
-                     *         "protected_ref": "refs/tags/v1.0.0",
-                     *         "repository": "example-server",
-                     *         "workflow": ".github/workflows/release.yml"
-                     *       },
-                     *       "server_name": "example-server",
-                     *       "server_version": "1.0.0",
-                     *       "status": "published",
-                     *       "tools": [],
-                     *       "versions": [
-                     *         {
-                     *           "commit_sha": "abc123",
-                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                     *           "provenance_reference": "oci://...",
-                     *           "release_version": "v1.0.0",
-                     *           "runtime_revision": "runtime-node-v1",
-                     *           "sbom_reference": "oci://...",
-                     *           "status": "published",
-                     *           "version_id": "version_xxx",
-                     *           "workflow_run_id": "123456"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    post_tool_deployments_deploymentID_upload_session: {
-        parameters: {
-            query?: never;
-            header: {
-                /** @description Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs. */
-                "X-Valendra-GitHub-OIDC-Token": string;
-            };
-            path: {
-                /** @description Deployment ID */
-                deploymentID: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "artifact_digest": "staging-repository@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                 *     }
-                 */
-                "application/json": unknown;
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "expires_at": "2026-08-27T12:15:00Z",
-                     *       "region": "eu-west-1",
-                     *       "repository": "staging-repository",
-                     *       "role_arn": "arn:aws:iam::...:role/qdiv0-upload",
-                     *       "session_id": "session_xxx"
-                     *     }
-                     */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getTools: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    tryTool: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Tool type */
-                toolType: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": {
-                    [key: string]: unknown;
-                };
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getUserAPIKeys: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiKeyListResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postUserAPIKeys: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiKeyResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postUserAPIKeysKeyIDRevoke: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description API key ID */
-                keyID: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No Content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getTutorialProgress: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TutorialProgressResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    putTutorialProgress: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateTutorialProgressRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TutorialProgressResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description missing credentials or invalid access token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postV1AudioSpeech: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AudioSpeechRequest"];
-            };
-        };
-        responses: {
-            /** @description Audio bytes */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/octet-stream": string;
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postV1AudioTranscriptions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /**
-                     * Format: binary
-                     * @description Audio file
-                     */
-                    file: string;
-                    /** @description Source language */
-                    language?: string;
-                    /** @description Model ID */
-                    model: string;
-                    /** @description Response format */
-                    response_format?: string;
-                };
-            };
-        };
-        responses: {
-            /** @description Transcription text */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: string;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getV1AudioVoices: {
-        parameters: {
-            query: {
-                /** @description Model ID */
-                model: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description voices and languages */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postV1ChatCompletions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ChatRequestEnvelope"];
-            };
-        };
-        responses: {
-            /** @description OpenAI chat.completion response or SSE stream */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description firewall blocked */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postV1Embeddings: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["EmbeddingsRequestEnvelope"];
-            };
-        };
-        responses: {
-            /** @description OpenAI embeddings list response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postV1ImageEdits: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /** @description Guidance scale (0-20) */
-                    guidance_scale?: number;
-                    /**
-                     * Format: binary
-                     * @description Source image file
-                     */
-                    image: string;
-                    /**
-                     * Format: binary
-                     * @description Mask image file
-                     */
-                    mask?: string;
-                    /** @description Model ID */
-                    model: string;
-                    /** @description Inference steps (1-200) */
-                    num_inference_steps?: number;
-                    /** @description Edit prompt */
-                    prompt: string;
-                    /** @description Random seed */
-                    seed?: number;
-                    /** @description Output size (WIDTHxHEIGHT) */
-                    size?: string;
-                    /** @description Denoising strength (0-1, lower preserves original) */
-                    strength?: number;
-                };
-            };
-        };
-        responses: {
-            /** @description Edited images with b64_json data */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    postV1ImageGenerations: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ImageGenerationRequest"];
-            };
-        };
-        responses: {
-            /** @description OpenAI image generation response with b64_json data */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getV1PublicEndpoints: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PublicEndpointsResponse"];
-                };
-            };
-        };
-    };
-    getV1PublicModelPrices: {
-        parameters: {
-            query?: {
-                /** @description Search query for model prices */
-                query?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelPricesResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Gateway Timeout */
-            504: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getV1PublicPricing: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PublicPricingResponse"];
-                };
-            };
-            /** @description Bad Gateway */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    getV1Realtime: {
-        parameters: {
-            query: {
-                /** @description Model serving name */
-                model: string;
-                /** @description Realtime mode (turn or duplex) */
-                mode?: string;
-                /** @description Legacy native-duplex alias (1/true/on); requires a duplex-capable model */
-                duplex?: string;
-                /** @description Resume a realtime session id */
-                session_id?: string;
-                /** @description Auto-start the realtime session (1/true/on) */
-                autostart?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description WebSocket upgrade */
-            101: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -12053,6 +14798,730 @@ export interface operations {
             };
         };
     };
+    getServingEndpoints: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description endpoints */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: components["schemas"]["ServingEndpointResponse"][];
+                    };
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postServingEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateServingEndpointRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServingEndpointResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description name conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getSmartBalancers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description smart_balancers */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: components["schemas"]["SmartBalancerViewResponse"][];
+                    };
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postSmartBalancer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSmartBalancerRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SmartBalancerViewResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteSmartBalancer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Smart balancer ID */
+                smartBalancerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    patchSmartBalancer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Smart balancer ID */
+                smartBalancerID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSmartBalancerRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SmartBalancerViewResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1SystemOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Execution.SystemOneRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Execution.SystemOneResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unsupported Media Type */
+            415: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gateway Timeout */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getTargetGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description groups */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: components["schemas"]["TargetGroupResponse"][];
+                    };
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postTargetGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTargetGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TargetGroupResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getTargetGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Target group ID */
+                targetGroupID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TargetGroupResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteTargetGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Target group ID */
+                targetGroupID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    patchTargetGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Target group ID */
+                targetGroupID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTargetGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TargetGroupResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     getV1Templates: {
         parameters: {
             query?: {
@@ -12183,6 +15652,1303 @@ export interface operations {
             };
         };
     };
+    postV1TimeseriesForecast: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Execution.ForecastRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Execution.ForecastResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unsupported Media Type */
+            415: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gateway Timeout */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_v1_tool_deployments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "deployments": [
+                     *         {
+                     *           "current_version_id": "version_xxx",
+                     *           "deployment_id": "dep_xxx",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *           "policy_revision": "policy-2026-08-27",
+                     *           "provider_key": "lambda:dep_xxx",
+                     *           "repository": {
+                     *             "owner": "example-org",
+                     *             "protected_ref": "refs/tags/v1.0.0",
+                     *             "repository": "example-server",
+                     *             "workflow": ".github/workflows/release.yml"
+                     *           },
+                     *           "server_name": "example-server",
+                     *           "server_version": "1.0.0",
+                     *           "status": "published",
+                     *           "tools": [],
+                     *           "versions": [
+                     *             {
+                     *               "commit_sha": "abc123",
+                     *               "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *               "provenance_reference": "oci://...",
+                     *               "release_version": "v1.0.0",
+                     *               "runtime_revision": "runtime-node-v1",
+                     *               "sbom_reference": "oci://...",
+                     *               "status": "published",
+                     *               "version_id": "version_xxx",
+                     *               "workflow_run_id": "123456"
+                     *             }
+                     *           ]
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_tool_deployments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "idempotency_key": "release-2026-08-27",
+                 *       "manifest_yaml": "apiVersion: tools.valendra.io/v1\\nkind: ToolDeployment\\n...",
+                 *       "repository": {
+                 *         "owner": "example-org",
+                 *         "protected_ref": "refs/tags/v1.0.0",
+                 *         "repository": "example-server",
+                 *         "workflow": ".github/workflows/release.yml"
+                 *       }
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "pending_upload"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_v1_tool_deployments_deploymentID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_tool_deployments_deploymentID_finalize: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs. */
+                "X-Valendra-GitHub-OIDC-Token": string;
+            };
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "commit_sha": "abc123",
+                 *       "image_digest": "qdiv0/managed-tools-staging@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                 *       "provenance_reference": "oci://...",
+                 *       "release_version": "v1.0.0",
+                 *       "sbom_reference": "oci://...",
+                 *       "session_id": "session_xxx",
+                 *       "workflow_run_id": "123456"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_tool_deployments_deploymentID_revoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_tool_deployments_deploymentID_rollback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "target_version": "version_xxx"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "current_version_id": "version_xxx",
+                     *       "deployment_id": "dep_xxx",
+                     *       "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *       "policy_revision": "policy-2026-08-27",
+                     *       "provider_key": "lambda:dep_xxx",
+                     *       "repository": {
+                     *         "owner": "example-org",
+                     *         "protected_ref": "refs/tags/v1.0.0",
+                     *         "repository": "example-server",
+                     *         "workflow": ".github/workflows/release.yml"
+                     *       },
+                     *       "server_name": "example-server",
+                     *       "server_version": "1.0.0",
+                     *       "status": "published",
+                     *       "tools": [],
+                     *       "versions": [
+                     *         {
+                     *           "commit_sha": "abc123",
+                     *           "image_digest": "qdiv0/managed-tools@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                     *           "provenance_reference": "oci://...",
+                     *           "release_version": "v1.0.0",
+                     *           "runtime_revision": "runtime-node-v1",
+                     *           "sbom_reference": "oci://...",
+                     *           "status": "published",
+                     *           "version_id": "version_xxx",
+                     *           "workflow_run_id": "123456"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    post_v1_tool_deployments_deploymentID_upload_session: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Short-lived GitHub Actions OIDC token. Never include this value in the request body or logs. */
+                "X-Valendra-GitHub-OIDC-Token": string;
+            };
+            path: {
+                /** @description Deployment ID */
+                deploymentID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "artifact_digest": "staging-repository@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                 *     }
+                 */
+                "application/json": unknown;
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "expires_at": "2026-08-27T12:15:00Z",
+                     *       "region": "eu-west-1",
+                     *       "repository": "staging-repository",
+                     *       "role_arn": "arn:aws:iam::...:role/qdiv0-upload",
+                     *       "session_id": "session_xxx"
+                     *     }
+                     */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getTools: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    tryTool: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tool type */
+                toolType: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getUserAPIKeys: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiKeyListResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postUserAPIKeys: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiKeyResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postUserAPIKeysKeyIDRevoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description API key ID */
+                keyID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getTutorialProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorialProgressResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    putTutorialProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTutorialProgressRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorialProgressResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description missing credentials or invalid access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    listV1VideoJobs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoJobsListResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postV1VideoJob: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Account-scoped submission identity */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description Standard aspect ratio or adaptive
+                     * @enum {string}
+                     */
+                    aspect_ratio?: "21:9" | "16:9" | "4:3" | "1:1" | "3:4" | "9:16" | "adaptive";
+                    /**
+                     * @description Non-negative audio flow shift
+                     * @default 3
+                     */
+                    audio_flow_shift?: number;
+                    /**
+                     * Format: uri
+                     * @description HTTP(S) audio URL up to 16 KiB or data URL with decoded audio up to 15 MiB
+                     */
+                    audio_reference_url?: string;
+                    /**
+                     * @description Duration in seconds
+                     * @default 5
+                     */
+                    duration?: number;
+                    /**
+                     * @description Non-negative flow shift
+                     * @default 12
+                     */
+                    flow_shift?: number;
+                    /**
+                     * @description Frames per second
+                     * @default 24
+                     * @enum {integer}
+                     */
+                    fps?: 24;
+                    /** @description Output height; provide with width */
+                    height?: number;
+                    /** @description Model ID */
+                    model: string;
+                    /**
+                     * @description Inference steps
+                     * @default 50
+                     */
+                    num_inference_steps?: number;
+                    /** @description Video prompt (maximum 7,000 Unicode characters) */
+                    prompt: string;
+                    /**
+                     * Format: int64
+                     * @description Random seed
+                     */
+                    seed?: number;
+                    /** @description Output short edge; only with adaptive aspect ratio */
+                    short_edge?: number;
+                    /**
+                     * @description Generation task
+                     * @default t2va
+                     * @enum {string}
+                     */
+                    task?: "t2va" | "fl2va" | "ref2va" | "t2v" | "i2v";
+                    /** @description Output width; provide with height */
+                    width?: number;
+                };
+                "multipart/form-data": {
+                    /**
+                     * @description Standard aspect ratio or adaptive
+                     * @enum {string}
+                     */
+                    aspect_ratio?: "21:9" | "16:9" | "4:3" | "1:1" | "3:4" | "9:16" | "adaptive";
+                    /**
+                     * @description Non-negative audio flow shift
+                     * @default 3
+                     */
+                    audio_flow_shift?: number;
+                    /**
+                     * Format: binary
+                     * @description Optional H3 Ref2VA audio reference up to 15 MiB; requires at least one image or video reference
+                     */
+                    audio_reference?: string;
+                    /**
+                     * Format: uri
+                     * @description HTTP(S) audio URL up to 16 KiB or data URL with decoded audio up to 15 MiB
+                     */
+                    audio_reference_url?: string;
+                    /**
+                     * @description Duration in seconds
+                     * @default 5
+                     */
+                    duration?: number;
+                    /**
+                     * @description Non-negative flow shift
+                     * @default 12
+                     */
+                    flow_shift?: number;
+                    /**
+                     * @description Frames per second
+                     * @default 24
+                     * @enum {integer}
+                     */
+                    fps?: 24;
+                    /** @description Output height; provide with width */
+                    height?: number;
+                    /**
+                     * Format: binary
+                     * @description Image up to 30 MiB or video up to 50 MiB; may be repeated. H3 Ref2VA allows mixed references, up to nine images, three videos, and twelve total; aggregate references plus audio up to 64 MiB
+                     */
+                    input_reference?: string;
+                    /**
+                     * Format: binary
+                     * @description Repeated image or video references with the same limits as input_reference
+                     */
+                    input_references?: string;
+                    /** @description Model ID */
+                    model: string;
+                    /**
+                     * @description Inference steps
+                     * @default 50
+                     */
+                    num_inference_steps?: number;
+                    /** @description Video prompt (maximum 7,000 Unicode characters) */
+                    prompt: string;
+                    /**
+                     * Format: int64
+                     * @description Random seed
+                     */
+                    seed?: number;
+                    /** @description Output short edge; only with adaptive aspect ratio */
+                    short_edge?: number;
+                    /**
+                     * @description Generation task
+                     * @default t2va
+                     * @enum {string}
+                     */
+                    task?: "t2va" | "fl2va" | "ref2va" | "t2v" | "i2v";
+                    /** @description Output width; provide with height */
+                    width?: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Accepted */
+            202: {
+                headers: {
+                    /** @description Job status URL */
+                    Location?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.VideoJobResult"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Payment Required */
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    getV1VideoJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Job UUID */
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.VideoJobResult"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    cancelV1VideoJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Job UUID */
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.VideoJobResult"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    downloadV1VideoJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Job UUID */
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description private, no-store */
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Service.VideoJobContentURL"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     postV1VideoGenerations: {
         parameters: {
             query?: never;
@@ -12192,6 +16958,65 @@ export interface operations {
         };
         requestBody: {
             content: {
+                "application/json": {
+                    /**
+                     * @description Output aspect ratio: a standard ratio may accompany matching dimensions; adaptive requires short_edge
+                     * @enum {string}
+                     */
+                    aspect_ratio?: "21:9" | "16:9" | "4:3" | "1:1" | "3:4" | "9:16" | "adaptive";
+                    /**
+                     * @description Non-negative audio flow shift
+                     * @default 3
+                     */
+                    audio_flow_shift?: number;
+                    /**
+                     * Format: uri
+                     * @description Hosted audio reference URL; HTTP(S) URLs are limited to 16 KiB and data URLs to the bounded decoded-audio ceiling
+                     */
+                    audio_reference_url?: string;
+                    /**
+                     * @description Duration in seconds
+                     * @default 5
+                     */
+                    duration?: number;
+                    /**
+                     * @description Non-negative flow shift
+                     * @default 12
+                     */
+                    flow_shift?: number;
+                    /**
+                     * @description Frames per second; only 24 is supported
+                     * @default 24
+                     * @enum {integer}
+                     */
+                    fps?: 24;
+                    /** @description Output height; provide with width; may accompany a matching standard aspect_ratio */
+                    height?: number;
+                    /** @description Model ID */
+                    model: string;
+                    /**
+                     * @description Inference steps
+                     * @default 50
+                     */
+                    num_inference_steps?: number;
+                    /** @description Video prompt (maximum 7,000 Unicode characters) */
+                    prompt: string;
+                    /**
+                     * Format: int64
+                     * @description Random seed
+                     */
+                    seed?: number;
+                    /** @description Output short edge; only valid with aspect_ratio=adaptive */
+                    short_edge?: number;
+                    /**
+                     * @description Generation task: t2va, fl2va, ref2va, t2v, or i2v
+                     * @default t2va
+                     * @enum {string}
+                     */
+                    task?: "t2va" | "fl2va" | "ref2va" | "t2v" | "i2v";
+                    /** @description Output width; provide with height; may accompany a matching standard aspect_ratio */
+                    width?: number;
+                };
                 "multipart/form-data": {
                     /**
                      * @description Output aspect ratio: a standard ratio may accompany matching dimensions; adaptive requires short_edge
@@ -12233,12 +17058,12 @@ export interface operations {
                     height?: number;
                     /**
                      * Format: binary
-                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
+                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated. H3 Ref2VA allows mixed references (up to nine images, three videos, and twelve total); FL2VA accepts up to two images; aggregate references plus audio are limited to 64 MiB
                      */
                     input_reference?: string;
                     /**
                      * Format: binary
-                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated; aggregate input references plus optional audio are limited to 64 MiB
+                     * @description Image reference up to 30 MiB or video reference up to 50 MiB; may be repeated. H3 Ref2VA allows mixed references (up to nine images, three videos, and twelve total); FL2VA accepts up to two images; aggregate references plus audio are limited to 64 MiB
                      */
                     input_references?: string;
                     /** @description Model ID */

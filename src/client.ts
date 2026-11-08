@@ -42,8 +42,7 @@ export function createQDivZeroClient(
   const wrapped = client as QDivZeroClient &
     ReturnType<typeof createClient<paths>>;
   wrapped.login = async (email: string, password: string) => {
-    manager.apply({ email, password });
-    await manager.refreshNow();
+    await manager.login(email, password);
   };
   wrapped.refresh = async () => {
     await manager.refreshNow();
