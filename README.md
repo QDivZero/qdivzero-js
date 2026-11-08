@@ -25,7 +25,7 @@ import { createQDivZeroClient } from "@qdivzero/qdivzero-js";
 
 const client = createQDivZeroClient({ apiKey: "your-api-key" });
 
-const { data, error, response } = await client.GET("/accounts");
+const { data, error, response } = await client.GET("/v1/accounts");
 if (response.status !== 200) {
   console.error(`get accounts: status ${response.status}`, error);
   process.exit(1);
@@ -40,24 +40,25 @@ request paths are checked at compile time.
 
 ## Authentication
 
-Tokens take precedence over API keys — the client sends the first available of:
+Session cookies take precedence over API keys — the client sends the first available of:
 
-1. An access token, set via `accessToken` or acquired through login/refresh
-   (`Authorization: Bearer <token>`).
+1. An access session cookie, set via `accessToken` or acquired through login/refresh
+   (`qdiv0_access=<token>`).
 2. An API key, set via `apiKey` (`Authorization: Bearer <key>`).
 
 The client accepts the following options:
 
 - `apiKey` — authenticate with a QDivZero API key.
-- `accessToken` / `refreshToken` — pre-configure bearer tokens without logging
-  in.
+- `accessToken` / `refreshToken` — pre-configure session-cookie values without
+  logging in.
 - `credentials: { email, password }` — enable on-demand login when no refresh
   token is available.
 - `baseUrl` — override the API base URL (defaults to `https://api.qdiv0.com`).
 
 `client.login(email, password)` authenticates with credentials and stores the
-access and refresh tokens. When a request fails with `401`, the client
-transparently refreshes the access token (using the refresh token, or
+access and refresh cookies. It rejects when the API requires additional
+verification. When a request fails with `401`, the client
+transparently refreshes the session (using the refresh cookie, or
 re-logging in with stored credentials) and retries the request once. Concurrent
 401s trigger a single shared refresh. `client.refresh()` forces a refresh.
 
@@ -77,7 +78,7 @@ fields are optional:
 ```
 
 `email`/`password` enable on-demand login; `access_token`/`refresh_token`
-authenticate directly. Explicit client options override file values. Pass
+provide session-cookie values. Explicit client options override file values. Pass
 `loadCredentialsFile: false` to disable auto-loading. Keep the file private
 (`chmod 600 ~/.qdivzero/credentials`) and never commit it.
 

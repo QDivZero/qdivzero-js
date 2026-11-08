@@ -4,15 +4,26 @@ import { AddressInfo } from "node:net";
 import { createQDivZeroClient } from "../src/client.js";
 
 function startServer(
-  handler: (req: import("node:http").IncomingMessage) => [number, string],
+  handler: (
+    req: import("node:http").IncomingMessage,
+  ) => [number, string, Record<string, string | string[]>?],
 ) {
   const server = createServer(async (req, res) => {
-    const [status, body] = handler(req);
-    res.writeHead(status, { "content-type": "application/json" });
+    const [status, body, headers] = handler(req);
+    res.writeHead(status, { "content-type": "application/json", ...headers });
     res.end(body);
   });
   server.listen(0);
   return server;
+}
+
+function session(access: string, refresh: string): Record<string, string[]> {
+  return {
+    "set-cookie": [
+      `qdiv0_access=${access}; Path=/`,
+      `qdiv0_refresh=${refresh}; Path=/v1/auth/refresh`,
+    ],
+  };
 }
 
 async function waitForServer(s: Server): Promise<string> {
@@ -36,7 +47,7 @@ describe("auth client", () => {
       apiKey: "k-123",
       loadCredentialsFile: false,
     });
-    await client.GET("/auth/me");
+    await client.GET("/v1/auth/me");
     expect(seen).toBe("Bearer k-123");
     await new Promise<void>((r) => server.close(() => r()));
   });
@@ -45,14 +56,16 @@ describe("auth client", () => {
     let refreshCalls = 0;
     let meCalls = 0;
     const server = startServer((req) => {
-      if (req.url?.startsWith("/auth/refresh")) {
+      if (req.url?.startsWith("/v1/auth/refresh")) {
         refreshCalls++;
-        return [200, JSON.stringify({ access_token: "new-token" })];
+        return [200, "{}", session("new-token", "r2")];
       }
-      if (req.url === "/auth/me") {
+      if (req.url === "/v1/auth/me") {
         meCalls++;
-        const auth = req.headers.authorization ?? "";
-        return auth === "Bearer new-token" ? [200, "{}"] : [401, "{}"];
+        const cookie = req.headers.cookie ?? "";
+        return cookie.includes("qdiv0_access=new-token")
+          ? [200, "{}"]
+          : [401, "{}"];
       }
       return [404, "{}"];
     });
@@ -63,7 +76,7 @@ describe("auth client", () => {
       refreshToken: "r1",
       loadCredentialsFile: false,
     });
-    const { response } = await client.GET("/auth/me");
+    const { response } = await client.GET("/v1/auth/me");
     expect(response.status).toBe(200);
     expect(refreshCalls).toBe(1);
     expect(meCalls).toBe(2);
@@ -73,20 +86,21 @@ describe("auth client", () => {
   it("does not refresh for /auth/login failures", async () => {
     let refreshCalls = 0;
     const server = startServer((req) => {
-      if (req.url?.startsWith("/auth/refresh")) {
+      if (req.url?.startsWith("/v1/auth/refresh")) {
         refreshCalls++;
         return [500, "{}"];
       }
-      if (req.url === "/auth/login")
+      if (req.url === "/v1/auth/login")
         return [401, JSON.stringify({ error: "bad credentials" })];
       return [404, "{}"];
     });
     const baseUrl = await waitForServer(server);
     const client = createQDivZeroClient({
       baseUrl,
+      refreshToken: "r1",
       loadCredentialsFile: false,
     });
-    await client.POST("/auth/login", {
+    await client.POST("/v1/auth/login", {
       body: { email: "a@b.c", password: "x" },
     });
     expect(refreshCalls).toBe(0);
@@ -96,15 +110,12 @@ describe("auth client", () => {
   it("logs in on demand with credentials", async () => {
     let loginCalls = 0;
     const server = startServer((req) => {
-      if (req.url === "/auth/login") {
+      if (req.url === "/v1/auth/login") {
         loginCalls++;
-        return [
-          200,
-          JSON.stringify({ access_token: "tok", refresh_token: "rr" }),
-        ];
+        return [200, "{}", session("tok", "rr")];
       }
-      if (req.url === "/auth/me") {
-        return req.headers.authorization === "Bearer tok"
+      if (req.url === "/v1/auth/me") {
+        return req.headers.cookie?.includes("qdiv0_access=tok")
           ? [200, "{}"]
           : [401, "{}"];
       }
@@ -116,7 +127,7 @@ describe("auth client", () => {
       credentials: { email: "a@b.c", password: "p" },
       loadCredentialsFile: false,
     });
-    const { response } = await client.GET("/auth/me");
+    const { response } = await client.GET("/v1/auth/me");
     expect(response.status).toBe(200);
     expect(loginCalls).toBe(1);
     await new Promise<void>((r) => server.close(() => r()));
@@ -126,17 +137,17 @@ describe("auth client", () => {
     let refreshCalls = 0;
     let receivedBody = "";
     const server = startServer((req) => {
-      if (req.url?.startsWith("/auth/refresh")) {
+      if (req.url?.startsWith("/v1/auth/refresh")) {
         refreshCalls++;
-        return [200, JSON.stringify({ access_token: "new-token" })];
+        return [200, "{}", session("new-token", "r2")];
       }
-      if (req.url === "/accounts" && req.method === "POST") {
+      if (req.url === "/v1/accounts" && req.method === "POST") {
         let raw = "";
         req.on("data", (c) => (raw += c));
         req.on("end", () => {
           receivedBody = raw;
         });
-        return req.headers.authorization === "Bearer new-token"
+        return req.headers.cookie?.includes("qdiv0_access=new-token")
           ? [201, "{}"]
           : [401, "{}"];
       }
@@ -150,7 +161,7 @@ describe("auth client", () => {
       loadCredentialsFile: false,
     });
     const payload = JSON.stringify({ name: "acme" });
-    const { response } = await client.POST("/accounts", {
+    const { response } = await client.POST("/v1/accounts", {
       body: JSON.parse(payload),
     });
     expect(response.status).toBe(201);
