@@ -283,6 +283,47 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/api-keys/{keyID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Permanently delete an account API key
+         * @description Deletes the key and immediately prevents further authentication.
+         */
+        delete: operations["deleteApiKeysKeyID"];
+        options?: never;
+        head?: never;
+        /** Update an account API key description */
+        patch: operations["patchApiKeysKeyID"];
+        trace?: never;
+    };
+    "/v1/api-keys/{keyID}/reactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reactivate a revoked account API key
+         * @description Re-enables the existing secret for a revoked key in the active account.
+         */
+        post: operations["postApiKeysKeyIDReactivate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/api-keys/{keyID}/revoke": {
         parameters: {
             query?: never;
@@ -1796,13 +1837,13 @@ export interface paths {
         };
         /**
          * List vector databases
-         * @description Returns the vector databases owned by the authenticated account.
+         * @description Returns the vector databases owned by the authenticated account. Accepts a browser session or a Bearer account or personal API key.
          */
         get: operations["getVectorDatabases"];
         put?: never;
         /**
          * Create a vector database
-         * @description Creates a new vector database for the authenticated account.
+         * @description Creates a new vector database for the authenticated account. Accepts a browser session or a Bearer account or personal API key.
          */
         post: operations["postVectorDatabases"];
         delete?: never;
@@ -1820,21 +1861,21 @@ export interface paths {
         };
         /**
          * Get a vector database
-         * @description Returns a single vector database owned by the authenticated account.
+         * @description Returns a single vector database owned by the authenticated account. Accepts a browser session or a Bearer account or personal API key.
          */
         get: operations["getVectorDatabase"];
         put?: never;
         post?: never;
         /**
          * Delete a vector database
-         * @description Removes a vector database owned by the authenticated account.
+         * @description Removes a vector database owned by the authenticated account. Accepts a browser session or a Bearer account or personal API key.
          */
         delete: operations["deleteVectorDatabase"];
         options?: never;
         head?: never;
         /**
          * Update a vector database
-         * @description Updates the slug, name, description, or compatible embedding model of an existing vector database. Changing models requires identical vectors for the text test.
+         * @description Updates the slug, name, description, or compatible embedding model of an existing vector database. Changing models requires identical vectors for the text test. Accepts a browser session or a Bearer account or personal API key.
          */
         patch: operations["patchVectorDatabase"];
         trace?: never;
@@ -1848,7 +1889,7 @@ export interface paths {
         };
         /**
          * List documents in a vector database
-         * @description Returns documents stored in a vector database with optional pagination.
+         * @description Returns documents stored in a vector database with optional pagination. Accepts a browser session or a Bearer account or personal API key.
          */
         get: operations["getVectorDatabaseDocuments"];
         put?: never;
@@ -1870,7 +1911,7 @@ export interface paths {
         put?: never;
         /**
          * Index documents directly
-         * @description Indexes documents into a vector database synchronously.
+         * @description Indexes documents into a vector database synchronously. Accepts a browser session or a Bearer account or personal API key.
          */
         post: operations["postVectorDatabaseIndexDirect"];
         delete?: never;
@@ -1890,7 +1931,7 @@ export interface paths {
         put?: never;
         /**
          * Enqueue an index job
-         * @description Enqueues documents for asynchronous indexing into a vector database.
+         * @description Enqueues documents for asynchronous indexing into a vector database. Accepts a browser session or a Bearer account or personal API key.
          */
         post: operations["postVectorDatabaseIndexJobs"];
         delete?: never;
@@ -1908,7 +1949,7 @@ export interface paths {
         };
         /**
          * Get an index job
-         * @description Returns the status of an asynchronous index job.
+         * @description Returns the status of an asynchronous index job. Accepts a browser session or a Bearer account or personal API key.
          */
         get: operations["getVectorDatabaseIndexJob"];
         put?: never;
@@ -1930,7 +1971,7 @@ export interface paths {
         put?: never;
         /**
          * Recommend documents
-         * @description Returns recommended documents for a recommend token.
+         * @description Returns recommended documents for a recommend token. Accepts a browser session or a Bearer account or personal API key.
          */
         post: operations["postVectorDatabaseRecommend"];
         delete?: never;
@@ -1950,7 +1991,7 @@ export interface paths {
         put?: never;
         /**
          * Search a vector database
-         * @description Searches a vector database by query text and/or image URL.
+         * @description Searches a vector database by query text and/or image URL. Accepts a browser session or a Bearer account or personal API key.
          */
         post: operations["postVectorDatabaseSearch"];
         delete?: never;
@@ -1970,7 +2011,7 @@ export interface paths {
         put?: never;
         /**
          * View an element
-         * @description Records a view for a document and returns a recommend token.
+         * @description Records a view for a document and returns a recommend token. Accepts a browser session or a Bearer account or personal API key.
          */
         post: operations["postVectorDatabaseViewElement"];
         delete?: never;
@@ -3847,13 +3888,18 @@ export interface components {
             email?: string;
             role?: string;
         };
+        ApiKeyDescriptionRequest: {
+            description?: string;
+        };
         ApiKeyListResponse: {
             api_keys?: components["schemas"]["ApiKeyResponse"][];
         };
         ApiKeyResponse: {
             created_at?: string;
+            description?: string;
             id?: string;
             key_prefix?: string;
+            last_used_at?: string;
             plaintext_key?: string;
             revoked_at?: string;
         };
@@ -3966,6 +4012,9 @@ export interface components {
         ConfirmTotpEnrollmentRequest: {
             code: string;
             secret: string;
+        };
+        CreateAPIKeyRequest: {
+            description?: string;
         };
         CreateAccountRequest: {
             name?: string;
@@ -6540,7 +6589,11 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CreateAPIKeyRequest"];
+            };
+        };
         responses: {
             /** @description Created */
             201: {
@@ -6571,6 +6624,181 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteApiKeysKeyID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description API key ID */
+                keyID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    patchApiKeysKeyID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description API key ID */
+                keyID: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApiKeyDescriptionRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postApiKeysKeyIDReactivate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description API key ID */
+                keyID: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

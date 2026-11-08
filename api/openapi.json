@@ -121,6 +121,15 @@
         "type": "object",
         "x-go-name": "AddAccountMemberRequest"
       },
+      "ApiKeyDescriptionRequest": {
+        "properties": {
+          "description": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "ApiKeyDescriptionRequest"
+      },
       "ApiKeyListResponse": {
         "properties": {
           "api_keys": {
@@ -138,10 +147,16 @@
           "created_at": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
           "key_prefix": {
+            "type": "string"
+          },
+          "last_used_at": {
             "type": "string"
           },
           "plaintext_key": {
@@ -513,6 +528,15 @@
         ],
         "type": "object",
         "x-go-name": "ConfirmTotpEnrollmentRequest"
+      },
+      "CreateAPIKeyRequest": {
+        "properties": {
+          "description": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-go-name": "CreateAPIKeyRequest"
       },
       "CreateAccountRequest": {
         "properties": {
@@ -7042,6 +7066,16 @@
       "post": {
         "description": "Issues a new API key for the active account context and returns the plaintext key once.",
         "operationId": "postApiKeys",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAPIKeyRequest"
+              }
+            }
+          },
+          "required": false
+        },
         "responses": {
           "201": {
             "content": {
@@ -7090,6 +7124,227 @@
           }
         ],
         "summary": "Create an API key for the selected account",
+        "tags": [
+          "API Keys"
+        ]
+      }
+    },
+    "/v1/api-keys/{keyID}": {
+      "delete": {
+        "description": "Deletes the key and immediately prevents further authentication.",
+        "operationId": "deleteApiKeysKeyID",
+        "parameters": [
+          {
+            "description": "API key ID",
+            "in": "path",
+            "name": "keyID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Permanently delete an account API key",
+        "tags": [
+          "API Keys"
+        ]
+      },
+      "patch": {
+        "description": "",
+        "operationId": "patchApiKeysKeyID",
+        "parameters": [
+          {
+            "description": "API key ID",
+            "in": "path",
+            "name": "keyID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyDescriptionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Update an account API key description",
+        "tags": [
+          "API Keys"
+        ]
+      }
+    },
+    "/v1/api-keys/{keyID}/reactivate": {
+      "post": {
+        "description": "Re-enables the existing secret for a revoked key in the active account.",
+        "operationId": "postApiKeysKeyIDReactivate",
+        "parameters": [
+          {
+            "description": "API key ID",
+            "in": "path",
+            "name": "keyID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Reactivate a revoked account API key",
         "tags": [
           "API Keys"
         ]
@@ -12673,7 +12928,7 @@
     },
     "/v1/flexible-vector-databases": {
       "get": {
-        "description": "Returns the vector databases owned by the authenticated account.",
+        "description": "Returns the vector databases owned by the authenticated account. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "getVectorDatabases",
         "responses": {
           "200": {
@@ -12718,7 +12973,7 @@
         ]
       },
       "post": {
-        "description": "Creates a new vector database for the authenticated account.",
+        "description": "Creates a new vector database for the authenticated account. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "postVectorDatabases",
         "requestBody": {
           "content": {
@@ -12785,7 +13040,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}": {
       "delete": {
-        "description": "Removes a vector database owned by the authenticated account.",
+        "description": "Removes a vector database owned by the authenticated account. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "deleteVectorDatabase",
         "parameters": [
           {
@@ -12864,7 +13119,7 @@
         ]
       },
       "get": {
-        "description": "Returns a single vector database owned by the authenticated account.",
+        "description": "Returns a single vector database owned by the authenticated account. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "getVectorDatabase",
         "parameters": [
           {
@@ -12940,7 +13195,7 @@
         ]
       },
       "patch": {
-        "description": "Updates the slug, name, description, or compatible embedding model of an existing vector database. Changing models requires identical vectors for the text test.",
+        "description": "Updates the slug, name, description, or compatible embedding model of an existing vector database. Changing models requires identical vectors for the text test. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "patchVectorDatabase",
         "parameters": [
           {
@@ -13028,7 +13283,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/documents": {
       "get": {
-        "description": "Returns documents stored in a vector database with optional pagination.",
+        "description": "Returns documents stored in a vector database with optional pagination. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "getVectorDatabaseDocuments",
         "parameters": [
           {
@@ -13114,7 +13369,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/index-direct": {
       "post": {
-        "description": "Indexes documents into a vector database synchronously.",
+        "description": "Indexes documents into a vector database synchronously. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "postVectorDatabaseIndexDirect",
         "parameters": [
           {
@@ -13196,7 +13451,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/index-jobs": {
       "post": {
-        "description": "Enqueues documents for asynchronous indexing into a vector database.",
+        "description": "Enqueues documents for asynchronous indexing into a vector database. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "postVectorDatabaseIndexJobs",
         "parameters": [
           {
@@ -13277,7 +13532,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/index-jobs/{jobID}": {
       "get": {
-        "description": "Returns the status of an asynchronous index job.",
+        "description": "Returns the status of an asynchronous index job. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "getVectorDatabaseIndexJob",
         "parameters": [
           {
@@ -13364,7 +13619,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/recommend": {
       "post": {
-        "description": "Returns recommended documents for a recommend token.",
+        "description": "Returns recommended documents for a recommend token. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "postVectorDatabaseRecommend",
         "parameters": [
           {
@@ -13442,7 +13697,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/search": {
       "post": {
-        "description": "Searches a vector database by query text and/or image URL.",
+        "description": "Searches a vector database by query text and/or image URL. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "postVectorDatabaseSearch",
         "parameters": [
           {
@@ -13520,7 +13775,7 @@
     },
     "/v1/flexible-vector-databases/{databaseID}/view-element": {
       "post": {
-        "description": "Records a view for a document and returns a recommend token.",
+        "description": "Records a view for a document and returns a recommend token. Accepts a browser session or a Bearer account or personal API key.",
         "operationId": "postVectorDatabaseViewElement",
         "parameters": [
           {
