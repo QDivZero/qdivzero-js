@@ -2176,6 +2176,9 @@
       },
       "IndexDocumentsRequest": {
         "properties": {
+          "chunking": {
+            "$ref": "#/components/schemas/Vectordb.ChunkingConfig"
+          },
           "documents": {
             "items": {
               "$ref": "#/components/schemas/IndexDocumentRequest"
@@ -2631,6 +2634,9 @@
       },
       "ListedDocumentResponse": {
         "properties": {
+          "chunk_index": {
+            "type": "integer"
+          },
           "content": {
             "type": "string"
           },
@@ -2642,6 +2648,9 @@
               "type": "string"
             },
             "type": "object"
+          },
+          "parent_document_id": {
+            "type": "string"
           },
           "source": {
             "$ref": "#/components/schemas/SearchHitSourceResponse"
@@ -4234,6 +4243,9 @@
       },
       "SearchHitResponse": {
         "properties": {
+          "chunk_index": {
+            "type": "integer"
+          },
           "content": {
             "type": "string"
           },
@@ -4245,6 +4257,9 @@
               "type": "string"
             },
             "type": "object"
+          },
+          "parent_document_id": {
+            "type": "string"
           },
           "score": {
             "type": "number"
@@ -5899,6 +5914,18 @@
         },
         "type": "object",
         "x-go-name": "VectorDatabaseResponse"
+      },
+      "Vectordb.ChunkingConfig": {
+        "properties": {
+          "overlap": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "x-go-name": "Vectordb.ChunkingConfig"
       },
       "VerifyEmailResponse": {
         "properties": {
@@ -13296,7 +13323,7 @@
             }
           },
           {
-            "description": "Maximum number of documents to return",
+            "description": "Documents per page (default 50, maximum 200)",
             "in": "query",
             "name": "limit",
             "required": false,
@@ -13308,6 +13335,15 @@
             "description": "Pagination cursor from a previous response",
             "in": "query",
             "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Return only chunks belonging to this document",
+            "in": "query",
+            "name": "parent_document_id",
             "required": false,
             "schema": {
               "type": "string"
@@ -13362,6 +13398,230 @@
           }
         ],
         "summary": "List documents in a vector database",
+        "tags": [
+          "Vector Databases"
+        ]
+      }
+    },
+    "/v1/flexible-vector-databases/{databaseID}/documents/{documentID}": {
+      "delete": {
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Vector database ID",
+            "in": "path",
+            "name": "databaseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Document ID",
+            "in": "path",
+            "name": "documentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Delete an indexed document",
+        "tags": [
+          "Vector Databases"
+        ]
+      },
+      "get": {
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Vector database ID",
+            "in": "path",
+            "name": "databaseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Document ID",
+            "in": "path",
+            "name": "documentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListedDocumentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Read an indexed document",
+        "tags": [
+          "Vector Databases"
+        ]
+      },
+      "put": {
+        "description": "Replaces the complete document and recomputes its embedding. The path ID identifies the document.",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Vector database ID",
+            "in": "path",
+            "name": "databaseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Document ID",
+            "in": "path",
+            "name": "documentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IndexDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Create or replace an indexed document",
+        "tags": [
+          "Vector Databases"
+        ]
+      }
+    },
+    "/v1/flexible-vector-databases/{databaseID}/documents/{documentID}/chunks": {
+      "delete": {
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Vector database ID",
+            "in": "path",
+            "name": "databaseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Parent document ID",
+            "in": "path",
+            "name": "documentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Delete every chunk of a document",
         "tags": [
           "Vector Databases"
         ]

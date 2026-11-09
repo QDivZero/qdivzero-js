@@ -1900,6 +1900,179 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/flexible-vector-databases/{databaseID}/documents/{documentID}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an indexed document */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Vector database ID */
+                    databaseID: string;
+                    /** @description Document ID */
+                    documentID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ListedDocumentResponse"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        /**
+         * Create or replace an indexed document
+         * @description Replaces the complete document and recomputes its embedding. The path ID identifies the document.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Vector database ID */
+                    databaseID: string;
+                    /** @description Document ID */
+                    documentID: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["IndexDocumentRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            [key: string]: number;
+                        };
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete an indexed document */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Vector database ID */
+                    databaseID: string;
+                    /** @description Document ID */
+                    documentID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/flexible-vector-databases/{databaseID}/documents/{documentID}/chunks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete every chunk of a document */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Vector database ID */
+                    databaseID: string;
+                    /** @description Parent document ID */
+                    documentID: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/flexible-vector-databases/{databaseID}/index-direct": {
         parameters: {
             query?: never;
@@ -4513,6 +4686,7 @@ export interface components {
             text?: string;
         };
         IndexDocumentsRequest: {
+            chunking?: components["schemas"]["Vectordb.ChunkingConfig"];
             documents?: components["schemas"]["IndexDocumentRequest"][];
         };
         IndexJobResponse: {
@@ -4649,11 +4823,13 @@ export interface components {
             total?: number;
         };
         ListedDocumentResponse: {
+            chunk_index?: number;
             content?: string;
             id?: string;
             metadata?: {
                 [key: string]: string;
             };
+            parent_document_id?: string;
             source?: components["schemas"]["SearchHitSourceResponse"];
             updated_at?: string;
         };
@@ -5150,11 +5326,13 @@ export interface components {
             updated_at?: string;
         };
         SearchHitResponse: {
+            chunk_index?: number;
             content?: string;
             id?: string;
             metadata?: {
                 [key: string]: string;
             };
+            parent_document_id?: string;
             score?: number;
             source?: components["schemas"]["SearchHitSourceResponse"];
         };
@@ -5692,6 +5870,10 @@ export interface components {
             slug?: string;
             status?: string;
             updated_at?: string;
+        };
+        "Vectordb.ChunkingConfig": {
+            overlap?: number;
+            size?: number;
         };
         VerifyEmailResponse: {
             email?: string;
@@ -11482,10 +11664,12 @@ export interface operations {
     getVectorDatabaseDocuments: {
         parameters: {
             query?: {
-                /** @description Maximum number of documents to return */
+                /** @description Documents per page (default 50, maximum 200) */
                 limit?: number;
                 /** @description Pagination cursor from a previous response */
                 cursor?: string;
+                /** @description Return only chunks belonging to this document */
+                parent_document_id?: string;
             };
             header?: never;
             path: {
