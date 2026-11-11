@@ -11270,6 +11270,32 @@
       "post": {
         "description": "Executes a chat completion using a managed instance or public model. Accepts Bearer access tokens or API keys. Supports streaming (SSE) when \"stream\": true.",
         "operationId": "postV1ChatCompletions",
+        "parameters": [
+          {
+            "description": "Set true to redact user, developer and tool text before every model call. System and assistant messages, including tool-call arguments, stay intact. Privacy filter failures stop inference.",
+            "in": "header",
+            "name": "x-paranoid",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Choose redacted (default) or mask; mask returns request-local substitutions",
+            "in": "header",
+            "name": "x-paranoid-mode",
+            "required": false,
+            "schema": {
+              "default": "redacted",
+              "enum": [
+                "redacted",
+                "mask"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -17989,6 +18015,32 @@
       "post": {
         "description": "Executes a Responses API request using a managed instance or public model. Accepts Bearer access tokens or API keys. Supports streaming (SSE) when \"stream\": true.",
         "operationId": "postV1Responses",
+        "parameters": [
+          {
+            "description": "Set true to redact user, developer and tool text before every model call. System and assistant messages, including tool-call arguments, stay intact. Privacy filter failures stop inference.",
+            "in": "header",
+            "name": "x-paranoid",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Choose redacted (default) or mask; mask returns request-local substitutions",
+            "in": "header",
+            "name": "x-paranoid-mode",
+            "required": false,
+            "schema": {
+              "default": "redacted",
+              "enum": [
+                "redacted",
+                "mask"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -18060,6 +18112,32 @@
       "post": {
         "description": "Compresses a conversation history into a compact representation for context management. Accepts Bearer access tokens or API keys.",
         "operationId": "postV1ResponsesCompact",
+        "parameters": [
+          {
+            "description": "Set true to redact user, developer and tool text before every model call. System and assistant messages, including tool-call arguments, stay intact. Privacy filter failures stop inference.",
+            "in": "header",
+            "name": "x-paranoid",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Choose redacted (default) or mask; mask returns request-local substitutions",
+            "in": "header",
+            "name": "x-paranoid-mode",
+            "required": false,
+            "schema": {
+              "default": "redacted",
+              "enum": [
+                "redacted",
+                "mask"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -22087,10 +22165,10 @@
       "name": "Automations"
     },
     {
-      "name": "Shared Capacity"
+      "name": "tutorial"
     },
     {
-      "name": "tutorial"
+      "name": "Shared Capacity"
     }
   ]
 }

@@ -10039,7 +10039,12 @@ export interface operations {
     postV1ChatCompletions: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Set true to redact user, developer and tool text before every model call. System and assistant messages, including tool-call arguments, stay intact. Privacy filter failures stop inference. */
+                "x-paranoid"?: boolean;
+                /** @description Choose redacted (default) or mask; mask returns request-local substitutions */
+                "x-paranoid-mode"?: "redacted" | "mask";
+            };
             path?: never;
             cookie?: never;
         };
@@ -14780,7 +14785,12 @@ export interface operations {
     postV1Responses: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Set true to redact user, developer and tool text before every model call. System and assistant messages, including tool-call arguments, stay intact. Privacy filter failures stop inference. */
+                "x-paranoid"?: boolean;
+                /** @description Choose redacted (default) or mask; mask returns request-local substitutions */
+                "x-paranoid-mode"?: "redacted" | "mask";
+            };
             path?: never;
             cookie?: never;
         };
@@ -14833,7 +14843,12 @@ export interface operations {
     postV1ResponsesCompact: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Set true to redact user, developer and tool text before every model call. System and assistant messages, including tool-call arguments, stay intact. Privacy filter failures stop inference. */
+                "x-paranoid"?: boolean;
+                /** @description Choose redacted (default) or mask; mask returns request-local substitutions */
+                "x-paranoid-mode"?: "redacted" | "mask";
+            };
             path?: never;
             cookie?: never;
         };
