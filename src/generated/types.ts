@@ -2856,7 +2856,7 @@ export interface paths {
         };
         /**
          * List public serving endpoints
-         * @description Returns all publicly available model-serving endpoints and their token or audio-duration prices. No authentication required.
+         * @description Returns public model-serving endpoints, their prices and regions. Region is null if unspecified. No authentication required.
          */
         get: operations["getV1PublicEndpoints"];
         put?: never;
@@ -5029,12 +5029,14 @@ export interface components {
         };
         PublicEndpointPriceResponse: {
             audio_per_hour_eur?: number;
+            cached_input_per_million_eur?: number;
             input_per_million_eur?: number;
             output_per_million_eur?: number;
         };
         PublicEndpointResponse: {
             name?: string;
             price?: components["schemas"]["PublicEndpointPriceResponse"];
+            region?: string;
         };
         PublicEndpointsResponse: {
             endpoints?: components["schemas"]["PublicEndpointResponse"][];
@@ -5435,8 +5437,10 @@ export interface components {
             name?: string;
             providers?: components["schemas"]["ServingProviderResponse"][];
             public_audio_per_hour_eur?: number;
+            public_cached_input_per_million_eur?: number;
             public_input_per_million_eur?: number;
             public_output_per_million_eur?: number;
+            public_region?: string;
             realtime_mode?: string;
             realtime_profile?: string;
             state?: string;

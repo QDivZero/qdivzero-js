@@ -3287,6 +3287,9 @@
           "audio_per_hour_eur": {
             "type": "number"
           },
+          "cached_input_per_million_eur": {
+            "type": "number"
+          },
           "input_per_million_eur": {
             "type": "number"
           },
@@ -3304,6 +3307,9 @@
           },
           "price": {
             "$ref": "#/components/schemas/PublicEndpointPriceResponse"
+          },
+          "region": {
+            "type": "string"
           }
         },
         "type": "object",
@@ -4571,11 +4577,17 @@
           "public_audio_per_hour_eur": {
             "type": "number"
           },
+          "public_cached_input_per_million_eur": {
+            "type": "number"
+          },
           "public_input_per_million_eur": {
             "type": "number"
           },
           "public_output_per_million_eur": {
             "type": "number"
+          },
+          "public_region": {
+            "type": "string"
           },
           "realtime_mode": {
             "type": "string"
@@ -17126,7 +17138,7 @@
     },
     "/v1/public/endpoints": {
       "get": {
-        "description": "Returns all publicly available model-serving endpoints and their token or audio-duration prices. No authentication required.",
+        "description": "Returns public model-serving endpoints, their prices and regions. Region is null if unspecified. No authentication required.",
         "operationId": "getV1PublicEndpoints",
         "responses": {
           "200": {
