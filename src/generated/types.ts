@@ -63,6 +63,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/health/services": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Microservice health
+         * @description Public health snapshot of all 16 services and their basic infrastructure dependencies. No token, browser session or account lookup is required. Uses existing internal service credentials and parallel standard gRPC Health/List calls with 1.5 second service deadlines and a two second overall deadline. Partial results remain available when a service fails. The ordinary public IP rate limit applies.
+         */
+        get: operations["get_health_services"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/runtime/notify/crash": {
         parameters: {
             query?: never;
@@ -5427,6 +5447,47 @@ export interface components {
             /** @enum {string} */
             status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
         };
+        ServiceHealthReport: {
+            services: {
+                account: components["schemas"]["ServiceHealthStatus"];
+                audit: components["schemas"]["ServiceHealthStatus"];
+                auth: components["schemas"]["ServiceHealthStatus"];
+                automations: components["schemas"]["ServiceHealthStatus"];
+                billing: components["schemas"]["ServiceHealthStatus"];
+                connectors: components["schemas"]["ServiceHealthStatus"];
+                cybersecurity: components["schemas"]["ServiceHealthStatus"];
+                firewall: components["schemas"]["ServiceHealthStatus"];
+                hpcprovider: components["schemas"]["ServiceHealthStatus"];
+                inference: components["schemas"]["ServiceHealthStatus"];
+                notifications: components["schemas"]["ServiceHealthStatus"];
+                selfagent: components["schemas"]["ServiceHealthStatus"];
+                storage: components["schemas"]["ServiceHealthStatus"];
+                templates: components["schemas"]["ServiceHealthStatus"];
+                tools: components["schemas"]["ServiceHealthStatus"];
+                vectordb: components["schemas"]["ServiceHealthStatus"];
+            };
+            /**
+             * @description UP only when every configured service is UP. Optional unconfigured services are DISABLED and do not affect the aggregate.
+             * @enum {string}
+             */
+            status: "UP" | "DOWN";
+        };
+        ServiceHealthStatus: {
+            /** @description gRPC call status under grpc, plus dependency statuses using local dependency names. Business-service aliases are omitted. */
+            checks: {
+                [key: string]: "UP" | "DOWN" | "UNKNOWN";
+            };
+            /**
+             * Format: int64
+             * @description Elapsed time for the service health call, in milliseconds. Zero for unconfigured services.
+             */
+            latency_ms: number;
+            /**
+             * @description DOWN for a failed dependency or RPC failure/timeout; UNKNOWN when standard health is unsupported or the overall snapshot is missing/invalid; DISABLED for an unconfigured optional service.
+             * @enum {string}
+             */
+            status: "UP" | "DOWN" | "UNKNOWN" | "DISABLED";
+        };
         ServingEndpointResponse: {
             created_at?: string;
             display_name?: string;
@@ -5958,6 +6019,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_health_services: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Every configured service is UP. */
+            200: {
+                headers: {
+                    /** @description Health snapshots are never cached. */
+                    "Cache-Control"?: "no-store";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServiceHealthReport"];
+                };
+            };
+            /** @description Public IP rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description At least one configured service is DOWN or UNKNOWN. */
+            503: {
+                headers: {
+                    /** @description Health snapshots are never cached. */
+                    "Cache-Control"?: "no-store";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServiceHealthReport"];
                 };
             };
         };

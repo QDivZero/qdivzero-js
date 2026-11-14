@@ -4542,6 +4542,133 @@
         "type": "object",
         "x-go-name": "Service.VideoJobResult"
       },
+      "ServiceHealthReport": {
+        "properties": {
+          "services": {
+            "additionalProperties": false,
+            "properties": {
+              "account": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "audit": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "auth": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "automations": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "billing": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "connectors": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "cybersecurity": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "firewall": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "hpcprovider": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "inference": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "notifications": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "selfagent": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "storage": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "templates": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "tools": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              },
+              "vectordb": {
+                "$ref": "#/components/schemas/ServiceHealthStatus"
+              }
+            },
+            "required": [
+              "account",
+              "auth",
+              "billing",
+              "firewall",
+              "inference",
+              "tools",
+              "notifications",
+              "vectordb",
+              "hpcprovider",
+              "templates",
+              "storage",
+              "selfagent",
+              "connectors",
+              "automations",
+              "audit",
+              "cybersecurity"
+            ],
+            "type": "object"
+          },
+          "status": {
+            "description": "UP only when every configured service is UP. Optional unconfigured services are DISABLED and do not affect the aggregate.",
+            "enum": [
+              "UP",
+              "DOWN"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "services"
+        ],
+        "type": "object"
+      },
+      "ServiceHealthStatus": {
+        "properties": {
+          "checks": {
+            "additionalProperties": {
+              "enum": [
+                "UP",
+                "DOWN",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            },
+            "description": "gRPC call status under grpc, plus dependency statuses using local dependency names. Business-service aliases are omitted.",
+            "type": "object"
+          },
+          "latency_ms": {
+            "description": "Elapsed time for the service health call, in milliseconds. Zero for unconfigured services.",
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "status": {
+            "description": "DOWN for a failed dependency or RPC failure/timeout; UNKNOWN when standard health is unsupported or the overall snapshot is missing/invalid; DISABLED for an unconfigured optional service.",
+            "enum": [
+              "UP",
+              "DOWN",
+              "UNKNOWN",
+              "DISABLED"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "latency_ms",
+          "checks"
+        ],
+        "type": "object"
+      },
       "ServingEndpointResponse": {
         "properties": {
           "created_at": {
@@ -6113,6 +6240,64 @@
           }
         },
         "summary": "Health check",
+        "tags": [
+          "System"
+        ]
+      }
+    },
+    "/health/services": {
+      "get": {
+        "description": "Public health snapshot of all 16 services and their basic infrastructure dependencies. No token, browser session or account lookup is required. Uses existing internal service credentials and parallel standard gRPC Health/List calls with 1.5 second service deadlines and a two second overall deadline. Partial results remain available when a service fails. The ordinary public IP rate limit applies.",
+        "operationId": "get_health_services",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceHealthReport"
+                }
+              }
+            },
+            "description": "Every configured service is UP.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Health snapshots are never cached.",
+                "schema": {
+                  "enum": [
+                    "no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Public IP rate limit exceeded."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceHealthReport"
+                }
+              }
+            },
+            "description": "At least one configured service is DOWN or UNKNOWN.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Health snapshots are never cached.",
+                "schema": {
+                  "enum": [
+                    "no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Microservice health",
         "tags": [
           "System"
         ]
